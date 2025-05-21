@@ -21,6 +21,9 @@ dependencies {
 
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
+    // https://mvnrepository.com/artifact/org.joda/joda-money
+    implementation("org.joda:joda-money:2.0.2")
+
     // This dependency is used by the application.
     implementation(libs.guava)
 }
