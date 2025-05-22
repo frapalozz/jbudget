@@ -2,6 +2,13 @@ package it.unicam.cs.mpgc.jbudget125914;
 
 
 
+import it.unicam.cs.mpgc.jbudget125914.categories.DefaultCategory;
+import it.unicam.cs.mpgc.jbudget125914.currency.Money;
+import it.unicam.cs.mpgc.jbudget125914.manager.MoneyManager;
+import it.unicam.cs.mpgc.jbudget125914.manager.TransactionsManager;
+import it.unicam.cs.mpgc.jbudget125914.transaction.DefaultTransaction;
+import it.unicam.cs.mpgc.jbudget125914.transaction.Transaction;
+
 import java.util.*;
 
 public class App {
@@ -11,15 +18,16 @@ public class App {
     }
 
     public static void main(String[] args) {
-        List<Transaction<Money, Category>> transactions = new ArrayList<>();
-        Set<Category> categories = new HashSet<>();
-        categories.add(new Category("Health", 1));
-        categories.add(new Category("Home", 2));
-        categories.add(new Category("Sport", 3));
-        transactions.add(new MoneyTransaction("Abbonamento palestra", TransactionType.EXPENSE, new Money(299.00, "EUR"), new Date(), Set.of(new Category("Sport", 3)) ));
+        List<Transaction<Money, DefaultCategory>> transactions = new ArrayList<>();
+        Set<DefaultCategory> categories = new HashSet<>();
+        categories.add(new DefaultCategory("Health"));
+        categories.add(new DefaultCategory("Home"));
+        categories.add(new DefaultCategory("Sport"));
+        transactions.add(new DefaultTransaction<Money, DefaultCategory>("Abbonamento palestra", new Money(-299.00, "EUR"), new Date(), Set.of(new DefaultCategory("Sport")) ));
+        transactions.add(new DefaultTransaction<Money, DefaultCategory>("Stipendio", new Money(1500.00, "EUR"), new Date(), Set.of(new DefaultCategory("Work")) ));
         TransactionsManager moneyManager = new MoneyManager(transactions, categories);
 
-        moneyManager.getAllTransactions().forEach(System.out::println);
+        moneyManager.getTransactions().forEach(System.out::println);
 
     }
 }

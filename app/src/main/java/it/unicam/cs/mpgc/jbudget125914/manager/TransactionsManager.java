@@ -19,7 +19,11 @@
  */
 
 
-package it.unicam.cs.mpgc.jbudget125914;
+package it.unicam.cs.mpgc.jbudget125914.manager;
+
+import it.unicam.cs.mpgc.jbudget125914.categories.DefaultCategory;
+import it.unicam.cs.mpgc.jbudget125914.currency.Money;
+import it.unicam.cs.mpgc.jbudget125914.transaction.Transaction;
 
 import java.util.List;
 import java.util.Set;
@@ -33,15 +37,7 @@ public interface TransactionsManager {
      * Return all the current Transactions
      * @return all the current Transactions
      */
-    List<Transaction<Money, Category>> getTransactions();
-
-    /**
-     * Return all the Transaction of a given type
-     * @param type the type of the Transaction
-     * @throws NullPointerException if type is {@code null}
-     * @return all the Expense Transaction
-     */
-    List<Transaction<Money, Category>> getTransactions(TransactionType type);
+    List<Transaction<Money, DefaultCategory>> getTransactions();
 
     /**
      * Return all the Transaction of a given Category
@@ -49,33 +45,25 @@ public interface TransactionsManager {
      * @throws NullPointerException if category is {@code null}
      * @return all the Transaction of the given Category
      */
-    List<Transaction<Money, Category>> getTransactions(Category category);
-
-    /**
-     * Return all the Transaction of a given category and type
-     * @param category the Category of the Transaction
-     * @param type the type of the Transaction
-     * @return all the Transaction of a given category and type
-     */
-    List<Transaction<Money, Category>> getTransactions(Category category, TransactionType type);
+    List<Transaction<Money, DefaultCategory>> getTransactions(DefaultCategory category);
 
     /**
      * Return all the Categories
      * @return all the Categories
      */
-    Set<Category> getCategories();
+    Set<DefaultCategory> getCategories();
 
     /**
      * Add a new Transaction
      * @param transaction the new Transaction
      * @throws NullPointerException if transaction is {@code null}
      */
-    void addTransaction(Transaction<Money, Category> transaction);
+    void addTransaction(Transaction<Money, DefaultCategory> transaction);
 
     /**
      * Remove a Transaction
      * @param transaction the Transaction to remove
      * @throws NullPointerException if transaction is {@code null}
      */
-    void removeTransaction(Transaction<Money, Category> transaction);
+    void removeTransaction(Transaction<Money, DefaultCategory> transaction);
 }
