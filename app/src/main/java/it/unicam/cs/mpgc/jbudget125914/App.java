@@ -1,16 +1,25 @@
 package it.unicam.cs.mpgc.jbudget125914;
 
 
-import org.joda.money.Money;
+
+import java.util.*;
 
 public class App {
 
-    static Money money = Money.parse("EUR 36.76");
     public String getGreeting() {
         return "Hello World!";
     }
 
     public static void main(String[] args) {
-        System.out.println(money.getAmount() + money.getCurrencyUnit().toString());
+        List<Transaction<Money, Category>> transactions = new ArrayList<>();
+        Set<Category> categories = new HashSet<>();
+        categories.add(new Category("Health", 1));
+        categories.add(new Category("Home", 2));
+        categories.add(new Category("Sport", 3));
+        transactions.add(new MoneyTransaction("Abbonamento palestra", TransactionType.EXPENSE, new Money(299.00, "EUR"), new Date(), Set.of(new Category("Sport", 3)) ));
+        TransactionsManager moneyManager = new MoneyManager(transactions, categories);
+
+        moneyManager.getAllTransactions().forEach(System.out::println);
+
     }
 }

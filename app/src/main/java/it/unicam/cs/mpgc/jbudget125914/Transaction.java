@@ -21,7 +21,7 @@
 package it.unicam.cs.mpgc.jbudget125914;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 /**
  * The Transaction interface gives the user a simple way to access to the name, value, date and Categories
@@ -37,11 +37,12 @@ public interface Transaction<T, C> {
     String getName();
 
     /**
-     * Set the new name for this Transaction
-     * @param name the new name of the Transaction
+     * Create a new {@code Transaction} with the new name passed
+     * @param name the new name for the Transaction
      * @throws NullPointerException if name is {@code null}
+     * @return the new {@code Transaction}
      */
-    void setName(String name);
+    Transaction<T, C> setName(String name);
 
     /**
      * Returns the value of this Transaction
@@ -50,11 +51,12 @@ public interface Transaction<T, C> {
     T getValue();
 
     /**
-     * Set the new value for this Transaction
-     * @param value the new value of the Transaction
+     * Create a new {@code Transaction} with the new value passed
+     * @param value the new value for the Transaction
      * @throws NullPointerException if value is {@code null}
+     * @return the new {@code Transaction}
      */
-    void setValue(T value);
+    Transaction<T, C> setValue(T value);
 
     /**
      * Returns the date when this Transaction occurred
@@ -63,28 +65,38 @@ public interface Transaction<T, C> {
     Date getDate();
 
     /**
-     * Set the new date for this Transaction
-     * @param date the new date of the Transaction
+     * Create a new {@code Transaction} with the new date passed
+     * @param date the new date for the Transaction
      * @throws NullPointerException if date is {@code null}
+     * @return the new {@code Transaction}
      */
-    void setDate(Date date);
+    Transaction<T, C> setDate(Date date);
 
     /**
-     * Returns the list of Category of this Transaction
-     * @return the list of Category of this Transaction
+     * Returns the Category set of this Transaction
+     * @return the Category set of this Transaction
      */
-    List<C> getCategory();
+    Set<C> getCategory();
 
     /**
-     * Set the new category list for this Transaction
-     * @param categories the new category list for the Transaction
+     * Create a new {@code Transaction} with the new category set passed
+     * @param categories the new category set for the Transaction
      * @throws NullPointerException if categories is {@code null}
+     * @return the new {@code Transaction}
      */
-    void setCategory(List<C> categories);
+    Transaction<T, C> setCategory(Set<C> categories);
 
     /**
      * Return the type of this Transaction
      * @return the type of this Transaction
      */
     TransactionType getTransactionType();
+
+    /**
+     * Create a new {@code Transaction} with the new {@code TransactionType} passed
+     * @param type the new {@code TransactionType} for the Transaction
+     * @throws NullPointerException if type is {@code null}
+     * @return the new {@code Transaction}
+     */
+    Transaction<T, C> setTransactionType(TransactionType type);
 }

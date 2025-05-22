@@ -21,21 +21,19 @@
 
 package it.unicam.cs.mpgc.jbudget125914;
 
-import org.joda.money.Money;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
-public class MoneyTransaction implements Transaction<Money, Category> {
+public final class MoneyTransaction implements Transaction<Money, Category> {
 
-    String name;
-    TransactionType type;
-    Money value;
-    Date date;
-    List<Category> categories;
+    private final String name;
+    private final TransactionType type;
+    private final Money value;
+    private final Date date;
+    private final Set<Category> categories;
 
-    public MoneyTransaction(String name, TransactionType type, Money value, Date date, List<Category> categories) {
+    public MoneyTransaction(String name, TransactionType type, Money value, Date date, Set<Category> categories) {
         this.name = name;
         this.type = type;
         this.value = value;
@@ -44,7 +42,7 @@ public class MoneyTransaction implements Transaction<Money, Category> {
     }
 
     public MoneyTransaction(String name, TransactionType type, Money value, Date date) {
-        this(name, type, value, date, new ArrayList<Category>());
+        this(name, type, value, date, new HashSet<Category>());
     }
 
     @Override
@@ -53,11 +51,11 @@ public class MoneyTransaction implements Transaction<Money, Category> {
     }
 
     @Override
-    public void setName(String name) {
+    public MoneyTransaction setName(String name) {
         if(name == null)
             throw new NullPointerException("Name cannot be null");
 
-        this.name = name;
+        return new MoneyTransaction(name, this.type, this.value, this.date, this.categories);
     }
 
     @Override
@@ -66,10 +64,11 @@ public class MoneyTransaction implements Transaction<Money, Category> {
     }
 
     @Override
-    public void setValue(Money value) {
+    public MoneyTransaction setValue(Money value) {
         if(value == null)
             throw new NullPointerException("Value cannot be null");
-        this.value = value;
+
+        return new MoneyTransaction(this.name, this.type, value, this.date, this.categories);
     }
 
     @Override
@@ -78,26 +77,46 @@ public class MoneyTransaction implements Transaction<Money, Category> {
     }
 
     @Override
-    public void setDate(Date date) {
+    public MoneyTransaction setDate(Date date) {
         if(date == null)
             throw new NullPointerException("Date cannot be null");
-        this.date = date;
+
+        return new MoneyTransaction(this.name, this.type, this.value, date, this.categories);
     }
 
     @Override
-    public List<Category> getCategory() {
+    public Set<Category> getCategory() {
         return this.categories;
     }
 
     @Override
-    public void setCategory(List<Category> categories) {
+    public MoneyTransaction setCategory(Set<Category> categories) {
         if(categories == null)
             throw new NullPointerException("Category cannot be null");
-        this.categories = categories;
+
+        return new MoneyTransaction(this.name, this.type, this.value, date, categories);
     }
 
     @Override
     public TransactionType getTransactionType() {
         return this.type;
+    }
+
+    @Override
+    public Transaction<Money, Category> setTransactionType(TransactionType type) {
+        if(type == null)
+            throw new NullPointerException("Type cannot be null");
+
+        return new MoneyTransaction(this.name, type, this.value, this.date, this.categories);
+    }
+
+    @Override
+    public String toString() {
+
+        return  "name: " + this.name + "\n" +
+                "type: " + this.type.toString() + "\n" +
+                "value: " + this.value.toString() + "\n" +
+                "date: " + this.date.toString() + "\n" +
+                "categories: " + this.categories.toString() + "\n";
     }
 }

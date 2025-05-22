@@ -21,6 +21,4 @@
 
 package it.unicam.cs.mpgc.jbudget125914;
 
-public enum Category {
-    HOME, SPORTS, OTHER
-}
+public record Category(String name, int priority) {}
