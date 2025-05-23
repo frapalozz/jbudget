@@ -1,18 +1,14 @@
 package it.unicam.cs.mpgc.jbudget125914.transaction;
 
-import it.unicam.cs.mpgc.jbudget125914.categories.Category;
-import it.unicam.cs.mpgc.jbudget125914.currency.UnitMeasure;
+import it.unicam.cs.mpgc.jbudget125914.categories.DefaultCategory;
+import it.unicam.cs.mpgc.jbudget125914.currency.Money;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
-public record DefaultTransaction<T extends UnitMeasure<?>, C extends Category<?>>(
-        String name,
-        T value,
-        Date date,
-        Set<C> categories) implements Transaction<T, C> {
+public record MoneyTransaction(String name, Money value, LocalDate date, Set<DefaultCategory> categories) implements Transaction {
 
-    public DefaultTransaction {
+    public MoneyTransaction {
         if(name == null)
             throw new NullPointerException("name is null");
         if(date == null)

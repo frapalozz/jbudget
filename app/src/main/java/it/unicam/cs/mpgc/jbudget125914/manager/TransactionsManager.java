@@ -34,36 +34,46 @@ import java.util.Set;
 public interface TransactionsManager {
 
     /**
-     * Return all the current Transactions
-     * @return all the current Transactions
+     * Set the new range
+     * @param range the new range
      */
-    List<Transaction<Money, DefaultCategory>> getTransactions();
+    void setRange(Range range);
 
     /**
-     * Return all the Transaction of a given Category
-     * @param category the Category of the Transaction
-     * @throws NullPointerException if category is {@code null}
-     * @return all the Transaction of the given Category
+     * Return the range
+     * @return the range
      */
-    List<Transaction<Money, DefaultCategory>> getTransactions(DefaultCategory category);
+    Range getRange();
 
     /**
-     * Return all the Categories
-     * @return all the Categories
+     * Set the new DateRange
+     * @param dateRange the new DateRange
      */
-    Set<DefaultCategory> getCategories();
+    void setDateRange(DateRange dateRange);
+
+    /**
+     * Return the DateRange
+     * @return the DateRange
+     */
+    DateRange getDateRange();
+
+    /**
+     * Return the transaction of the current DateRange
+     * @return the transaction of the current DateRange
+     */
+    List<Transaction> getTransactions();
 
     /**
      * Add a new Transaction
      * @param transaction the new Transaction
      * @throws NullPointerException if transaction is {@code null}
      */
-    void addTransaction(Transaction<Money, DefaultCategory> transaction);
+    void addTransaction(Transaction transaction);
 
     /**
      * Remove a Transaction
      * @param transaction the Transaction to remove
      * @throws NullPointerException if transaction is {@code null}
      */
-    void removeTransaction(Transaction<Money, DefaultCategory> transaction);
+    void removeTransaction(Transaction transaction);
 }

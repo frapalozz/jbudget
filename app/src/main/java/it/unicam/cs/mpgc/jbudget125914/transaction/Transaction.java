@@ -21,10 +21,10 @@
 package it.unicam.cs.mpgc.jbudget125914.transaction;
 
 
-import it.unicam.cs.mpgc.jbudget125914.categories.Category;
-import it.unicam.cs.mpgc.jbudget125914.currency.UnitMeasure;
+import it.unicam.cs.mpgc.jbudget125914.categories.DefaultCategory;
+import it.unicam.cs.mpgc.jbudget125914.currency.Money;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 /**
@@ -32,7 +32,7 @@ import java.util.Set;
  * of a Transaction
  * @author Francesco Palozzi
  */
-public interface Transaction<T extends UnitMeasure<?>, C extends Category<?>> {
+public interface Transaction {
 
     /**
      * Returns the name of this Transaction
@@ -44,17 +44,17 @@ public interface Transaction<T extends UnitMeasure<?>, C extends Category<?>> {
      * Returns the value of this Transaction
      * @return the value of this Transaction
      */
-    T value();
+    Money value();
 
     /**
      * Returns the date when this Transaction occurred
      * @return the date when this Transaction occurred
      */
-    Date date();
+    LocalDate date();
 
     /**
      * Returns the Category set of this Transaction
      * @return the Category set of this Transaction
      */
-    Set<C> categories();
+    Set<DefaultCategory> categories();
 }
