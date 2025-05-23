@@ -57,6 +57,8 @@ public interface TransactionsManager {
      */
     DateRange getDateRange();
 
+    double getBalance();
+
     /**
      * Return the transaction of the current DateRange
      * @return the transaction of the current DateRange

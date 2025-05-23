@@ -47,6 +47,12 @@ public interface Transaction {
     Money value();
 
     /**
+     * Return true if is an Expense, otherwise false
+     * @return true if is an Expense, otherwise false
+     */
+    boolean isExpense();
+
+    /**
      * Returns the date when this Transaction occurred
      * @return the date when this Transaction occurred
      */

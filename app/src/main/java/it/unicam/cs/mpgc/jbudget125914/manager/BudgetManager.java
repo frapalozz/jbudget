@@ -1,12 +1,8 @@
 package it.unicam.cs.mpgc.jbudget125914.manager;
 
-import it.unicam.cs.mpgc.jbudget125914.categories.DefaultCategory;
 import it.unicam.cs.mpgc.jbudget125914.transaction.Transaction;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class BudgetManager implements TransactionsManager {
 
@@ -46,6 +42,11 @@ public class BudgetManager implements TransactionsManager {
     }
 
     @Override
+    public double getBalance() {
+        return this.balance;
+    }
+
+    @Override
     public List<Transaction> getTransactions() {
         return this.transactions.stream().filter(t -> t.date().isAfter(this.dateRange.startDate()) && t.date().isBefore(this.dateRange.endDate())).toList();
     }
@@ -54,6 +55,8 @@ public class BudgetManager implements TransactionsManager {
     public void addTransaction(Transaction transaction) {
         if(transaction == null)
             throw new NullPointerException("Transaction cannot be null");
+
+        balance += transaction.value().quantity();
         transactions.add(transaction);
     }
 

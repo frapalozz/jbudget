@@ -20,6 +20,11 @@ public record MoneyTransaction(String name, Money value, LocalDate date, Set<Def
     }
 
     @Override
+    public boolean isExpense() {
+        return this.value.isExpense();
+    }
+
+    @Override
     public String toString() {
 
         return "name: " + this.name() + "\n" +

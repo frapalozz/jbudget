@@ -21,9 +21,4 @@
 
 package it.unicam.cs.mpgc.jbudget125914.categories;
 
-public record DefaultCategory(String category) implements Category<String> {
-    public DefaultCategory {
-        if (category == null)
-            throw new NullPointerException("category is null");
-    }
-}
+public record DefaultCategory(String category) implements Category<String> {}
