@@ -66,6 +66,15 @@ public interface TransactionsManager {
     List<Transaction> getTransactions();
 
     /**
+     * Return the transaction filtered by category, type and dateRange
+     * @param category the category to select, if {@code null} no category filter
+     * @param isExpense the type to select, if {@code null} no type filter
+     * @param dateRange the dateRange to filter
+     * @return the transaction filtered by category, type and dateRange
+     */
+    List<Transaction> getTransactions(List<DefaultCategory> category, Boolean isExpense, DateRange dateRange);
+
+    /**
      * Add a new Transaction
      * @param transaction the new Transaction
      * @throws NullPointerException if transaction is {@code null}

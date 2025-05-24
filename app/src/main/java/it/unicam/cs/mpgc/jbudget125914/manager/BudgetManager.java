@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.jbudget125914.manager;
 
+import it.unicam.cs.mpgc.jbudget125914.categories.DefaultCategory;
 import it.unicam.cs.mpgc.jbudget125914.transaction.Transaction;
 
 import java.util.List;
@@ -49,6 +50,11 @@ public class BudgetManager implements TransactionsManager {
     @Override
     public List<Transaction> getTransactions() {
         return this.transactions.stream().filter(t -> t.date().isAfter(this.dateRange.startDate()) && t.date().isBefore(this.dateRange.endDate())).toList();
+    }
+
+    @Override
+    public List<Transaction> getTransactions(List<DefaultCategory> category, Boolean isExpense, DateRange dateRange) {
+        return List.of();
     }
 
     @Override

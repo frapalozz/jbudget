@@ -9,13 +9,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class AccountsManager implements Manager{
 
     private Map<String, BudgetManager> accounts;
     private Map<DefaultCategory, Integer> categoryMap;
-    private DateRange dateRange;
 
     @Override
     public double getBalance() {
@@ -33,6 +31,11 @@ public class AccountsManager implements Manager{
     }
 
     @Override
+    public BudgetManager getAccount(String account) {
+        return accounts.get(account);
+    }
+
+    @Override
     public void addAccount(BudgetManager account, String name) {
         this.accounts.put(name, account);
     }
@@ -40,16 +43,6 @@ public class AccountsManager implements Manager{
     @Override
     public void removeAccount(String name) {
         this.accounts.remove(name);
-    }
-
-    @Override
-    public void setDateRange(DateRange dateRange) {
-        this.dateRange = dateRange;
-    }
-
-    @Override
-    public DateRange getDateRange() {
-        return this.dateRange;
     }
 
     @Override
@@ -68,48 +61,27 @@ public class AccountsManager implements Manager{
     }
 
     @Override
+    public void editCategoryPriority(DefaultCategory category, int priority) {
+        this.categoryMap.put(category, priority);
+    }
+
+    @Override
     public void removeCategory(DefaultCategory category) {
         this.categoryMap.remove(category);
     }
 
     @Override
-    public List<Transaction> getTransaction() {
-        return getTransaction(null, null, null);
+    public List<Transaction> getTransactions() {
+        return filterTransactions(null, null, null, null);
     }
 
     @Override
-    public List<Transaction> getTransaction(String account) {
-        return getTransaction(null, account, null);
-    }
-
-    @Override
-    public List<Transaction> getTransaction(boolean isExpense) {
-        return getTransaction(null, null, isExpense);
-    }
-
-    @Override
-    public List<Transaction> getTransaction(String account, boolean isExpense) {
-        return getTransaction(null, account, isExpense);
-    }
-
-    @Override
-    public List<Transaction> getTransaction(DefaultCategory category) {
-        return getTransaction(List.of(category));
-    }
-
-    @Override
-    public List<Transaction> getTransaction(List<DefaultCategory> category) {
-        return getTransaction(category, null, null);
-    }
-
-    @Override
-    public List<Transaction> getTransaction(DefaultCategory category, boolean isExpense) {
-        return getTransaction(List.of(category), isExpense);
-    }
-
-    @Override
-    public List<Transaction> getTransaction(List<DefaultCategory> category, boolean isExpense) {
-        return getTransaction(category, null, isExpense);
+    public List<Transaction> getTransaction(
+            String account,
+            Boolean isExpense,
+            List<DefaultCategory> categories,
+            DateRange dateRange) {
+        return filterTransactions(account, isExpense, categories, dateRange);
     }
 
     @Override
@@ -123,37 +95,16 @@ public class AccountsManager implements Manager{
     }
 
 
-    private List<Transaction> getTransaction(List<DefaultCategory> categories, String account, Boolean isExpense) {
+    private List<Transaction> filterTransactions(String account, Boolean isExpense, List<DefaultCategory> categories, DateRange dateRange) {
 
-        return filterDateRange(
-                filterCategory(
-                        categories, filterExpense(isExpense, filterAccount(account))
-                )
-        );
+        List<BudgetManager> accountBudgetManagers = this.filterAccount(account);
+
+        return accountBudgetManagers.stream()
+                .flatMap(b -> b.getTransactions(categories, isExpense, dateRange).stream())
+                .collect(Collectors.toList());
     }
 
-    private Stream<Transaction> filterAccount(String account) {
-        if(account != null) {
-            return this.accounts.get(account).getTransactions().stream();
-        }
-        return accounts.values().stream().flatMap(t -> t.getTransactions().stream());
-    }
-
-    private Stream<Transaction> filterExpense(Boolean isExpense, Stream<Transaction> transactions) {
-        if(isExpense != null) {
-            return transactions.filter(t -> t.isExpense() == isExpense);
-        }
-        return transactions;
-    }
-
-    private Stream<Transaction> filterCategory(List<DefaultCategory> categories, Stream<Transaction> transactions) {
-        if(categories != null) {
-            return transactions = transactions.filter(t -> t.categories().containsAll(categories));
-        }
-        return transactions;
-    }
-
-    private List<Transaction> filterDateRange(Stream<Transaction> transactions) {
-        return List.copyOf(transactions.filter(t -> t.date().isAfter(dateRange.startDate()) && t.date().isBefore(dateRange.endDate())).collect(Collectors.toList()));
+    private List<BudgetManager> filterAccount(String account) {
+        return (account != null)? List.of(getAccount(account)) : getAccounts();
     }
 }
