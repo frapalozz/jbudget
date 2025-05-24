@@ -10,13 +10,10 @@ import java.util.Set;
 
 public interface Manager {
 
-    // Balance Interface
-    double getBalance();
-
-    double getBalance(String accountName);
-
-    // Account interface
+    // Account Interface
     List<BudgetManager> getAccounts();
+
+    List<String> getAccountNames();
 
     BudgetManager getAccount(String accountName);
 
@@ -25,7 +22,7 @@ public interface Manager {
     void removeAccount(String accountName);
 
 
-    // Category interface
+    // Category Interface
 
     /**
      * Return all the Categories created
@@ -75,7 +72,10 @@ public interface Manager {
      * @param categories filter Transaction based on categories, if {@code null} no categories filter
      * @return the list of the Transaction after the filtering
      */
-    List<Transaction> getTransaction(String account, Boolean isExpense, List<DefaultCategory> categories, DateRange dateRange);
+    List<Transaction> getTransaction(String account,
+                                     Boolean isExpense,
+                                     List<DefaultCategory> categories,
+                                     DateRange dateRange);
 
     /**
      * Add new Transaction to a specified account
@@ -92,4 +92,14 @@ public interface Manager {
     void removeTransaction(Transaction transaction, String account);
 
 
+    // Balance Interface
+    double getBalance();
+
+    double getBalance(String accountName);
+
+    double getBalance(List<String> accountNames);
+
+    List<Double> getBalanceMovement(List<String> accountNames, DateRange dateRange);
+
+    List<Double> getBalanceMovement(String accountName, DateRange dateRange);
 }

@@ -59,6 +59,8 @@ public interface TransactionsManager {
 
     double getBalance();
 
+    List<Double> getBalanceMovement(DateRange dateRange);
+
     /**
      * Return the transaction of the current DateRange
      * @return the transaction of the current DateRange
