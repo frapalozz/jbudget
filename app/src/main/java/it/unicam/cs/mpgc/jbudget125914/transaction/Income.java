@@ -21,7 +21,7 @@
 package it.unicam.cs.mpgc.jbudget125914.transaction;
 
 import it.unicam.cs.mpgc.jbudget125914.categories.DefaultCategory;
-import it.unicam.cs.mpgc.jbudget125914.currency.Money;
+import it.unicam.cs.mpgc.jbudget125914.currency.Euro;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -30,9 +30,9 @@ import java.util.Set;
  * Income transaction with the Money Currency
  * @author Francesco Palozzi
  */
-public class Income extends AbstractTransaction<Money> {
+public class Income extends AbstractTransaction<Euro> {
 
-    public Income(String description, Money amount, LocalDate date, Set<DefaultCategory> categories) {
+    public Income(String description, Euro amount, LocalDate date, Set<DefaultCategory> categories) {
         super(description, amount, date, categories);
     }
 

@@ -26,7 +26,7 @@ public abstract class AbstractAccountManager<C extends Currency<C>> implements A
             throw new IllegalArgumentException("balance is negative");
 
         this.transactions = transactions;
-        this.balance = new HashMap<LocalDate, C>();
+        this.balance = new HashMap<>();
         this.balance.put(LocalDate.now(), balance);
     }
 

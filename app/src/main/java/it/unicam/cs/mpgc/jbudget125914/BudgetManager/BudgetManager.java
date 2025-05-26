@@ -2,13 +2,11 @@ package it.unicam.cs.mpgc.jbudget125914.BudgetManager;
 
 import it.unicam.cs.mpgc.jbudget125914.categories.Category;
 import it.unicam.cs.mpgc.jbudget125914.currency.Currency;
-import it.unicam.cs.mpgc.jbudget125914.currency.Money;
 import it.unicam.cs.mpgc.jbudget125914.manager.AccountManager;
 import it.unicam.cs.mpgc.jbudget125914.manager.DateRange;
 import it.unicam.cs.mpgc.jbudget125914.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.transaction.TransactionType;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface BudgetManager<T extends Currency<T>> {
