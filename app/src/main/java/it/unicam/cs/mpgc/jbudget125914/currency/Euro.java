@@ -67,9 +67,9 @@ public record Euro(Double amount) implements Currency<Euro> {
     public boolean equals(Object obj) {
         if(obj == null) return false;
         if(obj == this) return true;
-        if(!(obj instanceof Euro that)) return false;
+        if(!(obj instanceof Euro(Double amount1))) return false;
 
-        return this.amount.doubleValue() == that.amount.doubleValue();
+        return this.amount.doubleValue() == amount1.doubleValue();
     }
 
     @Override
