@@ -2,7 +2,7 @@ package it.unicam.cs.mpgc.jbudget125914.currency;
 
 import org.jetbrains.annotations.NotNull;
 
-public record Money(Double amount) implements Currency<Double, Money> {
+public record Money(Double amount) implements Currency<Money> {
 
     public Money{
         if(amount == null)
@@ -25,13 +25,9 @@ public record Money(Double amount) implements Currency<Double, Money> {
     }
 
     @Override
-    public Money negate() {
-        return new Money(-this.amount);
-    }
+    public Money sum(Money that) {
 
-    @Override
-    public Money sum(Money currency) {
-        return new Money(this.amount + currency.amount());
+        return new Money(this.amount + that.amount);
     }
 
     @Override
@@ -44,7 +40,7 @@ public record Money(Double amount) implements Currency<Double, Money> {
     }
 
     @Override
-    public int compareTo(@NotNull Currency<Double, Money> o) {
-        return this.amount.compareTo(o.amount());
+    public int compareTo(@NotNull Currency<Money> o) {
+        return this.amount.compareTo(o.amount().doubleValue());
     }
 }
