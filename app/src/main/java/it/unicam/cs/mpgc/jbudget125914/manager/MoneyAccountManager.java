@@ -6,10 +6,11 @@ import it.unicam.cs.mpgc.jbudget125914.transaction.TransactionType;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
-public class MoneyAccountManager extends AbstractAccountManager<Double, Money> {
+public class MoneyAccountManager extends AbstractAccountManager<Money> {
 
-    public MoneyAccountManager(List<Transaction<Money>> transactions, Money balance) {
+    public MoneyAccountManager(Map<LocalDate, List<Transaction<Money>>> transactions, Money balance) {
         super(transactions, balance);
     }
 
