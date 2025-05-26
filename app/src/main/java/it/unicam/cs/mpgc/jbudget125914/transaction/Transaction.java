@@ -32,7 +32,7 @@ import java.util.Set;
  * of a Transaction
  * @author Francesco Palozzi
  */
-public interface Transaction<T extends Currency<? extends Number, T>> {
+public interface Transaction<T extends Currency<T>> {
 
     /**
      * Returns the description of this Transaction
