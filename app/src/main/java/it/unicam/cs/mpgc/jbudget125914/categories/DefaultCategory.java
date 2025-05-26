@@ -21,4 +21,21 @@
 
 package it.unicam.cs.mpgc.jbudget125914.categories;
 
-public record DefaultCategory(String category) implements Category<String> {}
+import it.unicam.cs.mpgc.jbudget125914.transaction.TransactionType;
+
+public record DefaultCategory(String category, TransactionType type) implements Category {
+
+    @Override
+    public boolean equals (Object o) {
+        if(o == null)
+            return false;
+        if(!(o instanceof DefaultCategory that))
+            return false;
+        if(this == o)
+            return true;
+
+        if(this.type() != that.type())
+            return false;
+        return this.category.equals(that.category);
+    }
+}

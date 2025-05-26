@@ -1,6 +1,10 @@
 package it.unicam.cs.mpgc.jbudget125914.categories;
 
-public interface Category<C> {
+import it.unicam.cs.mpgc.jbudget125914.transaction.TransactionType;
 
-    C category();
+public interface Category {
+
+    String category();
+
+    TransactionType type();
 }

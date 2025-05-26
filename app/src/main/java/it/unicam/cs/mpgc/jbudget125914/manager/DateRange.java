@@ -13,6 +13,11 @@ public record DateRange(LocalDate startDate, LocalDate endDate) {
         };
     }
 
+    public boolean containsDate(LocalDate date) {
+        return date.isAfter(this.startDate.minusDays(1)) &&
+                date.isBefore(this.endDate.plusDays(1));
+    }
+
     private static DateRange calcRange(LocalDate currentDate, Range range) {
         return new DateRange(
                 currentDate.minusDays(daysFromStart(range, currentDate)),

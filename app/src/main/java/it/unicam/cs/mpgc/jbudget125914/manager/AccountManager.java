@@ -22,71 +22,64 @@
 package it.unicam.cs.mpgc.jbudget125914.manager;
 
 import it.unicam.cs.mpgc.jbudget125914.categories.DefaultCategory;
-import it.unicam.cs.mpgc.jbudget125914.currency.Money;
+import it.unicam.cs.mpgc.jbudget125914.currency.Currency;
 import it.unicam.cs.mpgc.jbudget125914.transaction.Transaction;
+import it.unicam.cs.mpgc.jbudget125914.transaction.TransactionType;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 /**
  *
  */
-public interface TransactionsManager {
+public interface AccountManager<T extends Currency<? extends Number, T>> {
 
     /**
-     * Set the new range
-     * @param range the new range
+     * Return the current balance
+     * @return the current balance
      */
-    void setRange(Range range);
+    T getBalance();
 
     /**
-     * Return the range
-     * @return the range
+     * Return the balance at the specified date
+     * @param date the date where to get the balance
+     * @return the balance at the specified date
      */
-    Range getRange();
+    T getBalanceAtDate(LocalDate date);
 
     /**
-     * Set the new DateRange
-     * @param dateRange the new DateRange
+     * Return the balance history movement
+     * @param dateRange the date range to filter the balance movement
+     * @return the balance history movement
      */
-    void setDateRange(DateRange dateRange);
-
-    /**
-     * Return the DateRange
-     * @return the DateRange
-     */
-    DateRange getDateRange();
-
-    double getBalance();
-
-    List<Double> getBalanceMovement(DateRange dateRange);
+    List<T> getBalanceMovement(DateRange dateRange);
 
     /**
      * Return the transaction of the current DateRange
      * @return the transaction of the current DateRange
      */
-    List<Transaction> getTransactions();
+    List<Transaction<T>> getTransactions();
 
     /**
      * Return the transaction filtered by category, type and dateRange
      * @param category the category to select, if {@code null} no category filter
-     * @param isExpense the type to select, if {@code null} no type filter
-     * @param dateRange the dateRange to filter
+     * @param type the type to select, if {@code null} no type filter
+     * @param dateRange the date range to filter, if {@code null} no date range filter
      * @return the transaction filtered by category, type and dateRange
      */
-    List<Transaction> getTransactions(List<DefaultCategory> category, Boolean isExpense, DateRange dateRange);
+    List<Transaction<T>> getTransactions(List<DefaultCategory> category, TransactionType type, DateRange dateRange);
 
     /**
      * Add a new Transaction
      * @param transaction the new Transaction
      * @throws NullPointerException if transaction is {@code null}
      */
-    void addTransaction(Transaction transaction);
+    void addTransaction(Transaction<T> transaction);
 
     /**
      * Remove a Transaction
      * @param transaction the Transaction to remove
      * @throws NullPointerException if transaction is {@code null}
      */
-    void removeTransaction(Transaction transaction);
+    void removeTransaction(Transaction<T> transaction);
 }

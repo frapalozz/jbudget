@@ -22,7 +22,7 @@ package it.unicam.cs.mpgc.jbudget125914.transaction;
 
 
 import it.unicam.cs.mpgc.jbudget125914.categories.DefaultCategory;
-import it.unicam.cs.mpgc.jbudget125914.currency.Money;
+import it.unicam.cs.mpgc.jbudget125914.currency.Currency;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -32,25 +32,25 @@ import java.util.Set;
  * of a Transaction
  * @author Francesco Palozzi
  */
-public interface Transaction {
+public interface Transaction<T extends Currency<? extends Number, T>> {
 
     /**
-     * Returns the name of this Transaction
-     * @return the name of this Transaction
+     * Returns the description of this Transaction
+     * @return the description of this Transaction
      */
-    String name();
+    String description();
 
     /**
-     * Returns the value of this Transaction
-     * @return the value of this Transaction
+     * Returns the amount of this Transaction
+     * @return the amount of this Transaction
      */
-    Money value();
+    T amount();
 
     /**
-     * Return true if is an Expense, otherwise false
-     * @return true if is an Expense, otherwise false
+     * Return the TransactionType of this Transaction
+     * @return the TransactionType of this Transaction
      */
-    boolean isExpense();
+    TransactionType getType();
 
     /**
      * Returns the date when this Transaction occurred
