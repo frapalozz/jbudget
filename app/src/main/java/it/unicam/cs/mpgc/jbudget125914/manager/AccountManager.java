@@ -28,11 +28,12 @@ import it.unicam.cs.mpgc.jbudget125914.transaction.TransactionType;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  */
-public interface AccountManager<T extends Currency<? extends Number, T>> {
+public interface AccountManager<T extends Currency<T>> {
 
     /**
      * Return the current balance
@@ -52,7 +53,7 @@ public interface AccountManager<T extends Currency<? extends Number, T>> {
      * @param dateRange the date range to filter the balance movement
      * @return the balance history movement
      */
-    List<T> getBalanceMovement(DateRange dateRange);
+    Map<LocalDate, T> getBalanceMovement(DateRange dateRange);
 
     /**
      * Return the transaction of the current DateRange
