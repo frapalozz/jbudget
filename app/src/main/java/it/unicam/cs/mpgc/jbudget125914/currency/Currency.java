@@ -21,8 +21,8 @@
 package it.unicam.cs.mpgc.jbudget125914.currency;
 
 /**
- *
- * @param <C>
+ * A currency with his amount and currency type
+ * @param <C> the type of the amount of this currency
  */
 public interface Currency<C extends Currency<C>> extends Comparable<Currency<C>> {
 
@@ -31,6 +31,12 @@ public interface Currency<C extends Currency<C>> extends Comparable<Currency<C>>
      * @return the amount of this currency
      */
     Number amount();
+
+    /**
+     * Return this currency
+     * @return this currency
+     */
+    String currency();
 
     /**
      * Return true if this currency amount is negative, otherwise false
