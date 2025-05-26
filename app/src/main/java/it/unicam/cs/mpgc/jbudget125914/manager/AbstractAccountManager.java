@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public abstract class AbstractAccountManager<C extends Currency<C>> implements AccountManager<C> {
@@ -18,25 +17,20 @@ public abstract class AbstractAccountManager<C extends Currency<C>> implements A
     private final Map<LocalDate, List<Transaction<C>>> transactions;
     private final Map<LocalDate, C> balance;
 
-    public AbstractAccountManager(Map<LocalDate, List<Transaction<C>>> transactions, C balance) {
+    public AbstractAccountManager(Map<LocalDate, List<Transaction<C>>> transactions, Map<LocalDate, C> balance) {
         if(transactions == null)
             throw new NullPointerException("transactions is null");
 
-        if(balance.isNegative())
-            throw new IllegalArgumentException("balance is negative");
+        if(balance == null)
+            throw new NullPointerException("balance is null");
 
         this.transactions = transactions;
-        this.balance = new HashMap<>();
-        this.balance.put(LocalDate.now(), balance);
-    }
-
-    public AbstractAccountManager(C balance) {
-        this(new HashMap<>(), balance);
+        this.balance = balance;
     }
 
     @Override
     public C getBalance() {
-        return this.balance.get(LocalDate.now());
+        return this.balance.get(balance.keySet().stream().max(LocalDate::compareTo).orElse(LocalDate.now()));
     }
 
     @Override
@@ -50,31 +44,45 @@ public abstract class AbstractAccountManager<C extends Currency<C>> implements A
     }
 
     @Override
-    public List<Transaction<C>> getTransactions() {
-        return this.transactions.values().stream().flatMap(List::stream).collect(Collectors.toList());
+    public Map<LocalDate, List<Transaction<C>>> getTransactions() {
+        Map<LocalDate, List<Transaction<C>>> transactions = new HashMap<>();
+        this.transactions.forEach((k, v) -> transactions.put(k, List.copyOf(v)));
+        return transactions;
     }
 
     @Override
-    public List<Transaction<C>> getTransactions(List<DefaultCategory> categories, TransactionType type, DateRange dateRange) {
-            return transactions
-                    .keySet()
-                    .stream()
+    public Map<LocalDate, List<Transaction<C>>> getTransactions(List<DefaultCategory> categories, TransactionType type, DateRange dateRange) {
+        Map<LocalDate, List<Transaction<C>>> transactions = new HashMap<>();
+
+        buildTransactionMap(
+                transactions,
+                this.transactions.keySet()
+                        .stream()
                     .filter(dateRange::containsDate)
                     .flatMap(d -> transactions.get(d).stream())
-                    .filter(t -> transactionTypeFilter(t, type) && categoryFilter(t, categories)).toList();
+                    .filter(t -> transactionTypeFilter(t, type) && categoryFilter(t, categories)).toList());
+
+        return transactions;
     }
 
-    @Override
-    public void addTransaction(Transaction<C> transaction) {
-        if(this.transactions.containsKey(transaction.date())) {
-            this.transactions.get(transaction.date()).add(transaction);
+    private void buildTransactionMap(Map<LocalDate, List<Transaction<C>>> map, List<Transaction<C>> transactions) {
+        transactions.forEach(t -> addTransaction(map, t));
+    }
+
+    private void addTransaction(Map<LocalDate, List<Transaction<C>>> map, Transaction<C> transaction) {
+        if(map.containsKey(transaction.date())) {
+            map.get(transaction.date()).add(transaction);
         }
         else {
             List<Transaction<C>> newTransactions = new ArrayList<>();
             newTransactions.add(transaction);
-            this.transactions.put(transaction.date(), newTransactions);
+            map.put(transaction.date(), newTransactions);
         }
+    }
 
+    @Override
+    public void addTransaction(Transaction<C> transaction) {
+        addTransaction(this.transactions, transaction);
         adjustAddBalance(transaction.date(), transaction);
     }
 
@@ -83,6 +91,10 @@ public abstract class AbstractAccountManager<C extends Currency<C>> implements A
         this.transactions.get(transaction.date()).remove(transaction);
         adjustRemoveBalance(transaction.date(), transaction);
     }
+
+
+
+
 
 
     // TODO: Refactoring, DRY
@@ -109,6 +121,7 @@ public abstract class AbstractAccountManager<C extends Currency<C>> implements A
             return balance.sum(transaction.amount());
         return balance.subtract(transaction.amount());
     }
+
 
 
 

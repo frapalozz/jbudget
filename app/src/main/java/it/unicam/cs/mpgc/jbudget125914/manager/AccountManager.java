@@ -31,7 +31,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *
+ * Interface for an AccountManager
+ * @param <T> the Currency used
  */
 public interface AccountManager<T extends Currency<T>> {
 
@@ -59,7 +60,7 @@ public interface AccountManager<T extends Currency<T>> {
      * Return the transaction of the current DateRange
      * @return the transaction of the current DateRange
      */
-    List<Transaction<T>> getTransactions();
+    Map<LocalDate, List<Transaction<T>>> getTransactions();
 
     /**
      * Return the transaction filtered by category, type and dateRange
@@ -68,7 +69,7 @@ public interface AccountManager<T extends Currency<T>> {
      * @param dateRange the date range to filter, if {@code null} no date range filter
      * @return the transaction filtered by category, type and dateRange
      */
-    List<Transaction<T>> getTransactions(List<DefaultCategory> category, TransactionType type, DateRange dateRange);
+    Map<LocalDate, List<Transaction<T>>> getTransactions(List<DefaultCategory> category, TransactionType type, DateRange dateRange);
 
     /**
      * Add a new Transaction
