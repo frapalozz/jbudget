@@ -8,6 +8,8 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     application
+
+    id("org.openjfx.javafxplugin") version "0.1.0"
 }
 
 repositories {
@@ -15,14 +17,33 @@ repositories {
     mavenCentral()
 }
 
+javafx {
+    version = "21.0.7"
+    modules("javafx.controls", "javafx.fxml")
+}
+
 dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation(libs.junit.jupiter)
-
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+
+    implementation("org.hibernate.orm:hibernate-core:7.0.0.Final")
+    implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
+
+    implementation ("org.openjfx:javafx-controls:21.0.7")
+    implementation ("org.openjfx:javafx-fxml:21.0.7")
+    implementation ("org.openjfx:javafx-web:21.0.7")
+
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    implementation("org.projectlombok:lombok:1.18.36")
+    annotationProcessor("org.projectlombok:lombok:1.18.36")
+
+    // https://mvnrepository.com/artifact/org.postgresql/postgresql
+    implementation("org.postgresql:postgresql:42.7.5")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.

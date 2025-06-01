@@ -18,25 +18,12 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.transaction;
-
-import it.unicam.cs.mpgc.jbudget125914.categories.DefaultCategory;
-import it.unicam.cs.mpgc.jbudget125914.currency.Euro;
-
-import java.time.LocalDate;
-import java.util.Set;
+package it.unicam.cs.mpgc.jbudget125914.model.transaction;
 
 /**
- * Expense transaction with the Money currency
+ * Transaction enum specifying the transaction type for the Money Currency
  * @author Francesco Palozzi
  */
-public class Expense extends AbstractTransaction<Euro> {
-    public Expense(String description, Euro amount, LocalDate date, Set<DefaultCategory> categories) {
-        super(description, amount, date, categories);
-    }
-
-    @Override
-    public TransactionType getType() {
-        return TransactionType.EXPENSE;
-    }
+public enum TransactionType {
+    EXPENSE, INCOME
 }

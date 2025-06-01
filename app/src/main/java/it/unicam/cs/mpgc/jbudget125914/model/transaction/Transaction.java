@@ -18,85 +18,84 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.transaction;
+package it.unicam.cs.mpgc.jbudget125914.model.transaction;
 
-import it.unicam.cs.mpgc.jbudget125914.categories.DefaultCategory;
-import it.unicam.cs.mpgc.jbudget125914.currency.Currency;
+import it.unicam.cs.mpgc.jbudget125914.model.account.Account;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Set;
 
 
 /**
  * This abstract class provides a default implementation of a transaction that abstracts a general transaction.
- * @param <C> currency used for this transaction
  */
-public abstract class AbstractTransaction<C extends Currency<C>> implements Transaction<C> {
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+public class Transaction implements Serializable {
 
-    private final String description;
-    private final C amount;
-    private final LocalDate date;
-    private final Set<DefaultCategory> categories;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long transaction_id;
 
-    public AbstractTransaction(String description, C amount, LocalDate date, Set<DefaultCategory> categories) {
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal amount;
+
+    @Column(columnDefinition = "DATE")
+    private LocalDate date;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+
+    public Transaction(String description, BigDecimal amount, LocalDate date, TransactionType type) {
         if(date == null)
             throw new NullPointerException("date for the transaction cannot be null");
-        if(amount.isZero())
+        if(amount == null || amount.equals(BigDecimal.ZERO))
             throw new IllegalArgumentException("value for the transaction cannot be zero");
 
         this.description = description;
         this.amount = amount;
         this.date = date;
-        this.categories = categories;
-    }
-
-    @Override
-    public String description() {
-        return this.description;
-    }
-
-    @Override
-    public C amount() {
-        return this.amount;
-    }
-
-    @Override
-    public LocalDate date() {
-        return this.date;
-    }
-
-    @Override
-    public Set<DefaultCategory> categories() {
-        return this.categories;
+        this.type = type;
     }
 
     @Override
     public String toString() {
 
         return "description: " + this.description + "\n" +
-                "type: " + this.getType() + "\n" +
-                "value: " + this.amount.amount() + "\n" +
-                "date: " + this.date().toString() + "\n" +
-                "categories: " + this.categories().toString() + "\n";
+                "type: " + this.type + "\n" +
+                "value: " + this.amount + "\n" +
+                "date: " + this.date.toString() + "\n";
     }
 
     @Override
     public boolean equals(Object o) {
         if(o == null)
             return false;
-        if(!(o instanceof AbstractTransaction that))
+        if(!(o instanceof Transaction that))
             return false;
         if(this == o)
             return true;
 
-        if(!this.description.equals(that.description()))
+        if(!this.description.equals(that.getDescription()))
             return false;
-        if(!this.amount.equals(that.amount()))
+        if(!this.amount.equals(that.getAmount()))
             return false;
-        if(!this.date.equals(that.date()))
+        if(!this.date.equals(that.getDate()))
             return false;
-        if(this.getType() != that.getType())
-            return false;
-        return (that.categories == null)? this.categories() == null : this.categories.containsAll(that.categories());
+        return this.getType() == that.getType();
     }
 }
