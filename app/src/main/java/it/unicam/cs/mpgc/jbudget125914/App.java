@@ -22,5 +22,7 @@ public class App {
         tags.forEach(System.out::println);
         accounts.forEach(System.out::println);
         transactions.forEach(System.out::println);
+
+
     }
 }

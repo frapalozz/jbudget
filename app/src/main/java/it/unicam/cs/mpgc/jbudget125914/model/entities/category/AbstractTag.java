@@ -25,6 +25,6 @@ public abstract class AbstractTag<T extends Transaction<? extends AbstractDetail
 
     @Override
     public String toString() {
-        return "Tag [name: " + name + "]";
+        return " [name: " + name + "]";
     }
 }

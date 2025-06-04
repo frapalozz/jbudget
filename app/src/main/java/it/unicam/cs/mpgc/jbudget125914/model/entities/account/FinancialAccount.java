@@ -34,4 +34,9 @@ public final class FinancialAccount extends AbstractAccount<FinancialDetail, Fin
     public List<Transaction<FinancialDetail, FinancialTransaction>> getTransactions() {
         return new ArrayList<>(transactions);
     }
+
+    @Override
+    public String toString() {
+        return "Financial Account" + super.toString();
+    }
 }

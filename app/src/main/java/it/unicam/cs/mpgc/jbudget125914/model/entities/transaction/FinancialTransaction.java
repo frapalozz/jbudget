@@ -80,6 +80,6 @@ public final class FinancialTransaction extends AbstractTransaction<FinancialDet
 
     @Override
     public String toString() {
-        return "FinancialTransaction " + super.toString() + account +  " | Tags: " + tags + "]";
+        return "Financial Transaction " + super.toString() + account +  " | Tags: " + tags + "]";
     }
 }

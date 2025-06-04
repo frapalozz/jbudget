@@ -46,4 +46,9 @@ public final class FinancialTag extends AbstractTag<FinancialTransaction> {
     public Set<Tag<FinancialTransaction>> getChildrens() {
         return new HashSet<>(childrens);
     }
+
+    @Override
+    public String toString() {
+        return "Financial Tag" + super.toString();
+    }
 }

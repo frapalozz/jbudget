@@ -40,9 +40,7 @@ public abstract class AbstractAccount<T extends AbstractDetail, D extends Transa
 
     @Override
     public String toString() {
-        return "Account [ID: " + account_id +
-                " | name: " + name +
-                " | description: " + description +
-                " | balance: " + initial_details + "]";
+        return " [ID: " + account_id +
+                " | name: " + name + "]";
     }
 }

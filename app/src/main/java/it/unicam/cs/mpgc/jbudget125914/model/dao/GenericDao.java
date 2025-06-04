@@ -19,37 +19,15 @@ public class GenericDao<T> {
     }
 
     public void create(T entity) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JBudget");
-        EntityManager em = emf.createEntityManager();
-
-        em.getTransaction().begin();
-        em.persist(entity);
-        em.getTransaction().commit();
-
-        em.close();
-        emf.close();
+        TransactionService.executeInTransaction(em -> em.persist(entity));
     }
 
     public void update(T entity) {
-        TransactionService.executeInTransaction(em -> {
-
-            em.getTransaction().begin();
-            em.merge(entity);
-            em.getTransaction().commit();
-
-            em.close();
-        });
+        TransactionService.executeInTransaction(em -> em.merge(entity));
     }
 
     public void delete(T entity) {
-        TransactionService.executeInTransaction(em -> {
-
-            em.getTransaction().begin();
-            em.remove(em.merge(entity));
-            em.getTransaction().commit();
-
-            em.close();
-        });
+        TransactionService.executeInTransaction(em -> em.remove(em.merge(entity)));
     }
 
     public List<T> findAll() {
