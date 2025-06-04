@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
+    <persistence-unit name="JBudget">
+        <class>it.unicam.cs.mpgc.jbudget125914.model.entities.transaction.FinancialTransaction</class>
+
+        <class>it.unicam.cs.mpgc.jbudget125914.model.entities.account.FinancialAccount</class>
+
+        <class>it.unicam.cs.mpgc.jbudget125914.model.entities.category.FinancialTag</class>
+
+        <properties>
+            <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://ep-aged-salad-a2jxjcd6-pooler.eu-central-1.aws.neon.tech/JBudget?sslmode=require"/>
+            <property name="jakarta.persistence.jdbc.user" value="JBudget_owner"/>
+            <property name="jakarta.persistence.jdbc.password" value="npg_IpoCKVcgd41A"/>
+
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
