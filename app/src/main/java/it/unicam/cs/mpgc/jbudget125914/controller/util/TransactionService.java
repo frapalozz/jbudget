@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.jbudget125914.model.dao.util;
+package it.unicam.cs.mpgc.jbudget125914.controller.util;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -9,11 +9,7 @@ import java.util.function.Consumer;
 
 public record TransactionService() {
 
-    private static final EntityManagerFactory emf;
-
-    static {
-        emf = Persistence.createEntityManagerFactory("JBudget");
-    }
+    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("JBudget");;
 
     public static EntityManagerFactory getEntityManagerFactory() {
         return emf;
@@ -23,6 +19,7 @@ public record TransactionService() {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
+        //noinspection TryFinallyCanBeTryWithResources
         try {
             tx.begin();
             operation.accept(em);

@@ -1,9 +1,9 @@
 package it.unicam.cs.mpgc.jbudget125914;
 
-import it.unicam.cs.mpgc.jbudget125914.model.dao.GenericDao;
-import it.unicam.cs.mpgc.jbudget125914.model.entities.account.FinancialAccount;
-import it.unicam.cs.mpgc.jbudget125914.model.entities.category.FinancialTag;
-import it.unicam.cs.mpgc.jbudget125914.model.entities.transaction.FinancialTransaction;
+import it.unicam.cs.mpgc.jbudget125914.controller.GenericDao;
+import it.unicam.cs.mpgc.jbudget125914.model.account.FinancialAccount;
+import it.unicam.cs.mpgc.jbudget125914.model.tag.FinancialTag;
+import it.unicam.cs.mpgc.jbudget125914.model.transaction.FinancialTransaction;
 
 import java.util.List;
 

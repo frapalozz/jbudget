@@ -1,19 +1,19 @@
-package it.unicam.cs.mpgc.jbudget125914.model.entities.transaction;
+package it.unicam.cs.mpgc.jbudget125914.model.transaction;
 
-import it.unicam.cs.mpgc.jbudget125914.model.entities.account.Account;
-import it.unicam.cs.mpgc.jbudget125914.model.entities.category.Tag;
-import it.unicam.cs.mpgc.jbudget125914.model.entities.transaction.details.AbstractDetail;
+import it.unicam.cs.mpgc.jbudget125914.model.account.Account;
+import it.unicam.cs.mpgc.jbudget125914.model.tag.Tag;
+import it.unicam.cs.mpgc.jbudget125914.model.transaction.details.AbstractDetail;
 
 import java.time.LocalDate;
 import java.util.Set;
 
-public interface Transaction<T extends AbstractDetail, D extends Transaction<T, D>> {
+public interface Transaction<T extends AbstractDetail, D extends Transaction<T, D, V>, V extends Tag<D, V>> {
 
     /**
      * Return the transaction_id of this transaction
      * @return the transaction_id
      */
-    Long getTransaction_id();
+    Long getTransactionId();
 
     /**
      * Return the details of this transaction
@@ -37,11 +37,11 @@ public interface Transaction<T extends AbstractDetail, D extends Transaction<T, 
      * Return the account associated to this transaction
      * @return the account associated to this transaction
      */
-    Account<T, D> getAccount();
+    Account<T, D, V> getAccount();
 
     /**
      * Return the tags associated to this transaction
      * @return the tags associated to this transaction
      */
-    Set<Tag<D>> getTags();
+    Set<V> getTags();
 }

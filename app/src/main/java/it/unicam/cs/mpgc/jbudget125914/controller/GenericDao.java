@@ -1,6 +1,6 @@
-package it.unicam.cs.mpgc.jbudget125914.model.dao;
+package it.unicam.cs.mpgc.jbudget125914.controller;
 
-import it.unicam.cs.mpgc.jbudget125914.model.dao.util.TransactionService;
+import it.unicam.cs.mpgc.jbudget125914.controller.util.TransactionService;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -23,7 +23,10 @@ public class GenericDao<T> {
     }
 
     public void update(T entity) {
-        TransactionService.executeInTransaction(em -> em.merge(entity));
+        TransactionService.executeInTransaction(em -> {
+            em.remove(em.find(entityClass, entity));
+            em.persist(entity);
+        });
     }
 
     public void delete(T entity) {
