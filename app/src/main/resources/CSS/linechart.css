@@ -1,0 +1,119 @@
+/* linechart.css */
+
+/* Base chart styling */
+.chart {
+    -fx-background-color: transparent;
+    -fx-padding: 20px;
+    -fx-font-family: 'Segoe UI', sans-serif;
+}
+
+/* Chart title */
+.chart-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #cdd6f4;
+    -fx-padding: 0 0 15px 0;
+}
+
+/* Chart plot background */
+.chart-plot-background {
+    -fx-background-color: #11111b;
+    -fx-border-color: #313244;
+    -fx-border-width: 1px;
+}
+
+/* Axes styling */
+.axis {
+    -fx-tick-label-fill: #cdd6f4;
+    -fx-tick-length: 5px;
+    -fx-minor-tick-visible: false;
+    -fx-border-color: transparent;
+}
+
+.axis-label {
+    -fx-text-fill: #a6adc8;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+}
+
+.axis-tick-mark {
+    -fx-stroke: #6c7086;
+    -fx-stroke-width: 1px;
+}
+
+.axis-minor-tick-mark {
+    -fx-stroke: #45475a;
+}
+
+/* Grid lines */
+.chart-horizontal-grid-lines {
+    -fx-stroke: #313244;
+    -fx-stroke-width: 1px;
+    -fx-stroke-dash-array: 5 5;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke: #313244;
+    -fx-stroke-width: 1px;
+    -fx-stroke-dash-array: 5 5;
+}
+
+/* Series styling */
+.chart-series-line {
+    -fx-stroke-width: 2.5px;
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #89b4fa; /* Blue */
+}
+
+.default-color1.chart-series-line {
+    -fx-stroke: #f38ba8; /* Pink */
+}
+
+/* Data point symbols */
+.chart-line-symbol {
+    -fx-background-color: #1e1e2e, white;
+    -fx-background-insets: 0, 2;
+    -fx-background-radius: 8px;
+    -fx-padding: 5px;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #89b4fa, #1e1e2e;
+}
+
+.default-color1.chart-line-symbol {
+    -fx-background-color: #f38ba8, #1e1e2e;
+}
+
+/* Legend styling */
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-padding: 10px;
+    -fx-border-color: #313244;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+}
+
+.chart-legend-item {
+    -fx-text-fill: #cdd6f4;
+    -fx-font-size: 13px;
+}
+
+.chart-legend-item-symbol {
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-scale-x: 1.2;
+    -fx-scale-y: 1.2;
+}
+
+/* Hover effects */
+.chart-line-symbol:hover {
+    -fx-background-insets: 0, 3;
+    -fx-scale-x: 1.5;
+    -fx-scale-y: 1.5;
+    -fx-effect: dropshadow(three-pass-box, rgba(255,255,255,0.8), 0, 0, 0, 3);
+}

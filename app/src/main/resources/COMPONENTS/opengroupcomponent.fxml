@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="CENTER" layoutX="216.0" layoutY="100.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label text="OPEN GROUP" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <TextField maxWidth="-Infinity" prefWidth="150.0" promptText="Group Name..." style="-fx-background-color: black; -fx-border-color: white; -fx-text-fill: white;" />
+            <Button mnemonicParsing="false" style="-fx-background-color: black; -fx-border-color: white;" text="OPEN" textFill="WHITE">
+               <padding>
+                  <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+               </padding>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

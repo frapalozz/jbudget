@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
     <persistence-unit name="JBudget">
-        <class>it.unicam.cs.mpgc.jbudget125914.model.transaction.FinancialTransaction</class>
-
-        <class>it.unicam.cs.mpgc.jbudget125914.model.account.FinancialAccount</class>
-
-        <class>it.unicam.cs.mpgc.jbudget125914.model.tag.FinancialTag</class>
+        <class>it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction</class>
+        <class>it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount</class>
+        <class>it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag</class>
+        <class>it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup</class>
+        <class>it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>

@@ -55,7 +55,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "it.unicam.cs.mpgc.jbudget125914.App"
+    mainClass = "it.unicam.cs.mpgc.jbudget125914.MainGUI"
 }
 
 tasks.named<Test>("test") {

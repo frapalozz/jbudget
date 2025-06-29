@@ -1,28 +1,19 @@
 package it.unicam.cs.mpgc.jbudget125914;
 
-import it.unicam.cs.mpgc.jbudget125914.controller.GenericDao;
-import it.unicam.cs.mpgc.jbudget125914.model.account.FinancialAccount;
-import it.unicam.cs.mpgc.jbudget125914.model.tag.FinancialTag;
-import it.unicam.cs.mpgc.jbudget125914.model.transaction.FinancialTransaction;
+import it.unicam.cs.mpgc.jbudget125914.models.services.TransactionService;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class App {
 
     public static void main(String[] args) {
+        
+        TransactionService<FinancialTransaction> transactionController =
+                new TransactionService<>(FinancialTransaction.class);
 
-        GenericDao<FinancialTag> tagDao = new GenericDao<>(FinancialTag.class);
-        GenericDao<FinancialAccount> accountDao = new GenericDao<>(FinancialAccount.class);
-        GenericDao<FinancialTransaction> transactionDao = new GenericDao<>(FinancialTransaction.class);
-
-        List<FinancialTag> tags = tagDao.findAll();
-        List<FinancialAccount> accounts = accountDao.findAll();
-        List<FinancialTransaction> transactions = transactionDao.findAll();
-
-        tags.forEach(System.out::println);
-        accounts.forEach(System.out::println);
+        List<FinancialTransaction> transactions = transactionController.findAll();
         transactions.forEach(System.out::println);
-
-
     }
 }
