@@ -33,7 +33,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "tag")
-public class FinancialTag implements Tag<Long, String, FinancialCategory>, Serializable {
+public class FinancialTag implements Tag<FinancialCategory>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

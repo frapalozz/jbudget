@@ -43,7 +43,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "transaction")
-public class FinancialTransaction implements Transaction<Long, BigDecimal, LocalDate, String, FinancialTag, FinancialAccount>, Serializable {
+public class FinancialTransaction implements Transaction<BigDecimal, LocalDate, FinancialTag, FinancialAccount>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

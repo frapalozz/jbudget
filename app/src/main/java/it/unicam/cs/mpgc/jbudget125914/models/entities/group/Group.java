@@ -13,23 +13,20 @@ import java.util.Set;
 
 /**
  * This interface represent a Group
- * @param <I> ID type
- * @param <N> name type
  * @param <C> currency type
  * @param <T> tag type
  */
 public interface Group<
-        I extends Serializable,
-        T extends Tag<I, N, CA>,
-        CA extends Category<I, N, T>,
-        A extends Account<I, N, ? extends Number>,
-        N, C> extends Taggable<T>, Categorizable<CA>, Nameable<N> {
+        T extends Tag<CA>,
+        CA extends Category<T>,
+        A extends Account<? extends Number>,
+        C> extends Taggable<T>, Categorizable<CA>, Nameable<String> {
 
     /**
      * Return the Group ID
      * @return the Group ID
      */
-    I getGroupId();
+    Long getGroupId();
 
     /**
      * Return the Group currency

@@ -24,16 +24,8 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.Nameable;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Taggable;
 
-import java.io.Serializable;
 
-public interface Category<
-        I extends Serializable,
-        N,
-        T extends Tag<
-                ? extends Serializable,
-                ?,
-                ? extends Category<I,N,T>>
-        > extends Taggable<T>, Nameable<N> {
+public interface Category<T extends Tag<? extends Category<T>>> extends Taggable<T>, Nameable<String> {
 
-    I getCategoryId();
+    Long getCategoryId();
 }

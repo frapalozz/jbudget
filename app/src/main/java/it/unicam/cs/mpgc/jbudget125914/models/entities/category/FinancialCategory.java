@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "category")
-public class FinancialCategory implements Category<Long, String, FinancialTag>, Serializable {
+public class FinancialCategory implements Category<FinancialTag>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

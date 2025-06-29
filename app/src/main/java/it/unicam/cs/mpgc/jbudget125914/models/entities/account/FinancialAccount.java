@@ -37,7 +37,7 @@ import java.math.BigDecimal;
 @Getter
 @NoArgsConstructor
 @Table(name = "account")
-public class FinancialAccount implements Account<Long, String, BigDecimal>, Serializable {
+public class FinancialAccount implements Account<BigDecimal>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

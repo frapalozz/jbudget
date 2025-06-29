@@ -16,7 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Table(name = "group_table")
-public class FinancialGroup implements Group<Long, FinancialTag, FinancialCategory, FinancialAccount, String, String>, Serializable {
+public class FinancialGroup implements Group<FinancialTag, FinancialCategory, FinancialAccount, String>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

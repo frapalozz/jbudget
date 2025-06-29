@@ -32,20 +32,15 @@ import java.util.Set;
 
 /**
  * This interface represent an Account
- * @param <I> ID type
- * @param <N> name type
  * @param <A> amount type
  */
-public interface Account<
-        I extends Serializable,
-        N,
-        A extends Number> extends Nameable<N> {
+public interface Account<A extends Number> extends Nameable<String> {
 
     /**
      * Return the Account ID
      * @return the Account ID
      */
-    I getAccountId();
+    Long getAccountId();
 
     /**
      * Return the Account initial Amount

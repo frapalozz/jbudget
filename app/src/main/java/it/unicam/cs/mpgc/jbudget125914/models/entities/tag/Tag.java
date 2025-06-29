@@ -6,12 +6,9 @@ import lombok.NonNull;
 
 import java.io.Serializable;
 
-public interface Tag<
-        I extends Serializable,
-        N,
-        C extends Category<I,N,? extends Tag<I,N,C>>> extends Nameable<N> {
+public interface Tag<C extends Category<? extends Tag<C>>> extends Nameable<String> {
 
-    I getTagId();
+    Long getTagId();
 
     C getCategory();
 

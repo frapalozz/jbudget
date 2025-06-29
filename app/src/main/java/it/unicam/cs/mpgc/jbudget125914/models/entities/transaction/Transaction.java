@@ -35,32 +35,27 @@ import java.util.Set;
 
 /**
  * This interface represent a Transaction
- * @param <I> ID type
- * @param <A> amount type
  * @param <L> date type
- * @param <D> description type
  * @param <T> tag type
  * @param <AC> account type
  */
 public interface Transaction<
-        I extends Serializable,
-        A extends Number,
+        N extends Number,
         L extends Temporal,
-        D extends CharSequence,
-        T extends Tag<I,D,? extends Category<I,D,T>>,
-        AC extends Account<I, D, A>> extends Taggable<T>, AccountLinked<AC> {
+        T extends Tag<? extends Category<T>>,
+        AC extends Account<N>> extends Taggable<T>, AccountLinked<AC> {
 
     /**
      * Return the Transaction ID
      * @return the Transaction ID
      */
-    I getTransactionId();
+    Long getTransactionId();
 
     /**
      * Return the Transaction amount
      * @return the Transaction amount
      */
-    A getAmount();
+    N getAmount();
 
     /**
      * Set the new Transaction amount
@@ -68,7 +63,7 @@ public interface Transaction<
      * @throws NullPointerException if {@code amount} is null
      * @throws IllegalArgumentException if {@code amount} is zero
      */
-    void setAmount(@NonNull A amount);
+    void setAmount(@NonNull N amount);
 
     /**
      * Return the Transaction date
@@ -87,12 +82,12 @@ public interface Transaction<
      * Return the Transaction description
      * @return the Transaction description
      */
-    D getDescription();
+    String getDescription();
 
     /**
      * Set the new Transaction description
      * @param description the new Transaction description
      * @throws NullPointerException if {@code description} is null
      */
-    void setDescription(@NonNull D description);
+    void setDescription(@NonNull String description);
 }
