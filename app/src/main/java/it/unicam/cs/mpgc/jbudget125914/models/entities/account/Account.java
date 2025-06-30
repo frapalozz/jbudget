@@ -21,20 +21,14 @@
 package it.unicam.cs.mpgc.jbudget125914.models.entities.account;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.Nameable;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
-import lombok.NonNull;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.Set;
+import lombok.NonNull;
 
 /**
  * This interface represent an Account
- * @param <A> amount type
+ * @param <N> amount type
  */
-public interface Account<A extends Number> extends Nameable<String> {
+public interface Account<N extends Number> extends Nameable<String> {
 
     /**
      * Return the Account ID
@@ -46,7 +40,7 @@ public interface Account<A extends Number> extends Nameable<String> {
      * Return the Account initial Amount
      * @return the Account initial Amount
      */
-    A getInitialAmount();
+    N getInitialAmount();
 
     /**
      * Set the new Account initialAmount
@@ -54,5 +48,5 @@ public interface Account<A extends Number> extends Nameable<String> {
      * @throws IllegalArgumentException if {@code initialAmount} is zero
      * @throws NullPointerException if {@code initialAmount} is null
      */
-    void setInitialAmount(@NonNull A initialAmount);
+    void setInitialAmount(@NonNull N initialAmount);
 }

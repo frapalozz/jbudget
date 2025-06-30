@@ -26,13 +26,18 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 
+/**
+ * This class represent a FinancialTag entity
+ */
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "tag")
+@ToString(of = "name")
 public class FinancialTag implements Tag<FinancialCategory>, Serializable {
 
     @Id
@@ -49,9 +54,9 @@ public class FinancialTag implements Tag<FinancialCategory>, Serializable {
     private FinancialCategory category;
 
     /**
-     * Construct a new {@code Tag} with the specified {@code name}
-     * @param name of this Tag
-     * @throws NullPointerException if name is null
+     * Construct a new FinancialTag
+     * @param name name of the Tag
+     * @param category category associated to the Tag
      */
     public FinancialTag(String name, FinancialCategory category) {
         if(name == null)

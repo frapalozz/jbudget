@@ -22,7 +22,6 @@ package it.unicam.cs.mpgc.jbudget125914.models.entities.transaction;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,7 +35,7 @@ import java.util.Set;
 
 
 /**
- * This class represent a FinancialTransaction
+ * This class represent a FinancialTransaction entity
  */
 @Entity
 @Getter
@@ -71,10 +70,14 @@ public class FinancialTransaction implements Transaction<BigDecimal, LocalDate, 
     private Set<FinancialTag> tags;
 
     /**
-     * Construct a new Transaction with the specified {@code transaction_id}, {@code date}, {@code description}
-     * @param date date of the new Transaction
-     * @param description description of the new Transaction
-     * @throws NullPointerException if one of the param is null
+     * Construct a new FinancialTransaction
+     * @param amount amount of the Transaction
+     * @param date date of the Transaction
+     * @param description description of the Transaction
+     * @param account account associated to the Transaction
+     * @param tags tags associated to the Transaction
+     * @throws NullPointerException if any of the params are null
+     * @throws IllegalArgumentException if {@code amount} is ZERO
      */
     public FinancialTransaction(
             @NonNull BigDecimal amount,

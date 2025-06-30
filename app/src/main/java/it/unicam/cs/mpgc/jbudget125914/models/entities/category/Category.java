@@ -24,8 +24,15 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.Nameable;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Taggable;
 
-
+/**
+ * This interface represent a Category
+ * @param <T> tag type
+ */
 public interface Category<T extends Tag<? extends Category<T>>> extends Taggable<T>, Nameable<String> {
 
+    /**
+     * Return the Category ID
+     * @return the Category ID
+     */
     Long getCategoryId();
 }

@@ -31,7 +31,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * This class represent a Financial Account
+ * This class represent a FinancialAccount entity
  */
 @Entity
 @Getter

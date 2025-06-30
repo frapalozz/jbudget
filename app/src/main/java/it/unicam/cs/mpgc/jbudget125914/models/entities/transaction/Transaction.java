@@ -27,23 +27,20 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Taggable;
 import lombok.NonNull;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.temporal.Temporal;
-import java.util.Set;
 
 /**
  * This interface represent a Transaction
- * @param <L> date type
+ * @param <D> date type
  * @param <T> tag type
- * @param <AC> account type
+ * @param <A> account type
  */
 public interface Transaction<
         N extends Number,
-        L extends Temporal,
+        D extends Temporal,
         T extends Tag<? extends Category<T>>,
-        AC extends Account<N>> extends Taggable<T>, AccountLinked<AC> {
+        A extends Account<N>
+        > extends Taggable<T>, AccountLinked<A> {
 
     /**
      * Return the Transaction ID
@@ -61,7 +58,7 @@ public interface Transaction<
      * Set the new Transaction amount
      * @param amount the new Transaction amount
      * @throws NullPointerException if {@code amount} is null
-     * @throws IllegalArgumentException if {@code amount} is zero
+     * @throws IllegalArgumentException if {@code amount} is ZERO
      */
     void setAmount(@NonNull N amount);
 
@@ -69,14 +66,14 @@ public interface Transaction<
      * Return the Transaction date
      * @return the Transaction date
      */
-    L getDate();
+    D getDate();
 
     /**
      * Set the new Transaction date
      * @param date the new Transaction date
      * @throws NullPointerException if {@code date} is null
      */
-    void setDate(@NonNull L date);
+    void setDate(@NonNull D date);
 
     /**
      * Return the Transaction description
