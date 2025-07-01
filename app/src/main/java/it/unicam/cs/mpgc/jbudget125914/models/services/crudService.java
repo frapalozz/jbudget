@@ -18,54 +18,56 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.models.entities.group;
+package it.unicam.cs.mpgc.jbudget125914.models.services;
 
-import it.unicam.cs.mpgc.jbudget125914.models.entities.Nameable;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Categorizable;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Taggable;
 import lombok.NonNull;
 
-import java.util.Set;
+import java.util.List;
 
 /**
- * This interface represent a Group
- * @param <T> tag type
- * @param <K> category type
- * @param <C> currency type
- * @param <A> account type
+ * This interface gives you the ability of the basics crud operations
+ * @param <T> entity type
  */
-public interface Group<
-        T, K, C, A
-        > extends Taggable<T>, Categorizable<K>, Nameable<String> {
+public interface crudService<T> {
 
     /**
-     * Return the Group ID
-     * @return the Group ID
+     * Create a new entity
+     * @param entity entity to create
+     * @throws NullPointerException if {@code entity} is null
      */
-    Long getGroupId();
+    void create(@NonNull T entity);
 
     /**
-     * Return the Group currency
-     * @return the Group currency
+     * Create a new list of entities
+     * @param entities list of entities
      */
-    C getCurrency();
+    void create(@NonNull List<T> entities);
 
     /**
-     * Set the new Group currency
-     * @param currency the new Group currency
+     * Update an entity
+     * @param entity entity to update
+     * @throws NullPointerException if {@code entity} is null
      */
-    void setCurrency(@NonNull C currency);
+    void update(@NonNull T entity);
 
     /**
-     * Return the set of Account associated with this Group
-     * @return the set of Account associated with this Group
+     * Delete an entity
+     * @param entity entity to delete
+     * @throws NullPointerException if {@code entity} is null
      */
-    Set<A> getAccounts();
+    void delete(@NonNull T entity);
 
     /**
-     * Set the accounts associated to the Group
-     * @param accounts the new accounts
-     * @throws NullPointerException if {@code accounts} is null
+     * Find an entity by is ID
+     * @param id id to search for
+     * @return the entity found or null if any entity are not found
+     * @param <D> the type of ID
      */
-    void setAccounts(@NonNull Set<A> accounts);
+    <D> T findById(@NonNull D id);
+
+    /**
+     * Return all the entities of {@code <T>} type from the database
+     * @return all the entities of {@code <T>} type from the database
+     */
+    List<T> findAll();
 }

@@ -21,14 +21,13 @@
 package it.unicam.cs.mpgc.jbudget125914.models.entities.tag;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.Nameable;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
 import lombok.NonNull;
 
 /**
  * This interface represent a Tag
- * @param <C>
+ * @param <C> category type
  */
-public interface Tag<C extends Category<? extends Tag<C>>> extends Nameable<String> {
+public interface Tag<C> extends Nameable<String> {
 
     /**
      * Return the Tag ID

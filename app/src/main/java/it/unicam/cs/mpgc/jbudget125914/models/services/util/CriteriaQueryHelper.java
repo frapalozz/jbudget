@@ -24,21 +24,23 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.*;
 import lombok.Getter;
 
+import java.lang.reflect.Constructor;
 import java.util.List;
+import java.util.Set;
 
 /**
  * This class is a util class used to build a criteria query
- * @param <T> is the entity of the query
+ * @param <R> is the entity of the query
  */
-public class CriteriaQueryHelper<T> {
+public class CriteriaQueryHelper<R, Q> {
 
     private final EntityManager em;
     @Getter
     private final CriteriaBuilder cb;
     @Getter
-    private final CriteriaQuery<T> cq;
+    private final CriteriaQuery<Q> cq;
     @Getter
-    private final Root<T> root;
+    private final Root<R> root;
 
     /**
      * CriteriaQueryHelper constructor
@@ -47,10 +49,10 @@ public class CriteriaQueryHelper<T> {
      * @throws NullPointerException if {@code em} is null
      * @throws NullPointerException if {@code entityClass} is null
      */
-    public CriteriaQueryHelper(EntityManager em, Class<T> entityClass) {
+    public CriteriaQueryHelper(EntityManager em, Class<R> entityClass, Class<Q> queryClass) {
         this.em = em;
         this.cb = em.getCriteriaBuilder();
-        this.cq = cb.createQuery(entityClass);
+        this.cq = cb.createQuery(queryClass);
         this.root = cq.from(entityClass);
     }
 
@@ -58,7 +60,7 @@ public class CriteriaQueryHelper<T> {
      * Return the query result
      * @return the query result
      */
-    public List<T> getResultList() {
+    public List<Q> getResultList() {
         return em.createQuery(cq).getResultList();
     }
 
@@ -67,7 +69,7 @@ public class CriteriaQueryHelper<T> {
      * @param predicates to add
      * @return this CriteriaQueryHelper with the new predicates
      */
-    public CriteriaQueryHelper<T> where(Predicate... predicates) {
+    public CriteriaQueryHelper<R, Q> where(Predicate... predicates) {
         cq.where(predicates);
         return this;
     }
@@ -77,8 +79,42 @@ public class CriteriaQueryHelper<T> {
      * @param orders to add
      * @return this CriteriaQueryHelper with the new orders
      */
-    public CriteriaQueryHelper<T> orderBy(Order... orders) {
+    public CriteriaQueryHelper<R, Q> orderBy(Order... orders) {
         cq.orderBy(orders);
         return this;
+    }
+
+    /**
+     * Filter if two collections has an intersection
+     * @param field of the database to get the collection
+     * @param items collection passed
+     * @param <T> type of the elements
+     */
+    public <T> void containsAny(String field, Set<T> items) {
+        where(
+            getCb().or(
+                items.stream()
+                    .map(t -> getCb().isMember(t, getRoot().get(field)))
+                    .toArray(Predicate[]::new)
+            )
+        );
+    }
+
+    /**
+     * Construct a new object of type {@code T1} with parameter {@code T2}
+     * @param class1 class of type {@code T1}
+     * @param class2 class of tyoe {@code T2}
+     * @return a new object of type {@code T1} with parameter {@code T2}
+     * @param <T1> type of the returned object
+     * @param <T2> type of the parameter of the returned object
+     */
+    public <T1, T2> T1 convertor(Class<T1> class1, Class<T2> class2) {
+        try {
+            Constructor<T1> constructor = class1.getConstructor(class2);
+            return constructor.newInstance(getResultList().getFirst());
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Amount conversion failed", e);
+        }
     }
 }

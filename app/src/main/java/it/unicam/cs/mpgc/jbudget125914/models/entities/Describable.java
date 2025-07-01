@@ -18,12 +18,26 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.models.services;
+package it.unicam.cs.mpgc.jbudget125914.models.entities;
 
+import lombok.NonNull;
 
-public class GroupService<G> extends AbstractService<G> {
+/**
+ * This interface gives you the ability to add a description to an object
+ * @param <T> description type
+ */
+public interface Describable<T> {
 
-    public GroupService(Class<G> entityClass) {
-        super(entityClass);
-    }
+    /**
+     * Return the description
+     * @return the description
+     */
+    T getDescription();
+
+    /**
+     * Set the new description
+     * @param description the new description
+     * @throws NullPointerException if {@code description} is null
+     */
+    void setDescription(@NonNull T description);
 }

@@ -20,27 +20,21 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.entities.transaction;
 
-import it.unicam.cs.mpgc.jbudget125914.models.entities.account.Account;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.Describable;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.AccountLinked;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Taggable;
 import lombok.NonNull;
 
-import java.time.temporal.Temporal;
-
 /**
  * This interface represent a Transaction
+ * @param <AM> amount type
  * @param <D> date type
  * @param <T> tag type
  * @param <A> account type
  */
 public interface Transaction<
-        N extends Number,
-        D extends Temporal,
-        T extends Tag<? extends Category<T>>,
-        A extends Account<N>
-        > extends Taggable<T>, AccountLinked<A> {
+        AM, D, T, A
+        > extends Taggable<T>, AccountLinked<A>, Describable<String> {
 
     /**
      * Return the Transaction ID
@@ -52,7 +46,7 @@ public interface Transaction<
      * Return the Transaction amount
      * @return the Transaction amount
      */
-    N getAmount();
+    AM getAmount();
 
     /**
      * Set the new Transaction amount
@@ -60,7 +54,7 @@ public interface Transaction<
      * @throws NullPointerException if {@code amount} is null
      * @throws IllegalArgumentException if {@code amount} is ZERO
      */
-    void setAmount(@NonNull N amount);
+    void setAmount(@NonNull AM amount);
 
     /**
      * Return the Transaction date
@@ -74,17 +68,4 @@ public interface Transaction<
      * @throws NullPointerException if {@code date} is null
      */
     void setDate(@NonNull D date);
-
-    /**
-     * Return the Transaction description
-     * @return the Transaction description
-     */
-    String getDescription();
-
-    /**
-     * Set the new Transaction description
-     * @param description the new Transaction description
-     * @throws NullPointerException if {@code description} is null
-     */
-    void setDescription(@NonNull String description);
 }

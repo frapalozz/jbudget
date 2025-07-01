@@ -21,6 +21,7 @@
 package it.unicam.cs.mpgc.jbudget125914.models.entities.transaction;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
+import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,7 +30,6 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Set;
 
@@ -42,7 +42,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "transaction")
-public class FinancialTransaction implements Transaction<BigDecimal, LocalDate, FinancialTag, FinancialAccount>, Serializable {
+public class FinancialTransaction implements Transaction<FinancialAmount, LocalDate, FinancialTag, FinancialAccount>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,11 +55,10 @@ public class FinancialTransaction implements Transaction<BigDecimal, LocalDate, 
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "account")
     private FinancialAccount account;
 
-    @Column(precision = 14, scale = 2, nullable = false)
-    private BigDecimal amount;
+    @Embedded
+    private FinancialAmount amount;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -80,11 +79,11 @@ public class FinancialTransaction implements Transaction<BigDecimal, LocalDate, 
      * @throws IllegalArgumentException if {@code amount} is ZERO
      */
     public FinancialTransaction(
-            @NonNull BigDecimal amount,
-            @NonNull LocalDate date,
-            @NonNull String description,
-            @NonNull FinancialAccount account,
-            @NonNull Set<FinancialTag> tags) {
+            FinancialAmount amount,
+            LocalDate date,
+            String description,
+            FinancialAccount account,
+            Set<FinancialTag> tags) {
 
         setAccount(account);
         setTags(tags);
@@ -94,8 +93,8 @@ public class FinancialTransaction implements Transaction<BigDecimal, LocalDate, 
     }
 
     @Override
-    public void setAmount(@NonNull BigDecimal amount) {
-        if(amount.equals(BigDecimal.ZERO))
+    public void setAmount(@NonNull FinancialAmount amount) {
+        if(amount.isZero())
             throw new IllegalArgumentException("Amount must be greater or less than zero");
         this.amount = amount;
     }

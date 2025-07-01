@@ -1,5 +1,7 @@
 package it.unicam.cs.mpgc.jbudget125914.controllers;
 
+import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import it.unicam.cs.mpgc.jbudget125914.models.services.TransactionService;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
@@ -12,12 +14,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.Set;
 
 public class TransactionTableView implements Initializable {
 
-    private TransactionService<FinancialTransaction> controller;
+    private TransactionService<FinancialTransaction, FinancialAccount, FinancialTag, BigDecimal, LocalDate, FinancialAmount> controller;
 
     @FXML
     private TableView<FinancialTransaction> table;

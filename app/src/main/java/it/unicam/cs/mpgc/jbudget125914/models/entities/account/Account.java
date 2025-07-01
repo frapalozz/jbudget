@@ -26,9 +26,9 @@ import lombok.NonNull;
 
 /**
  * This interface represent an Account
- * @param <N> amount type
+ * @param <A> amount type
  */
-public interface Account<N extends Number> extends Nameable<String> {
+public interface Account<A> extends Nameable<String> {
 
     /**
      * Return the Account ID
@@ -40,7 +40,7 @@ public interface Account<N extends Number> extends Nameable<String> {
      * Return the Account initial Amount
      * @return the Account initial Amount
      */
-    N getInitialAmount();
+    A getInitialAmount();
 
     /**
      * Set the new Account initialAmount
@@ -48,5 +48,5 @@ public interface Account<N extends Number> extends Nameable<String> {
      * @throws IllegalArgumentException if {@code initialAmount} is zero
      * @throws NullPointerException if {@code initialAmount} is null
      */
-    void setInitialAmount(@NonNull N initialAmount);
+    void setInitialAmount(@NonNull A initialAmount);
 }

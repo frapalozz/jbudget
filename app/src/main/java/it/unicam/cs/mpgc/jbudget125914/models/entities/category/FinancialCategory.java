@@ -25,6 +25,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -37,6 +38,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "category")
+@ToString(of = "name")
 public class FinancialCategory implements Category<FinancialTag>, Serializable {
 
     @Id

@@ -13,7 +13,6 @@ public class MainGUI extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/COMPONENTS/main.fxml"));
         primaryStage.setTitle("JBudget");
         primaryStage.setScene(new javafx.scene.Scene(root));
-        primaryStage.setMaxWidth(500);
         primaryStage.setResizable(true);
         primaryStage.show();
     }

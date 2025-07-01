@@ -6,6 +6,7 @@
         <class>it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag</class>
         <class>it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup</class>
         <class>it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory</class>
+        <class>it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount</class>
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>

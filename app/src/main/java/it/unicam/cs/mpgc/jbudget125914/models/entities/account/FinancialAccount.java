@@ -20,6 +20,7 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.entities.account;
 
+import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -28,7 +29,6 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
  * This class represent a FinancialAccount entity
@@ -37,7 +37,7 @@ import java.math.BigDecimal;
 @Getter
 @NoArgsConstructor
 @Table(name = "account")
-public class FinancialAccount implements Account<BigDecimal>, Serializable {
+public class FinancialAccount implements Account<FinancialAmount>, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,8 +47,9 @@ public class FinancialAccount implements Account<BigDecimal>, Serializable {
     @Setter
     private String name;
 
-    @Column(precision = 14, scale = 2)
-    private BigDecimal initialAmount;
+    @Embedded
+    @AttributeOverride(name = "amount", column = @Column(name = "initialAmount"))
+    private FinancialAmount initialAmount;
 
     @ManyToOne
     @JoinColumn(name = "groupId")
@@ -63,15 +64,15 @@ public class FinancialAccount implements Account<BigDecimal>, Serializable {
      * @throws NullPointerException if any of the params is null
      * @throws IllegalArgumentException if {@code initialAmount} is zero
      */
-    public FinancialAccount(String name, BigDecimal initialAmount, FinancialGroup group) {
+    public FinancialAccount(String name, FinancialAmount initialAmount, FinancialGroup group) {
         setName(name);
         setInitialAmount(initialAmount);
         setGroup(group);
     }
 
     @Override
-    public void setInitialAmount(@NonNull BigDecimal initialAmount) {
-        if(initialAmount.equals(BigDecimal.ZERO)) {
+    public void setInitialAmount(@NonNull FinancialAmount initialAmount) {
+        if(initialAmount.signum() == 0) {
             throw new IllegalArgumentException("Initial amount cannot be zero");
         }
         this.initialAmount = initialAmount;

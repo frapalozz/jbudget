@@ -18,12 +18,38 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.models.services;
+package it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount;
 
+import lombok.NonNull;
 
-public class GroupService<G> extends AbstractService<G> {
+/**
+ * This interface represent an Amount
+ * @param <N> amount type
+ */
+public interface Amount<N, A extends Amount<N ,A>> {
 
-    public GroupService(Class<G> entityClass) {
-        super(entityClass);
-    }
+    /**
+     * Return this amount
+     * @return this amount
+     */
+    N getAmount();
+
+    /**
+     * Returns the signum function of this Amount
+     * @return -1, 0, or 1 as the value of this Amount is negative, zero, or positive.
+     */
+    int signum();
+
+    /**
+     * Returns true if the signum is ZERO
+     * @return true if the signum is ZERO, otherwise false
+     */
+    boolean isZero();
+
+    /**
+     * Sum two Amount
+     * @param n the amount to sum with
+     * @return the sum of this and {@code n} amount
+     */
+    A add(@NonNull A n);
 }
