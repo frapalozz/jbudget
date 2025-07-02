@@ -44,7 +44,7 @@ public class CategoryService<
         super(entityClass);
     }
 
-    public List<Map<C, N>> getCategoryBalance(Class<T> entityClass, D from, D to, Set<A> account) {
+    public List<Map<C, N>> getCategoryBalance(Class<T> entityClass, D from, D to,@NonNull Set<A> account) {
         TransactionService<T, A, TA, NU, D, N> transactionService = new TransactionService<>(entityClass);
         List<T> transactions = transactionService.findAll(from, to, account);
 
@@ -70,7 +70,7 @@ public class CategoryService<
     }
 
     private void addTo(List<Map<C, N>> categoryBalance, C category, N amount) {
-        if(amount.signum() < 0) {
+        if(amount.signum() > 0) {
             checkOrAdd(categoryBalance.getFirst(), category, amount);
         } else {
             checkOrAdd(categoryBalance.get(1), category, amount);

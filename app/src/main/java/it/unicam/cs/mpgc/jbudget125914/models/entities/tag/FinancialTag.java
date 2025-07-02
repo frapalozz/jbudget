@@ -37,7 +37,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 @Table(name = "tag")
-@ToString(of = "name")
 public class FinancialTag implements Tag<FinancialCategory>, Serializable {
 
     @Id
@@ -63,5 +62,10 @@ public class FinancialTag implements Tag<FinancialCategory>, Serializable {
             throw new NullPointerException("name is null");
         this.name = name;
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

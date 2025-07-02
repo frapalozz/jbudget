@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.VBox?>
+
+<TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../CSS/tabpane.css" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.jbudget125914.controllers.MainView">
+  <tabs>
+    <Tab fx:id="dashboard" style="-fx-text-base-color: white;" text="Dashboard">
+         <content>
+            <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" style="-fx-background-color: black; -fx-background: black;">
+               <content>
+                  <VBox fx:id="main1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+               </content>
+            </ScrollPane>
+         </content></Tab>
+    <Tab fx:id="transactions" text="Transactions" />
+      <Tab fx:id="scheduler" text="Scheduler" />
+  </tabs>
+</TabPane>

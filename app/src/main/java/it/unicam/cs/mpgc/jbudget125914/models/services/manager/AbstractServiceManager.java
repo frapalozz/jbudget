@@ -7,12 +7,17 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.*;
+import javafx.beans.property.SimpleIntegerProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.temporal.Temporal;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Getter
+@Setter
 public abstract class AbstractServiceManager<
         T extends Transaction<AM, D, TA, A>,
         A extends Account<AM>,
@@ -25,24 +30,39 @@ public abstract class AbstractServiceManager<
             TransactionService<T, A, TA, N, D, AM>,
             AccountService<A, N, AM>,
             CategoryService<AM, N, A, T, TA, C, D>,
-            GroupService<G>,
-            TagService<TA, C>> {
+            GroupService<G, A, TA>,
+            TagService<TA, C>,
+            D, A, TA, T, C, AM> {
+
+    private SimpleIntegerProperty changes = new SimpleIntegerProperty(0);
 
     private Long groupId;
 
-    @Setter
+    private D startDate;
+
+    private D endDate;
+
+    private Set<A> accounts;
+
+    private Set<TA> tags;
+
+    private List<T> transactions;
+
+    List<Map<C, AM>> categoryBalance;
+
+
     private TransactionService<T, A, TA, N, D, AM> transactionService;
 
-    @Setter
+
     private AccountService<A, N, AM> accountService;
 
-    @Setter
+
     private CategoryService<AM, N, A, T, TA, C, D> categoryService;
 
-    @Setter
-    private GroupService<G> groupService;
 
-    @Setter
+    private GroupService<G, A, TA> groupService;
+
+
     private TagService<TA, C> tagService;
 
 }

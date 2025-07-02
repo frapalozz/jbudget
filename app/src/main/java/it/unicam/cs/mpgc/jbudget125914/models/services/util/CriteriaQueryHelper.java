@@ -100,6 +100,10 @@ public class CriteriaQueryHelper<R, Q> {
         );
     }
 
+    public <T> void in(String field, Set<T> items) {
+        where(getRoot().get("field").in(items));
+    }
+
     /**
      * Construct a new object of type {@code T1} with parameter {@code T2}
      * @param class1 class of type {@code T1}

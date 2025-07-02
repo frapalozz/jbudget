@@ -1,0 +1,58 @@
+/* Base styles */
+.root {
+    -fx-base: #121212;
+    -fx-background: #121212;
+    -fx-control-inner-background: #252525;
+    -fx-text-fill: white;
+}
+
+/* ListView customization */
+.list-view {
+    -fx-background-color: #252525;
+    -fx-border-color: #333;
+}
+
+.list-cell {
+    -fx-background-color: #252525;
+    -fx-text-fill: white;
+    -fx-border-color: #333;
+}
+
+.list-cell:filled:selected {
+    -fx-background-color: #3d3d3d;
+    -fx-text-fill: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #353535;
+}
+
+/* Button styles */
+.dark-button {
+    -fx-background-color: #333;
+    -fx-text-fill: white;
+    -fx-border-color: #444;
+    -fx-border-radius: 3;
+}
+
+.dark-button:hover {
+    -fx-background-color: #444;
+}
+
+.dark-button:pressed {
+    -fx-background-color: #2a2a2a;
+}
+
+/* Checkbox in ListView (for multiple selection) */
+.list-cell .check-box {
+    -fx-text-fill: white;
+}
+
+.list-cell .check-box .box {
+    -fx-background-color: #333;
+    -fx-border-color: #555;
+}
+
+.list-cell .check-box:selected .box {
+    -fx-background-color: #4CAF50;
+}

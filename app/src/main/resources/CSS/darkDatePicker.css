@@ -1,0 +1,48 @@
+/* Black DatePicker */
+.date-picker {
+    -fx-background-color: black;
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+/* Text field inside DatePicker */
+.date-picker .text-field {
+    -fx-control-inner-background: black;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #aaaaaa;
+}
+
+/* Arrow button */
+.date-picker .arrow-button {
+    -fx-background-color: #333333;
+}
+
+.date-picker .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+/* Calendar popup */
+.date-picker-popup {
+    -fx-background-color: black;
+    -fx-border-color: #444444;
+}
+
+/* Month/year pane */
+.date-picker-popup .month-year-pane {
+    -fx-background-color: #111111;
+}
+
+/* Calendar cells */
+.date-picker-popup .spinner .button,
+.date-picker-popup .calendar-grid .day-cell {
+    -fx-background-color: #222222;
+    -fx-text-fill: white;
+}
+
+.date-picker-popup .calendar-grid .day-cell:hover {
+    -fx-background-color: #333333;
+}
+
+.date-picker-popup .calendar-grid .day-cell:selected {
+    -fx-background-color: #555555;
+}

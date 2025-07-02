@@ -59,7 +59,7 @@ public class FinancialGroup implements Group<FinancialTag, FinancialCategory, St
     @Setter
     private Set<FinancialTag> tags;
 
-    @OneToMany(mappedBy = "group")
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
     @Setter
     private Set<FinancialAccount> accounts;
 

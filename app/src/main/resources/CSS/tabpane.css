@@ -1,0 +1,79 @@
+/* Pure Black Theme for TabPane */
+.tab-pane {
+    -fx-background-color: #000000;
+}
+
+.tab {
+    -fx-background-color: #000000;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5 5 0 0, 4 4 0 0, 3 3 0 0;
+    -fx-padding: 5 15 5 15;
+    -fx-border-color: #333333;
+    -fx-border-width: 1 1 0 1;
+}
+
+.tab:selected {
+    -fx-background-color: #111111;
+    -fx-border-color: #444444 #444444 transparent #444444;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.tab .tab-label {
+    -fx-text-fill: #cccccc;
+    -fx-font-size: 12px;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: #ffffff;
+}
+
+.tab-header-background {
+    -fx-background-color: #000000;
+}
+
+.tab-content-area {
+    -fx-background-color: #000000;
+    -fx-border-color: #333333;
+    -fx-border-width: 0 1 1 1;
+}
+
+/* Hover effect */
+.tab:hover {
+    -fx-background-color: #0a0a0a;
+}
+
+/* Close button styling */
+.tab-down-button {
+    -fx-background-color: transparent;
+}
+
+.tab-down-button:hover {
+    -fx-background-color: #1a1a1a;
+}
+
+.tab-close-button {
+    -fx-background-color: #333333;
+    -fx-shape: "M 0,0 H1 L 4,3 7,0 H8 V1 L 5,4 8,7 V8 H7 L 4,5 1,8 H0 V7 L 3,4 0,1 Z";
+}
+
+.tab-close-button:hover {
+    -fx-background-color: #e81123;
+}
+
+/* Tab pane background when empty */
+.tab-pane:top > .tab-header-area > .headers-region > .tab:top:selected {
+    -fx-background-color: #111111;
+    -fx-border-color: #444444 #444444 transparent #444444;
+}
+
+.tab-pane:top > .tab-header-area > .headers-region > .tab:top {
+    -fx-background-color: #000000;
+    -fx-border-color: #333333 #333333 transparent #333333;
+}
+
+/* Make the selected tab content area blend with the tab */
+.tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
+    -fx-border-color: transparent;
+    -fx-border-width: 0;
+}

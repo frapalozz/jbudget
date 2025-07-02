@@ -28,8 +28,10 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.util.CriteriaQueryHelper;
 import it.unicam.cs.mpgc.jbudget125914.models.services.util.TransactionUtil;
 import jakarta.persistence.criteria.Expression;
+import lombok.NonNull;
 
 import java.time.temporal.Temporal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -67,7 +69,7 @@ public class TransactionService<
      * @return all the transaction between date {@code from} and {@code to} (inclusive)
      */
     public List<T> findAll(D from, D to) {
-        return findAll(from, to, null);
+        return findAll(from, to, new HashSet<>());
     }
 
     /**
@@ -77,8 +79,8 @@ public class TransactionService<
      * @param accounts account filter
      * @return all the transaction between date {@code from} and {@code to} (inclusive) and filtered by accounts
      */
-    public List<T> findAll(D from, D to, Set<A> accounts) {
-        return findAll(from, to, accounts, null);
+    public List<T> findAll(D from, D to, @NonNull Set<A> accounts) {
+        return findAll(from, to, accounts, new HashSet<>());
     }
 
     /**
@@ -89,18 +91,19 @@ public class TransactionService<
      * @param tags tags filter
      * @return all the transaction between date {@code from} and {@code to} (inclusive) and filtered by accounts and tags
      */
-    public List<T> findAll(D from, D to, Set<A> accounts, Set<TA> tags) {
+    public List<T> findAll(D from, D to, @NonNull Set<A> accounts, @NonNull Set<TA> tags) {
 
         return TransactionUtil.executeInTransactionReturn(em -> {
             CriteriaQueryHelper<T, T> helper = new CriteriaQueryHelper<>(em, this.getEntityClass(), this.getEntityClass());
 
-            helper.where(helper.getCb().greaterThanOrEqualTo(helper.getRoot().get("date"), from));
-            helper.where(helper.getCb().lessThanOrEqualTo(helper.getRoot().get("date"), to));
+            helper.getCq()
+                    .select(helper.getRoot())
+                    .where(helper.getCb().between(helper.getRoot().get("date"), from, to));
 
-            if (accounts != null) {
-                helper.containsAny("account", accounts);
+            if (!accounts.isEmpty()) {
+                helper.in("accounts", accounts);
             }
-            if (tags != null) {
+            if (!tags.isEmpty()) {
                 helper.containsAny("tags", tags);
             }
 

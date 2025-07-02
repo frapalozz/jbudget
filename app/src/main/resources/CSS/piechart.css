@@ -1,0 +1,80 @@
+/* Dark PieChart with White Text */
+.chart {
+    -fx-background-color: transparent;
+    -fx-padding: 0px;
+}
+
+.chart-content {
+    -fx-padding: 0px;
+}
+
+.pie-chart {
+    -fx-background-color: #121212;
+    -fx-border-color: #333333;
+    -fx-border-width: 1px;
+}
+
+/* White title text */
+.chart-title {
+    -fx-text-fill: white !important;
+    -fx-font-size: 16px;
+}
+
+/* White legend text */
+.chart-legend {
+    -fx-background-color: #1e1e1e;
+    -fx-border-color: #333333;
+    -fx-padding: 10px;
+}
+
+.chart-legend-item-symbol {
+    -fx-background-radius: 5px;
+}
+
+.chart-legend-item {
+    -fx-text-fill: white !important;
+}
+
+/* White data labels */
+.chart-pie-label {
+    -fx-fill: white !important;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* Slice colors (customize as needed) */
+.data0.chart-pie { -fx-pie-color: #4e79a7; }
+.data1.chart-pie { -fx-pie-color: #f28e2b; }
+.data2.chart-pie { -fx-pie-color: #e15759; }
+.data3.chart-pie { -fx-pie-color: #76b7b2; }
+.data4.chart-pie { -fx-pie-color: #59a14f; }
+.data5.chart-pie { -fx-pie-color: #edc948; }
+.data6.chart-pie { -fx-pie-color: #b07aa1; }
+.data7.chart-pie { -fx-pie-color: #ff9da7; }
+.data8.chart-pie { -fx-pie-color: #9c755f; }
+.data9.chart-pie { -fx-pie-color: #bab0ac; }
+/* Add more colors as needed */
+
+/* White line connectors */
+.chart-pie-label-line {
+    -fx-stroke: white !important;
+    -fx-fill: white !important;
+}
+
+/* Hover effects */
+.chart-pie:hover {
+    -fx-cursor: hand;
+    -fx-opacity: 0.8;
+    -fx-stroke: white;
+    -fx-stroke-width: 1px;
+}
+
+/* White tooltip text */
+.chart-tooltip-label {
+    -fx-background-color: #2a2a2a;
+    -fx-text-fill: white !important;
+    -fx-border-color: #444444;
+    -fx-border-width: 1px;
+    -fx-border-radius: 3px;
+    -fx-padding: 5px 10px;
+}
