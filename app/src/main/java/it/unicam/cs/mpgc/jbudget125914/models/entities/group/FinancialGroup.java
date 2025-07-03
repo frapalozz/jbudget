@@ -29,6 +29,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -59,11 +60,11 @@ public class FinancialGroup implements Group<FinancialTag, FinancialCategory, St
     @Setter
     private Set<FinancialTag> tags;
 
-    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "groupId", fetch = FetchType.EAGER)
     @Setter
     private Set<FinancialAccount> accounts;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "group_category_relationship",
             joinColumns = @JoinColumn(name = "groupid"),
@@ -71,6 +72,10 @@ public class FinancialGroup implements Group<FinancialTag, FinancialCategory, St
     )
     @Setter
     private Set<FinancialCategory> categories;
+
+    public FinancialGroup(String name, String currency) {
+        this(name, currency, new HashSet<>());
+    }
 
     /**
      * Construct a new FinancialGroup
@@ -83,5 +88,10 @@ public class FinancialGroup implements Group<FinancialTag, FinancialCategory, St
         setName(name);
         setCurrency(currency);
         setAccounts(accounts);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

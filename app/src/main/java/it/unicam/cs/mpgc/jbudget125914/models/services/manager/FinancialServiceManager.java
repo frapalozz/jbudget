@@ -7,12 +7,11 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.*;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleIntegerProperty;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.Set;
 
 public class FinancialServiceManager extends AbstractServiceManager<
         FinancialTransaction,
@@ -50,29 +49,59 @@ public class FinancialServiceManager extends AbstractServiceManager<
 
     }
 
-    public void update() {
-        updateTransactions();
-        updateCategoryBalance();
-        increaseChanges();
+    @Override
+    public Set<FinancialAccount> getGroupAccounts() {
+        return getGroup().getAccounts();
     }
 
     @Override
-    public void updateTransactions() {
+    public Set<FinancialTag> getGroupTags() {
+        return getGroup().getTags();
+    }
+
+    @Override
+    public void update() {
+        if(getGroup() == null) {
+            return;
+        }
+        updateTransactions();
+        updateCategoryBalance();
+        setBalance();
+        increaseChanges();
+    }
+
+    private void setBalance() {
+        if(getGroup().getAccounts().isEmpty()) {
+            setBalance(new FinancialAmount(BigDecimal.ZERO));
+            return;
+        }
+
+        FinancialAmount amount = getTransactionService().getTransactionAmount(LocalDate.now(), FinancialAmount.class, BigDecimal.class, getGroup().getAccounts());
+        setBalance(getGroup()
+                .getAccounts()
+                .stream()
+                .map(FinancialAccount::getInitialAmount)
+                .reduce(new FinancialAmount(BigDecimal.ZERO), FinancialAmount::add)
+                .add(amount));
+    }
+
+    private void updateTransactions() {
         setTransactions(getTransactionService().findAll(
                 getStartDate(),
                 getEndDate(),
                 getAccounts(),
-                getTags()
+                getTags(),
+                getGroup()
         ));
     }
 
-    @Override
-    public void updateCategoryBalance() {
+    private void updateCategoryBalance() {
         setCategoryBalance(getCategoryService().getCategoryBalance(
                 FinancialTransaction.class,
                 getStartDate(),
                 getEndDate(),
-                getAccounts()
+                getAccounts(),
+                getGroup()
         ));
     }
 

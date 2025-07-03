@@ -1,66 +1,26 @@
 package it.unicam.cs.mpgc.jbudget125914.controllers;
 
 import it.unicam.cs.mpgc.jbudget125914.models.services.manager.FinancialServiceManager;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Dialog;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class FilterBarController extends FilterBarBase implements Initializable {
 
-public class FilterBarController implements Initializable {
 
     @FXML
-    private DatePicker startDate;
-    @FXML
-    private DatePicker endDate;
-
-    private final FinancialServiceManager service = FinancialServiceManager.getInstance();
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        startDate.setValue(service.getStartDate());
-        endDate.setValue(service.getEndDate());
-        service.getChanges().addListener((obs, oldValue, newValue) -> {
-            Platform.runLater(() -> {
-                startDate.setValue(service.getStartDate());
-                endDate.setValue(service.getEndDate());
-            });
-        });
+    public void openDialogGroup() {
+        openDialogBuilder("NewGroupDialog", "New Group");
     }
 
     @FXML
-    public void setStartDate() {
-        service.setStartDate(startDate.getValue());
-        service.update();
-    }
-
-    @FXML
-    public void setEndDate() {
-        service.setEndDate(endDate.getValue());
-        service.update();
-    }
-
-    @FXML
-    public void openDialog() {
-
+    public void deleteGroup() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/COMPONENTS/filterDialog.fxml"));
-
-            Parent root = loader.load();
-            Dialog<ButtonType> dialog = new Dialog<>();
-            dialog.setTitle("Filter");
-            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CLOSE);
-            dialog.getDialogPane().setContent(root);
-            dialog.showAndWait();
-            service.update();
+            getService().getGroupService().delete(getService().getGroup());
+            getInfo().setText(getService().getGroup().getName()+"'s group has been deleted.");
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            getInfo().setText("Error while deleting group.");
         }
+        getService().setGroup(getService().getGroupService().findAll().getFirst());
+        getService().update();
     }
 }

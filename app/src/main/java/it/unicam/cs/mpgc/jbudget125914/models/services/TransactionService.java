@@ -23,11 +23,13 @@ package it.unicam.cs.mpgc.jbudget125914.models.services;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.Account;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.Amount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.util.CriteriaQueryHelper;
 import it.unicam.cs.mpgc.jbudget125914.models.services.util.TransactionUtil;
 import jakarta.persistence.criteria.Expression;
+import jakarta.persistence.criteria.Predicate;
 import lombok.NonNull;
 
 import java.time.temporal.Temporal;
@@ -47,10 +49,11 @@ import java.util.Set;
 public class TransactionService<
         T extends Transaction<AM, D, TA, A>,
         A extends Account<AM>,
-        TA extends Tag<? extends Category<?>>,
+        TA extends Tag<? extends Category<TA>>,
         N extends Number,
         D extends Temporal & Comparable<? super D>,
-        AM extends Amount<N, AM>
+        AM extends Amount<N, AM>,
+        G extends Group<TA, ? extends Category<TA>, ?,A>
         > extends AbstractService<T> {
 
     /**
@@ -68,8 +71,8 @@ public class TransactionService<
      * @param to date end
      * @return all the transaction between date {@code from} and {@code to} (inclusive)
      */
-    public List<T> findAll(D from, D to) {
-        return findAll(from, to, new HashSet<>());
+    public List<T> findAll(D from, D to, G group) {
+        return findAll(from, to, new HashSet<>(), group);
     }
 
     /**
@@ -79,33 +82,29 @@ public class TransactionService<
      * @param accounts account filter
      * @return all the transaction between date {@code from} and {@code to} (inclusive) and filtered by accounts
      */
-    public List<T> findAll(D from, D to, @NonNull Set<A> accounts) {
-        return findAll(from, to, accounts, new HashSet<>());
+    public List<T> findAll(D from, D to, @NonNull Set<A> accounts, G group) {
+        return findAll(from, to, accounts, new HashSet<>(), group);
     }
 
     /**
      * Return all the transaction between date {@code from} and {@code to} (inclusive) and filtered by accounts and tags
      * @param from date start
      * @param to date end
-     * @param accounts account filter
+     * @param accounts accounts filter
      * @param tags tags filter
      * @return all the transaction between date {@code from} and {@code to} (inclusive) and filtered by accounts and tags
      */
-    public List<T> findAll(D from, D to, @NonNull Set<A> accounts, @NonNull Set<TA> tags) {
+    public List<T> findAll(D from, D to, @NonNull Set<A> accounts, @NonNull Set<TA> tags, G group) {
 
         return TransactionUtil.executeInTransactionReturn(em -> {
             CriteriaQueryHelper<T, T> helper = new CriteriaQueryHelper<>(em, this.getEntityClass(), this.getEntityClass());
 
-            helper.getCq()
-                    .select(helper.getRoot())
-                    .where(helper.getCb().between(helper.getRoot().get("date"), from, to));
+            Predicate groupPredicate = helper.getRoot().get("account").get("groupId").equalTo(group);
+            Predicate datePredicate = helper.getCb().between(helper.getRoot().get("date"), from, to);
+            Predicate accountPredicate = helper.in("account", accounts);
+            Predicate tagsPredicate = helper.containsAny("tags", tags);
 
-            if (!accounts.isEmpty()) {
-                helper.in("accounts", accounts);
-            }
-            if (!tags.isEmpty()) {
-                helper.containsAny("tags", tags);
-            }
+            helper.where(helper.getCb().and(datePredicate, accountPredicate, tagsPredicate, groupPredicate));
 
             return helper.getResultList();
         });
@@ -116,22 +115,20 @@ public class TransactionService<
      * @param cutoff cutoff date
      * @param amountClass amount class
      * @param numberClass number class (of amount attribute)
-     * @param accounts accounts to filter
      * @return the total amount period to the cutoff (inclusive)
      */
     public AM getTransactionAmount(D cutoff, Class<AM> amountClass, Class<N> numberClass, Set<A> accounts) {
         return TransactionUtil.executeInTransactionReturn(em -> {
             CriteriaQueryHelper<T, N> helper = new CriteriaQueryHelper<>(em, getEntityClass(), numberClass);
 
-            helper.where(helper.getCb().lessThanOrEqualTo(helper.getRoot().get("date"), cutoff));
-            if(accounts != null)
-                helper.containsAny("account", accounts);
+            Predicate accountPredicate = helper.in("account", accounts);
+            Predicate datePredicate = helper.getCb().lessThanOrEqualTo(helper.getRoot().get("date"), cutoff);
+
+            helper.where(accountPredicate, datePredicate);
 
             Expression<N> transactionSum = helper.getCb().sum(
                     helper.getRoot().get("amount").get("amount")
             );
-
-            helper.where(helper.getCb().lessThanOrEqualTo(helper.getRoot().get("date"), cutoff));
 
             helper.getCq().select(transactionSum);
 

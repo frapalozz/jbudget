@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" style="-fx-background-color: #121212; -fx-padding: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.jbudget125914.controllers.NewGroupDialogController">
+   <children>
+      <Label style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;" text="New Group" />
+      <Separator style="-fx-background-color: #333;" />
+      <VBox>
+         <children>
+            <VBox spacing="5" style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-border-color: #333; -fx-border-radius: 5;">
+               <children>
+                  <Label style="-fx-text-fill: #e0e0e0; -fx-font-weight: bold;" text="Group Name" />
+                  <TextField fx:id="groupName" />
+                  <Label style="-fx-text-fill: #e0e0e0; -fx-font-weight: bold;" text="Currency" />
+                  <TextField fx:id="currency" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <Separator style="-fx-background-color: #333;" />
+      <HBox alignment="CENTER_RIGHT" spacing="10">
+         <children>
+            <Button fx:id="applyButton" defaultButton="true" onAction="#apply" styleClass="dark-button" text="Create" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

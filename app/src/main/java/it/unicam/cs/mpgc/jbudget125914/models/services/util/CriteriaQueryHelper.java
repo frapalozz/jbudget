@@ -25,7 +25,9 @@ import jakarta.persistence.criteria.*;
 import lombok.Getter;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -61,7 +63,9 @@ public class CriteriaQueryHelper<R, Q> {
      * @return the query result
      */
     public List<Q> getResultList() {
-        return em.createQuery(cq).getResultList();
+        List<Q> result = em.createQuery(cq).getResultList();
+
+        return Objects.requireNonNullElseGet(result, ArrayList::new);
     }
 
     /**
@@ -88,31 +92,37 @@ public class CriteriaQueryHelper<R, Q> {
      * Filter if two collections has an intersection
      * @param field of the database to get the collection
      * @param items collection passed
-     * @param <T> type of the elements
      */
-    public <T> void containsAny(String field, Set<T> items) {
-        where(
-            getCb().or(
+    public Predicate containsAny(String field, Set<?> items) {
+        if(items == null || items.isEmpty())
+            return getCb().conjunction();
+
+        return getCb().or(
                 items.stream()
                     .map(t -> getCb().isMember(t, getRoot().get(field)))
                     .toArray(Predicate[]::new)
-            )
         );
     }
 
-    public <T> void in(String field, Set<T> items) {
-        where(getRoot().get("field").in(items));
+    /**
+     * Filter if the field is present in items
+     * @param field field to filter
+     * @param items items passed
+     */
+    public <T> Predicate in(String field, Set<T> items) {
+        if(items == null || items.isEmpty())
+            return getCb().conjunction();
+        return getRoot().get(field).in(items);
     }
 
     /**
      * Construct a new object of type {@code T1} with parameter {@code T2}
      * @param class1 class of type {@code T1}
-     * @param class2 class of tyoe {@code T2}
+     * @param class2 class of type {@code T2}
      * @return a new object of type {@code T1} with parameter {@code T2}
      * @param <T1> type of the returned object
-     * @param <T2> type of the parameter of the returned object
      */
-    public <T1, T2> T1 convertor(Class<T1> class1, Class<T2> class2) {
+    public <T1> T1 convertor(Class<T1> class1, Class<?> class2) {
         try {
             Constructor<T1> constructor = class1.getConstructor(class2);
             return constructor.newInstance(getResultList().getFirst());

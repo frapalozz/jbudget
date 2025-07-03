@@ -8,6 +8,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.*;
 import javafx.beans.property.SimpleIntegerProperty;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +18,6 @@ import java.util.Map;
 import java.util.Set;
 
 @Getter
-@Setter
 public abstract class AbstractServiceManager<
         T extends Transaction<AM, D, TA, A>,
         A extends Account<AM>,
@@ -27,42 +27,52 @@ public abstract class AbstractServiceManager<
         AM extends Amount<N ,AM>,
         C extends Category<TA>,
         G extends Group<TA, C, ?, A>> implements ServiceManager<
-            TransactionService<T, A, TA, N, D, AM>,
-            AccountService<A, N, AM>,
-            CategoryService<AM, N, A, T, TA, C, D>,
-            GroupService<G, A, TA>,
-            TagService<TA, C>,
-            D, A, TA, T, C, AM> {
+            D, A, TA, T, C, AM, G> {
 
+    @Setter
     private SimpleIntegerProperty changes = new SimpleIntegerProperty(0);
 
-    private Long groupId;
+    @Setter
+    private G group;
 
+    @Setter
+    private AM balance;
+
+    @Setter
     private D startDate;
 
+    @Setter
     private D endDate;
 
+    @Setter
     private Set<A> accounts;
 
+    @Setter
     private Set<TA> tags;
 
+    @Setter
+    private T transaction;
+
+    @Setter
     private List<T> transactions;
 
+    @Setter
     List<Map<C, AM>> categoryBalance;
 
 
-    private TransactionService<T, A, TA, N, D, AM> transactionService;
+    @Setter(value = AccessLevel.PACKAGE)
+    private TransactionService<T, A, TA, N, D, AM, G> transactionService;
 
+    @Setter(value = AccessLevel.PACKAGE)
+    private AccountService<A, N, AM, G> accountService;
 
-    private AccountService<A, N, AM> accountService;
-
-
+    @Setter(value = AccessLevel.PACKAGE)
     private CategoryService<AM, N, A, T, TA, C, D> categoryService;
 
-
+    @Setter(value = AccessLevel.PACKAGE)
     private GroupService<G, A, TA> groupService;
 
-
+    @Setter(value = AccessLevel.PACKAGE)
     private TagService<TA, C> tagService;
 
 }

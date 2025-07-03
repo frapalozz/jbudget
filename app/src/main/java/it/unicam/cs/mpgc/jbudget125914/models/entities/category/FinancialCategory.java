@@ -38,7 +38,6 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "category")
-@ToString(of = "name")
 public class FinancialCategory implements Category<FinancialTag>, Serializable {
 
     @Id
@@ -59,5 +58,10 @@ public class FinancialCategory implements Category<FinancialTag>, Serializable {
     FinancialCategory(String name, Set<FinancialTag> tags) {
         setName(name);
         setTags(tags);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

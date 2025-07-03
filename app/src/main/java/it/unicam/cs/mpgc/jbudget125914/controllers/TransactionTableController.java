@@ -1,13 +1,16 @@
 package it.unicam.cs.mpgc.jbudget125914.controllers;
 
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import it.unicam.cs.mpgc.jbudget125914.models.services.TransactionService;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
+import it.unicam.cs.mpgc.jbudget125914.models.services.manager.FinancialServiceManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,22 +21,41 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-public class TransactionTableView implements Initializable {
+public class TransactionTableController implements Initializable {
 
-    private TransactionService<FinancialTransaction, FinancialAccount, FinancialTag, BigDecimal, LocalDate, FinancialAmount> controller;
+    private final FinancialServiceManager service = FinancialServiceManager.getInstance();
 
     @FXML
     private TableView<FinancialTransaction> table;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        controller = new TransactionService<>(FinancialTransaction.class);
+        table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
+        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            service.setTransaction(newValue);
+        });
+
+        service.getChanges().addListener((observable, oldValue, newValue) -> {
+            table.getItems().clear();
+            tableSetter();
+        });
+
+        tableInitialize();
+        tableSetter();
+    }
+
+    private void tableSetter() {
+        if(service.getTransactions() != null)
+            service.getTransactions().forEach(t -> table.getItems().add(t));
+    }
+
+    private void tableInitialize() {
         TableColumn<FinancialTransaction, String> description = new TableColumn<>("DESCRIPTION");
         TableColumn<FinancialTransaction, BigDecimal> amount = new TableColumn<>("AMOUNT");
         TableColumn<FinancialTransaction, BigDecimal> date = new TableColumn<>("DATE");
         TableColumn<FinancialTransaction, FinancialAccount> account = new TableColumn<>("ACCOUNT");
-        TableColumn<FinancialTransaction, Set<Tag>> tags = new TableColumn<>("TAGS");
+        TableColumn<FinancialTransaction, Set<FinancialTag>> tags = new TableColumn<>("TAGS");
 
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
         amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
@@ -42,7 +64,5 @@ public class TransactionTableView implements Initializable {
         tags.setCellValueFactory(new PropertyValueFactory<>("tags"));
 
         table.getColumns().addAll(description, amount, date, account, tags);
-
-        controller.findAll().forEach(t -> table.getItems().add(t));
     }
 }

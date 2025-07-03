@@ -8,15 +8,14 @@ import java.util.Map;
 import java.util.Set;
 
 
-public interface ServiceManager<T, A, C, G, TA, D, AC, TAGS, TR, CA, AM> {
+public interface ServiceManager<D, AC, TAGS, TR, CA, AM, G> {
 
     SimpleIntegerProperty getChanges();
     void setChanges(int changes);
 
-    Long getGroupId();
+    G getGroup();
 
-
-    void setGroupId(@NonNull Long groupId);
+    void setGroup(@NonNull G groupId);
 
     D getStartDate();
     void setStartDate(@NonNull D startDate);
@@ -25,37 +24,19 @@ public interface ServiceManager<T, A, C, G, TA, D, AC, TAGS, TR, CA, AM> {
     void setEndDate(@NonNull D endDate);
 
     Set<AC> getAccounts();
+    Set<AC> getGroupAccounts();
     void setAccounts(Set<AC> account);
 
     Set<TAGS> getTags();
+    Set<TAGS> getGroupTags();
     void setTags(Set<TAGS> tags);
 
+    void update();
+
+    TR getTransaction();
+    void setTransaction(TR transaction);
+
     List<TR> getTransactions();
-    void setTransactions(List<TR> transactions);
-    void updateTransactions();
 
     List<Map<CA, AM>> getCategoryBalance();
-    void setCategoryBalance(List<Map<CA, AM>> categories);
-    void updateCategoryBalance();
-
-
-    T getTransactionService();
-
-    void setTransactionService(@NonNull T transactionService);
-
-    A getAccountService();
-
-    void setAccountService(@NonNull A accountService);
-
-    C getCategoryService();
-
-    void setCategoryService(@NonNull C categoryService);
-
-    G getGroupService();
-
-    void setGroupService(@NonNull G groupService);
-
-    TA getTagService();
-
-    void setTagService(@NonNull TA tagService);
 }

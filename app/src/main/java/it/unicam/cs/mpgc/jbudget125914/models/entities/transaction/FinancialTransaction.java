@@ -55,6 +55,7 @@ public class FinancialTransaction implements Transaction<FinancialAmount, LocalD
     private String description;
 
     @ManyToOne
+    @JoinColumn(referencedColumnName = "accountid", name = "account")
     private FinancialAccount account;
 
     @Embedded

@@ -51,5 +51,5 @@ public interface Amount<N, A extends Amount<N ,A>> {
      * @param n the amount to sum with
      * @return the sum of this and {@code n} amount
      */
-    A add(@NonNull A n);
+    A add(A n);
 }

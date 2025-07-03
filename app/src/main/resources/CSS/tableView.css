@@ -1,54 +1,78 @@
-/* Column header text color */
-.table-view .column-header .label {
-    -fx-text-fill: white;
+.root {
+    -fx-background-color: #000000;
 }
 
+/* Main table styling */
 .table-view {
-    -fx-background-color: black;
-    -fx-table-cell-border-color: rgba(255, 255, 255, 0.2);
-    -fx-table-header-border-color: white;
+    -fx-background-color: #000000;
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-width: 1.5;
+    -fx-border-radius: 3;
+    -fx-table-cell-border-color: rgba(255, 255, 255, 0.25);
 }
 
+/* Header styling */
 .table-view .column-header-background {
-    -fx-background-color: black;
+    -fx-background-color: #000000;
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-width: 0 0 1.5 0;
 }
 
-.table-view .column-header,
-.table-view .filler {
-    -fx-border-color: white;
-    -fx-border-width: 1;
-    -fx-background-color: transparent;
-}
-
-/* This is the key selector for header text */
-.table-view .column-header .label {
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: #000000;
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-width: 0 1.5 0 0;
     -fx-text-fill: white;
+    -fx-font-weight: bold;
     -fx-alignment: CENTER;
+    -fx-padding: 10 0 10 0;
 }
 
+/* Cell styling */
 .table-view .table-cell {
-    -fx-border-color: rgba(255, 255, 255, 0.2);
-    -fx-border-width: 0.5;
     -fx-text-fill: white;
-    -fx-background-color: black;
+    -fx-border-color: rgba(255, 255, 255, 0.25);
+    -fx-border-width: 0 1.5 1.5 0;
     -fx-alignment: CENTER;
+    -fx-padding: 8 0 8 0;
 }
 
-.table-view .table-row-cell {
-    -fx-background-color: black;
+/* Row styling */
+.table-row-cell {
+    -fx-background-color: #000000;
+    -fx-background-insets: 0, 0 0 1 0;
 }
 
-.table-view .table-row-cell:filled:selected {
-    -fx-background-color: #333;
+.table-row-cell:odd {
+    -fx-background-color: #080808;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: rgba(50, 50, 50, 0.9);
+    -fx-text-fill: white;
 }
 
 /* Scrollbar styling */
 .table-view .scroll-bar:horizontal .track,
 .table-view .scroll-bar:vertical .track {
-    -fx-background-color: black;
+    -fx-background-color: #000000;
+    -fx-border-color: rgba(255, 255, 255, 0.3);
 }
 
 .table-view .scroll-bar:horizontal .thumb,
 .table-view .scroll-bar:vertical .thumb {
-    -fx-background-color: rgba(255, 255, 255, 0.2);
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+    -fx-background-insets: 2;
+}
+
+/* Corner styling */
+.table-view .corner {
+    -fx-background-color: #000000;
+    -fx-border-color: rgba(255, 255, 255, 0.5);
+    -fx-border-width: 0 1.5 1.5 0;
+}
+
+/* Hover effects */
+.table-row-cell:hover {
+    -fx-background-color: rgba(100, 100, 100, 0.3);
 }

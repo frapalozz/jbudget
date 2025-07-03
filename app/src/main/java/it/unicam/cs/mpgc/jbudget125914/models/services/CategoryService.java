@@ -23,6 +23,7 @@ package it.unicam.cs.mpgc.jbudget125914.models.services;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.Account;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.Amount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import lombok.NonNull;
@@ -44,9 +45,9 @@ public class CategoryService<
         super(entityClass);
     }
 
-    public List<Map<C, N>> getCategoryBalance(Class<T> entityClass, D from, D to,@NonNull Set<A> account) {
-        TransactionService<T, A, TA, NU, D, N> transactionService = new TransactionService<>(entityClass);
-        List<T> transactions = transactionService.findAll(from, to, account);
+    public <G extends Group<TA, C, ?, A>> List<Map<C, N>> getCategoryBalance(Class<T> entityClass, D from, D to, Set<A> account, G group) {
+        TransactionService<T, A, TA, NU, D, N, G> transactionService = new TransactionService<>(entityClass);
+        List<T> transactions = transactionService.findAll(from, to, account, group);
 
         List<Map<C, N>> categoryBalance = new ArrayList<>();
         categoryBalance.add(new HashMap<>());

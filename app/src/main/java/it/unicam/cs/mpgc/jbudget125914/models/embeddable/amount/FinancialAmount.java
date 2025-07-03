@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Embeddable
-public class FinancialAmount implements Amount<BigDecimal, FinancialAmount> {
+public class FinancialAmount implements Amount<BigDecimal, FinancialAmount>, Comparable<FinancialAmount> {
 
     @Column(precision = 14, scale = 2, nullable = false)
     private final BigDecimal amount;
@@ -46,7 +46,15 @@ public class FinancialAmount implements Amount<BigDecimal, FinancialAmount> {
     }
 
     @Override
-    public FinancialAmount add(@NonNull FinancialAmount n) {
+    public FinancialAmount add(FinancialAmount n) {
+        if(n == null || n.getAmount() == null) {
+            return new FinancialAmount(getAmount());
+        }
         return new FinancialAmount(amount.add(n.getAmount()));
+    }
+
+    @Override
+    public int compareTo(FinancialAmount o) {
+        return this.getAmount().compareTo(o.getAmount());
     }
 }

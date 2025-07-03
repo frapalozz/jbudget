@@ -60,6 +60,7 @@ public class LineChartController implements Initializable {
     }
 
     private void buildSeries(XYChart.Series<String, Number> a, XYChart.Series<String, Number> b) {
+        if(service.getTransactions() == null) return;
         service.getTransactions().stream()
             .filter(t ->
                     t.getDate().isAfter(service.getStartDate().minusDays(1)) &&

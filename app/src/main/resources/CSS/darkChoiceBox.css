@@ -1,0 +1,29 @@
+/* Main ChoiceBox */
+.dark-choice-box {
+    -fx-background-color: #2d2d2d;
+    -fx-text-fill: white;
+    -fx-mark-color: white;
+    -fx-border-color: #444;
+}
+
+/* Dropdown menu */
+.dark-choice-box .context-menu {
+    -fx-background-color: #2d2d2d;
+    -fx-border-color: #444;
+}
+
+/* Menu items */
+.dark-choice-box .menu-item {
+    -fx-background-color: #2d2d2d;
+    -fx-text-fill: white;
+}
+
+/* Hovered menu items */
+.dark-choice-box .menu-item:focused {
+    -fx-background-color: #3d3d3d;
+}
+
+/* Selected value display */
+.dark-choice-box .label {
+    -fx-text-fill: white;
+}

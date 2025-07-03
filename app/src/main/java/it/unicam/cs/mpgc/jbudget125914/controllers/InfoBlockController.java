@@ -29,12 +29,13 @@ public class InfoBlockController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         service.getChanges().addListener((obs, oldValue, newValue) -> {
             Platform.runLater(() -> {
-                String currency = service.getGroupService().getCurrency(service.getGroupId());
+                String currency = service.getGroupService().getCurrency(service.getGroup().getGroupId());
 
                 generateCategoryBlocks(currency, service.getTransactions());
             });
         });
-        String currency = service.getGroupService().getCurrency(service.getGroupId());
+
+        String currency = service.getGroup() != null ? service.getGroupService().getCurrency(service.getGroup().getGroupId()) : "";
         generateCategoryBlocks(currency, service.getTransactions());
     }
 
@@ -45,11 +46,14 @@ public class InfoBlockController implements Initializable {
     }
 
     private void setAmount1(String currency) {
-        this.amount1.setText( currency + " " + service.getTransactionService().getTransactionAmount(LocalDate.now(), FinancialAmount.class, BigDecimal.class, null)
-                .add(service.getAccountService().accountsInitialBalance(FinancialAmount.class, BigDecimal.class)).toString());
+        this.amount1.setText( currency + " " + (service.getBalance() != null? service.getBalance() : "0"));
     }
 
     private void setAmount2(String currency, List<FinancialTransaction> transactions) {
+        if(transactions == null) {
+            this.amount2.setText("0");
+            return;
+        }
         this.amount2.setText(
                 currency + " " + transactions
                         .stream()
@@ -62,6 +66,10 @@ public class InfoBlockController implements Initializable {
     }
 
     private void setAmount3(String currency, List<FinancialTransaction> transactions) {
+        if(transactions == null) {
+            this.amount3.setText("0");
+            return;
+        }
         this.amount3.setText(
                 currency + " " + transactions
                         .stream()

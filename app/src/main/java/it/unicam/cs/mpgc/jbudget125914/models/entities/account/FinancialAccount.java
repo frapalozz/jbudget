@@ -37,7 +37,7 @@ import java.io.Serializable;
 @Getter
 @NoArgsConstructor
 @Table(name = "account")
-public class FinancialAccount implements Account<FinancialAmount>, Serializable {
+public class FinancialAccount implements Account<FinancialAmount>, Serializable, Comparable<FinancialAccount> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,9 +52,9 @@ public class FinancialAccount implements Account<FinancialAmount>, Serializable 
     private FinancialAmount initialAmount;
 
     @ManyToOne
-    @JoinColumn(name = "groupId")
+    @JoinColumn(referencedColumnName = "groupid", name = "groupid")
     @Setter
-    private FinancialGroup group;
+    private FinancialGroup groupId;
 
     /**
      * Constructor for a FinancialAccount
@@ -67,7 +67,7 @@ public class FinancialAccount implements Account<FinancialAmount>, Serializable 
     public FinancialAccount(String name, FinancialAmount initialAmount, FinancialGroup group) {
         setName(name);
         setInitialAmount(initialAmount);
-        setGroup(group);
+        setGroupId(group);
     }
 
     @Override
@@ -81,5 +81,10 @@ public class FinancialAccount implements Account<FinancialAmount>, Serializable 
     @Override
     public String toString() {
         return this.getName();
+    }
+
+    @Override
+    public int compareTo(FinancialAccount o) {
+        return this.getName().compareTo(o.getName());
     }
 }
