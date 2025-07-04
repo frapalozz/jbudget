@@ -1,5 +1,6 @@
 package it.unicam.cs.mpgc.jbudget125914.controllers;
 
+import it.unicam.cs.mpgc.jbudget125914.controllers.util.ControllerUtil;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.services.manager.FinancialServiceManager;
 import javafx.application.Platform;
@@ -23,7 +24,7 @@ public abstract class FilterBarBase implements Initializable {
     private DatePicker endDate;
 
     @FXML
-    private ChoiceBox<FinancialGroup> selectGroup;
+    private ComboBox<FinancialGroup> selectGroup;
 
     @FXML
     private Label info;
@@ -32,69 +33,62 @@ public abstract class FilterBarBase implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        startDate.setValue(service.getStartDate());
-        endDate.setValue(service.getEndDate());
-        selectGroup.setValue(service.getGroup());
+        startDate.setValue(service.getFilterManager().getStartDate());
+        endDate.setValue(service.getFilterManager().getEndDate());
+        selectGroup.setValue(service.getFilterManager().getGroup());
 
         selectGroup.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if(newValue != null)
-                service.setGroup(newValue);
-            service.setAccounts(new HashSet<>());
-            service.setTags(new HashSet<>());
-            if(newValue != null)
+            if(selectGroup.getSelectionModel().isEmpty()) return;
+            if(oldValue != newValue) {
+                service.getFilterManager().setGroup(newValue);
+                service.getFilterManager().setAccounts(new HashSet<>());
+                service.getFilterManager().setTags(new HashSet<>());
                 service.update();
-        });
-
-        service.getGroupService().findAll().forEach(group -> {
-            selectGroup.getItems().add(group);
+            }
         });
 
         service.getChanges().addListener((obs, oldValue, newValue) -> {
             Platform.runLater(() -> {
-                selectGroup.getItems().clear();
-                selectGroup.setValue(service.getGroup());
+                selectGroup.setValue(service.getFilterManager().getGroup());
 
-                startDate.setValue(service.getStartDate());
-                endDate.setValue(service.getEndDate());
+                startDate.setValue(service.getFilterManager().getStartDate());
+                endDate.setValue(service.getFilterManager().getEndDate());
 
-                service.getGroupService().findAll().forEach(group -> {
-                    selectGroup.getItems().add(group);
-                });
+                if(info.getText().equals("Loading..."))
+                    info.setText("New Data loaded.");
             });
         });
     }
 
     @FXML
+    public void populateAccounts() {
+        selectGroup.getItems().clear();
+        selectGroup.setValue(service.getFilterManager().getGroup());
+        if(service.getFetchManager().getGroups() != null)
+            service.getFetchManager().getGroups().forEach(group -> {
+                selectGroup.getItems().add(group);
+            });
+    }
+
+    @FXML
     public void setStartDate() {
-        service.setStartDate(startDate.getValue());
+        service.getFilterManager().setStartDate(startDate.getValue());
         service.update();
     }
 
     @FXML
     public void setEndDate() {
-        service.setEndDate(endDate.getValue());
+        service.getFilterManager().setEndDate(endDate.getValue());
         service.update();
     }
 
     @FXML
     public void openDialog() {
-
         openDialogBuilder("filterDialog", "Filter");
     }
 
     protected void openDialogBuilder(String path, String title) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/COMPONENTS/"+path+".fxml"));
-
-            Parent root = loader.load();
-            Dialog<ButtonType> dialog = new Dialog<>();
-            dialog.setTitle(title);
-            dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CLOSE);
-            dialog.getDialogPane().setContent(root);
-
-            dialog.showAndWait();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        ControllerUtil cUtil = new ControllerUtil();
+        cUtil.dialogBuilder(path,title);
     }
 }

@@ -47,13 +47,7 @@ import java.util.Set;
  * @param <AM> amount type
  */
 public class TransactionService<
-        T extends Transaction<AM, D, TA, A>,
-        A extends Account<AM>,
-        TA extends Tag<? extends Category<TA>>,
-        N extends Number,
-        D extends Temporal & Comparable<? super D>,
-        AM extends Amount<N, AM>,
-        G extends Group<TA, ? extends Category<TA>, ?,A>
+        T, A, TA, N extends Number, D extends Temporal & Comparable<? super D>, AM, G
         > extends AbstractService<T> {
 
     /**

@@ -36,11 +36,11 @@ public class MainController implements Initializable {
     }
 
     private void fetchStartData() {
-        service.setGroup(null);
-        service.setEndDate(LocalDate.now());
-        service.setStartDate(LocalDate.now().minusDays(90));
-        service.setAccounts(new HashSet<>());
-        service.setTags(new HashSet<>());
+        service.getFilterManager().setGroup(null);
+        service.getFilterManager().setEndDate(LocalDate.now());
+        service.getFilterManager().setStartDate(LocalDate.now().minusDays(90));
+        service.getFilterManager().setAccounts(new HashSet<>());
+        service.getFilterManager().setTags(new HashSet<>());
         service.update();
     }
 

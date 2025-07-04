@@ -20,32 +20,9 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.services;
 
-
-import it.unicam.cs.mpgc.jbudget125914.models.entities.account.Account;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
-
-import java.util.Set;
-
-public class GroupService<
-        G extends Group<T,?,?,A>,
-        A extends Account<?>,
-        T extends Tag<?>
-        > extends AbstractService<G> {
+public class GroupService<G> extends AbstractService<G> {
 
     public GroupService(Class<G> entityClass) {
         super(entityClass);
-    }
-
-    public <D> String getCurrency(D id) {
-        return findById(id).getCurrency().toString();
-    }
-
-    public <D> Set<A> getAccounts(D id) {
-        return findById(id).getAccounts();
-    }
-
-    public <D> Set<T> getTags(D id) {
-        return findById(id).getTags();
     }
 }

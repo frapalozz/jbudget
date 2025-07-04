@@ -32,10 +32,10 @@ import java.time.temporal.Temporal;
 import java.util.*;
 
 public class CategoryService<
-        N extends Amount<NU,N>,
-        NU extends Number,
-        A extends Account<N>,
-        T extends Transaction<N, D, TA, A>,
+        AM extends Amount<N,AM>,
+        N extends Number,
+        A extends Account<AM>,
+        T extends Transaction<AM,D,TA,A>,
         TA extends Tag<C>,
         C extends Category<TA>,
         D extends Temporal & Comparable<? super D>
@@ -45,11 +45,11 @@ public class CategoryService<
         super(entityClass);
     }
 
-    public <G extends Group<TA, C, ?, A>> List<Map<C, N>> getCategoryBalance(Class<T> entityClass, D from, D to, Set<A> account, G group) {
-        TransactionService<T, A, TA, NU, D, N, G> transactionService = new TransactionService<>(entityClass);
+    public <G extends Group<TA, C, ?, A>> List<Map<C, AM>> getCategoryBalance(Class<T> entityClass, D from, D to, Set<A> account, G group) {
+        TransactionService<T, A, TA, N, D, AM, G> transactionService = new TransactionService<>(entityClass);
         List<T> transactions = transactionService.findAll(from, to, account, group);
 
-        List<Map<C, N>> categoryBalance = new ArrayList<>();
+        List<Map<C, AM>> categoryBalance = new ArrayList<>();
         categoryBalance.add(new HashMap<>());
         categoryBalance.add(new HashMap<>());
 
@@ -62,7 +62,7 @@ public class CategoryService<
         return categoryBalance;
     }
 
-    private void checkOrAdd(Map<C, N> map, C category, N amount) {
+    private void checkOrAdd(Map<C, AM> map, C category, AM amount) {
         if(!map.containsKey(category)) {
             map.put(category, amount);
         } else {
@@ -70,7 +70,7 @@ public class CategoryService<
         }
     }
 
-    private void addTo(List<Map<C, N>> categoryBalance, C category, N amount) {
+    private void addTo(List<Map<C, AM>> categoryBalance, C category, AM amount) {
         if(amount.signum() > 0) {
             checkOrAdd(categoryBalance.getFirst(), category, amount);
         } else {

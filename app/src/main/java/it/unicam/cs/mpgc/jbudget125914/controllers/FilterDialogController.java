@@ -30,11 +30,11 @@ public class FilterDialogController extends Dialog<ButtonType> {
 
         // Sample data - replace with your actual data
         accountsList.setItems(FXCollections.observableArrayList(
-                service.getGroup().getAccounts()
+                service.getFilterManager().getGroup().getAccounts()
         ));
 
         tagsList.setItems(FXCollections.observableArrayList(
-                service.getGroup().getTags()
+                service.getFilterManager().getGroup().getTags()
         ));
 
         // Button actions
@@ -56,8 +56,8 @@ public class FilterDialogController extends Dialog<ButtonType> {
     public void apply() {
         getSelectedAccounts();
         getSelectedTags();
-        service.setTags(new HashSet<>(selectedTags));
-        service.setAccounts(new HashSet<>(selectedAccounts));
+        service.getFilterManager().setTags(new HashSet<>(selectedTags));
+        service.getFilterManager().setAccounts(new HashSet<>(selectedAccounts));
         service.update();
     }
 }

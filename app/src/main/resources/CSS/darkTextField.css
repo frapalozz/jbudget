@@ -1,0 +1,13 @@
+.text-field {
+    -fx-background-color: transparent;
+    -fx-text-fill: #e0e0e0;
+    -fx-prompt-text-fill: #757575;
+    -fx-border-color: #616161;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 5 5 5 0;
+}
+
+.text-field:focused {
+    -fx-border-color: #4285f4;
+    -fx-border-width: 0 0 2 0;
+}

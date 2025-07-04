@@ -1,31 +1,23 @@
 package it.unicam.cs.mpgc.jbudget125914.models.services;
 
-import it.unicam.cs.mpgc.jbudget125914.models.entities.account.Account;
-import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.Amount;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
 import it.unicam.cs.mpgc.jbudget125914.models.services.util.CriteriaQueryHelper;
 import it.unicam.cs.mpgc.jbudget125914.models.services.util.TransactionUtil;
 import jakarta.persistence.criteria.Expression;
 
-import java.util.Set;
-
 public class AccountService<
-        A extends Account<N>,
-        NU extends Number,
-        N extends Amount<NU, N>,
-        G extends Group<?, ?, ?, A>
+        A, N extends Number, G
         > extends AbstractService<A> {
 
     public AccountService(Class<A> entityClass) {
         super(entityClass);
     }
 
-    public N accountsInitialBalance(Class<N> amountClass, Class<NU> currencyClass, G group) {
+    public N accountsInitialBalance(Class<N> amountClass, Class<N> currencyClass, G group) {
         return TransactionUtil.executeInTransactionReturn(em -> {
-            CriteriaQueryHelper<A, NU> helper = new CriteriaQueryHelper<>(em, getEntityClass(), currencyClass);
+            CriteriaQueryHelper<A, N> helper = new CriteriaQueryHelper<>(em, getEntityClass(), currencyClass);
 
             helper.where(helper.getRoot().get("groupId").equalTo(group));
-            Expression<NU> accountsBalance = helper.getCb().sum(
+            Expression<N> accountsBalance = helper.getCb().sum(
                     helper.getRoot().get("initialAmount").get("amount")
             );
 

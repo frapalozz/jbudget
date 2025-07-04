@@ -27,8 +27,8 @@ public class NewGroupDialogController extends Dialog<ButtonType> {
         }
         FinancialGroup group = new FinancialGroup(groupName, currency);
 
-        service.getGroupService().create(group);
-        service.setGroup(group);
+        service.getGeneralManager().getGroupService().create(group);
+        service.getFilterManager().setGroup(group);
         service.update();
     }
 }

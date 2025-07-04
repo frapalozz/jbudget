@@ -1,6 +1,5 @@
 package it.unicam.cs.mpgc.jbudget125914.controllers;
 
-import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.manager.FinancialServiceManager;
 import javafx.application.Platform;
@@ -10,7 +9,6 @@ import javafx.scene.control.Label;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -29,14 +27,14 @@ public class InfoBlockController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         service.getChanges().addListener((obs, oldValue, newValue) -> {
             Platform.runLater(() -> {
-                String currency = service.getGroupService().getCurrency(service.getGroup().getGroupId());
+                String currency = service.getFilterManager().getGroup() != null ? service.getFilterManager().getGroup().getCurrency() : "";
 
-                generateCategoryBlocks(currency, service.getTransactions());
+                generateCategoryBlocks(currency, service.getFetchManager().getTransactions());
             });
         });
 
-        String currency = service.getGroup() != null ? service.getGroupService().getCurrency(service.getGroup().getGroupId()) : "";
-        generateCategoryBlocks(currency, service.getTransactions());
+        String currency = service.getFilterManager().getGroup() != null ? service.getFilterManager().getGroup().getCurrency() : "";
+        generateCategoryBlocks(currency, service.getFetchManager().getTransactions());
     }
 
     private void generateCategoryBlocks(String currency, List<FinancialTransaction> transactions) {
@@ -46,7 +44,7 @@ public class InfoBlockController implements Initializable {
     }
 
     private void setAmount1(String currency) {
-        this.amount1.setText( currency + " " + (service.getBalance() != null? service.getBalance() : "0"));
+        this.amount1.setText( currency + " " + (service.getFetchManager().getBalance() != null? service.getFetchManager().getBalance() : "0"));
     }
 
     private void setAmount2(String currency, List<FinancialTransaction> transactions) {
@@ -58,8 +56,8 @@ public class InfoBlockController implements Initializable {
                 currency + " " + transactions
                         .stream()
                         .filter(t -> t.getAmount().signum() > 0)
-                        .filter(t -> t.getDate().isAfter(service.getStartDate().minusDays(1)) &&
-                                t.getDate().isBefore(service.getEndDate().plusDays(1)))
+                        .filter(t -> t.getDate().isAfter(service.getFilterManager().getStartDate().minusDays(1)) &&
+                                t.getDate().isBefore(service.getFilterManager().getEndDate().plusDays(1)))
                         .map(t -> t.getAmount().getAmount())
                         .reduce(BigDecimal.ZERO, BigDecimal::add)
         );
@@ -74,8 +72,8 @@ public class InfoBlockController implements Initializable {
                 currency + " " + transactions
                         .stream()
                         .filter(t -> t.getAmount().signum() < 0)
-                        .filter(t -> t.getDate().isAfter(service.getStartDate().minusDays(1)) &&
-                                t.getDate().isBefore(service.getEndDate().plusDays(1)))
+                        .filter(t -> t.getDate().isAfter(service.getFilterManager().getStartDate().minusDays(1)) &&
+                                t.getDate().isBefore(service.getFilterManager().getEndDate().plusDays(1)))
                         .map(t -> t.getAmount().getAmount())
                         .reduce(BigDecimal.ZERO, BigDecimal::add)
         );

@@ -60,11 +60,11 @@ public class LineChartController implements Initializable {
     }
 
     private void buildSeries(XYChart.Series<String, Number> a, XYChart.Series<String, Number> b) {
-        if(service.getTransactions() == null) return;
-        service.getTransactions().stream()
+        if(service.getFetchManager().getTransactions() == null) return;
+        service.getFetchManager().getTransactions().stream()
             .filter(t ->
-                    t.getDate().isAfter(service.getStartDate().minusDays(1)) &&
-                            t.getDate().isBefore(service.getEndDate().plusDays(1)))
+                    t.getDate().isAfter(service.getFilterManager().getStartDate().minusDays(1)) &&
+                            t.getDate().isBefore(service.getFilterManager().getEndDate().plusDays(1)))
             .sorted(Comparator.comparing(FinancialTransaction::getDate))
             .forEach(t -> {
                 XYChart.Data<String, Number> newNode = new XYChart.Data<>(t.getDate().toString(), t.getAmount().getAmount().abs());

@@ -33,7 +33,7 @@ public class TransactionTableController implements Initializable {
         table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            service.setTransaction(newValue);
+            service.getFilterManager().setTransaction(newValue);
         });
 
         service.getChanges().addListener((observable, oldValue, newValue) -> {
@@ -46,8 +46,8 @@ public class TransactionTableController implements Initializable {
     }
 
     private void tableSetter() {
-        if(service.getTransactions() != null)
-            service.getTransactions().forEach(t -> table.getItems().add(t));
+        if(service.getFetchManager().getTransactions() != null)
+            service.getFetchManager().getTransactions().forEach(t -> table.getItems().add(t));
     }
 
     private void tableInitialize() {

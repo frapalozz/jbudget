@@ -1,42 +1,39 @@
 package it.unicam.cs.mpgc.jbudget125914.models.services.manager;
 
-import javafx.beans.property.SimpleIntegerProperty;
-import lombok.NonNull;
+import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.Amount;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.account.Account;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
+import it.unicam.cs.mpgc.jbudget125914.models.services.manager.fetchManager.FetchManager;
+import it.unicam.cs.mpgc.jbudget125914.models.services.manager.filterManager.AbstractFilterManager;
+import it.unicam.cs.mpgc.jbudget125914.models.services.manager.filterManager.FilterManager;
+import it.unicam.cs.mpgc.jbudget125914.models.services.manager.generalManager.AbstractGeneralManager;
+import it.unicam.cs.mpgc.jbudget125914.models.services.manager.generalManager.GeneralManager;
+import javafx.beans.property.SimpleBooleanProperty;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.time.temporal.Temporal;
 
 
-public interface ServiceManager<D, AC, TAGS, TR, CA, AM, G> {
-
-    SimpleIntegerProperty getChanges();
-    void setChanges(int changes);
-
-    G getGroup();
-
-    void setGroup(@NonNull G groupId);
-
-    D getStartDate();
-    void setStartDate(@NonNull D startDate);
-
-    D getEndDate();
-    void setEndDate(@NonNull D endDate);
-
-    Set<AC> getAccounts();
-    Set<AC> getGroupAccounts();
-    void setAccounts(Set<AC> account);
-
-    Set<TAGS> getTags();
-    Set<TAGS> getGroupTags();
-    void setTags(Set<TAGS> tags);
+public interface ServiceManager<
+        D extends Temporal & Comparable<? super D>,
+        C extends Category<TA>,
+        A extends Account<AM>,
+        TA extends Tag<C>,
+        T extends Transaction<AM, D, TA, A>,
+        AM extends Amount<N,AM>,
+        N extends Number,
+        G extends Group<TA, C,?,A>,
+        GM extends GeneralManager<T,AM,N,A,D,TA,C,G,?,?,?,?,?>,
+        FM extends FilterManager<T,AM,N,A,D,TA,C,G>,
+        FTC extends FetchManager<T,AM,N,A,D,TA,C,G,GM,FM>> {
 
     void update();
 
-    TR getTransaction();
-    void setTransaction(TR transaction);
+    SimpleBooleanProperty getChanges();
 
-    List<TR> getTransactions();
-
-    List<Map<CA, AM>> getCategoryBalance();
+    FM getFilterManager();
+    FTC getFetchManager();
+    GM getGeneralManager();
 }

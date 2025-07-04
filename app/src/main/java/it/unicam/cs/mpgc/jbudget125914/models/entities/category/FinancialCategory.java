@@ -55,7 +55,7 @@ public class FinancialCategory implements Category<FinancialTag>, Serializable {
      * @param name name of the Category
      * @param tags tags associated to the Category
      */
-    FinancialCategory(String name, Set<FinancialTag> tags) {
+    public FinancialCategory(String name, Set<FinancialTag> tags) {
         setName(name);
         setTags(tags);
     }
@@ -63,5 +63,12 @@ public class FinancialCategory implements Category<FinancialTag>, Serializable {
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof FinancialCategory that)) return false;
+        return getCategoryId().equals(that.getCategoryId()) && getName().equals(that.getName());
     }
 }

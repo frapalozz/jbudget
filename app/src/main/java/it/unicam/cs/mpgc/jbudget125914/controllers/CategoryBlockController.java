@@ -55,14 +55,14 @@ public class CategoryBlockController implements Initializable {
     }
 
     private void generateCategoryBlocks() {
-        List<Map<FinancialCategory, FinancialAmount>> categoryBalance = service.getCategoryBalance();
+        List<Map<FinancialCategory, FinancialAmount>> categoryBalance = service.getFetchManager().getCategoryBalance();
         if(categoryBalance != null &&!categoryBalance.isEmpty()) {
             addValues(income, categoryBalance.getFirst(), chartIncome);
             addValues(expenses, categoryBalance.getLast(), chartExpenses);
         }
 
-        catDate1.setText(service.getStartDate().toString() + " | " + service.getEndDate().toString());
-        catDate2.setText(service.getStartDate().toString() + " | " + service.getEndDate().toString());
+        catDate1.setText(service.getFilterManager().getStartDate().toString() + " | " + service.getFilterManager().getEndDate().toString());
+        catDate2.setText(service.getFilterManager().getStartDate().toString() + " | " + service.getFilterManager().getEndDate().toString());
     }
 
     private void addValues(VBox table, Map<FinancialCategory, FinancialAmount> map, PieChart chart) {
