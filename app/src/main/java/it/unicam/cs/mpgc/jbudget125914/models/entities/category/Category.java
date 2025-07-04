@@ -20,8 +20,8 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.entities.category;
 
-import it.unicam.cs.mpgc.jbudget125914.models.entities.Nameable;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Taggable;
+import it.unicam.cs.mpgc.jbudget125914.interfaces.Nameable;
+import it.unicam.cs.mpgc.jbudget125914.interfaces.Taggable;
 
 /**
  * This interface represent a Category

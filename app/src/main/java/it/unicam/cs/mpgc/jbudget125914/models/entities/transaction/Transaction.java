@@ -20,9 +20,9 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.entities.transaction;
 
-import it.unicam.cs.mpgc.jbudget125914.models.entities.Describable;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.account.AccountLinked;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Taggable;
+import it.unicam.cs.mpgc.jbudget125914.interfaces.Describable;
+import it.unicam.cs.mpgc.jbudget125914.interfaces.AccountLinked;
+import it.unicam.cs.mpgc.jbudget125914.interfaces.Taggable;
 import lombok.NonNull;
 
 /**

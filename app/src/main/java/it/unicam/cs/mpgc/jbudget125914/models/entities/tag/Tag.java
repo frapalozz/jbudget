@@ -20,7 +20,7 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.entities.tag;
 
-import it.unicam.cs.mpgc.jbudget125914.models.entities.Nameable;
+import it.unicam.cs.mpgc.jbudget125914.interfaces.Nameable;
 import lombok.NonNull;
 
 /**

@@ -20,9 +20,9 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.entities.group;
 
-import it.unicam.cs.mpgc.jbudget125914.models.entities.Nameable;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Categorizable;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Taggable;
+import it.unicam.cs.mpgc.jbudget125914.interfaces.Nameable;
+import it.unicam.cs.mpgc.jbudget125914.interfaces.Categorizable;
+import it.unicam.cs.mpgc.jbudget125914.interfaces.Taggable;
 import lombok.NonNull;
 
 import java.util.Set;
