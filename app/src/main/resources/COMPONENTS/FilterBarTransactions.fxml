@@ -22,7 +22,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <ComboBox fx:id="selectGroup" onShowing="#populateAccounts" prefWidth="150.0" />
+            <ComboBox fx:id="selectGroup" onShowing="#populateGroups" prefWidth="150.0" />
             <Button fx:id="deleteGroup" mnemonicParsing="false" onAction="#openNewTransactionDialog" style="-fx-background-color: #2d2d2d;" text="New Transaction" textFill="WHITE" />
             <Button fx:id="deleteGroup1" mnemonicParsing="false" onAction="#deleteTransaction" style="-fx-background-color: #2d2d2d;" text="Delete Transaction" textFill="WHITE" />
             <Button fx:id="deleteGroup11" mnemonicParsing="false" onAction="#openUpdateTransactionDialog" style="-fx-background-color: #2d2d2d;" text="Update Transaction" textFill="WHITE" />

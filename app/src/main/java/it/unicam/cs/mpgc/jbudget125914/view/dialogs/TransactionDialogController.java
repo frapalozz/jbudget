@@ -1,3 +1,23 @@
+/**
+ * MIT License
+ * Copyright (c) 2025 Francesco Palozzi
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 
 import it.unicam.cs.mpgc.jbudget125914.view.util.ControllerUtil;
@@ -19,7 +39,10 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
-public class TransactionDialogController implements Initializable {
+/**
+ * This class is the controller for NewTransactionDialog.fxml view
+ */
+public class TransactionDialogController extends BaseTransactionController implements Initializable {
 
     @FXML
     private TextField description;
@@ -50,6 +73,9 @@ public class TransactionDialogController implements Initializable {
         );
     }
 
+    /**
+     * Populate account ChoiceBox
+     */
     @FXML
     public void populateAccounts() {
         FinancialAccount account = this.account.getValue();
@@ -59,6 +85,9 @@ public class TransactionDialogController implements Initializable {
         this.account.getItems().addAll(service.getFilterManager().getGroup().getAccounts());
     }
 
+    /**
+     * Populate category ChoiceBox
+     */
     @FXML
     public void populateCategory() {
         FinancialCategory category = this.category.getValue();
@@ -68,6 +97,9 @@ public class TransactionDialogController implements Initializable {
         this.category.getItems().addAll(service.getFilterManager().getGroup().getCategories());
     }
 
+    /**
+     * Apply changes
+     */
     @FXML
     private void apply() {
         if(applyButton.getText().equals("Create")) {
@@ -120,25 +152,55 @@ public class TransactionDialogController implements Initializable {
         return tags;
     }
 
+    /**
+     * Set the applyButton text
+     * @param text the new text
+     */
     public void setApplyButton(String text) {
         applyButton.setText(text);
     }
+
+    /**
+     * Set the new description for the Transaction
+     * @param description the new description
+     */
     public void setDescription(String description) {
         this.description.setText(description);
     }
+
+    /**
+     * Set the amount for the Transaction
+     * @param amount the new amount
+     */
     public void setAmount(String amount) {
         this.amount.setText(amount);
     }
+
+    /**
+     * Set the date for the Transaction
+     * @param date the new date
+     */
     public void setDate(LocalDate date) {
         this.date.setValue(date);
     }
+
+    /**
+     * Set the account for the Transaction
+     * @param account the new account
+     */
     public void setAccount(FinancialAccount account) {
         this.account.setValue(account);
     }
+
+    /**
+     * Set the category for the Transaction
+     * @param category the new category
+     */
     public void setCategory(FinancialCategory category) {
         this.category.setValue(category);
         updateTags();
     }
+
     private void updateTags() {
         tags.getChildren().clear();
         tags.getChildren().addAll(generateTags(category.getValue()));

@@ -22,7 +22,7 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </Button>
-            <ComboBox fx:id="selectGroup" onShowing="#populateAccounts" prefWidth="150.0" />
+            <ComboBox fx:id="selectGroup" onShowing="#populateGroups" prefWidth="150.0" />
             <Button mnemonicParsing="false" onAction="#openNewScheduleDialog" style="-fx-background-color: #2d2d2d;" text="New Schedule" textFill="WHITE" />
             <Button mnemonicParsing="false" onAction="#deleteSchedule" style="-fx-background-color: #2d2d2d;" text="Delete Schedule" textFill="WHITE" />
             <Button mnemonicParsing="false" onAction="#openUpdateScheduleDialog" style="-fx-background-color: #2d2d2d;" text="Update Schedule" textFill="WHITE" />
