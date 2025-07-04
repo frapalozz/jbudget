@@ -6,6 +6,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
+import it.unicam.cs.mpgc.jbudget125914.models.services.manager.generalManager.GeneralManager;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,7 +23,8 @@ public abstract class AbstractFilterManager<
         D extends Temporal & Comparable<? super D>,
         TA extends Tag<C>,
         C extends Category<TA>,
-        G extends Group<TA,C,?,A>> implements FilterManager<T,AM,N,A,D,TA,C,G> {
+        G extends Group<TA,C,?,A>,
+        S extends Transaction<AM,D,TA,A>> implements FilterManager<T,AM,N,A,D,TA,C,G> {
 
     D startDate;
 
@@ -35,4 +37,11 @@ public abstract class AbstractFilterManager<
     private G group;
 
     private T transaction;
+
+    private S schedule;
+
+    @Override
+    public <GM extends GeneralManager<?,?,?,?,?,?,?,?,G,?,?,?,?,?,?>> void updateGroup(GM generalManager) {
+        setGroup(generalManager.getGroupService().findById(this.group.getGroupId()));
+    }
 }

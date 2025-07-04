@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.jbudget125914.controllers;
+package it.unicam.cs.mpgc.jbudget125914.controllers.charts;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.manager.FinancialServiceManager;
@@ -23,12 +23,12 @@ public class LineChartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        service.getChanges().addListener((observable, oldValue, newValue) -> {
+        service.getChanges().addListener((observable, oldValue, newValue) ->
             Platform.runLater(() -> {
                 chart.getData().clear();
                 generateChart();
-            });
-        });
+            })
+        );
         generateChart();
     }
 

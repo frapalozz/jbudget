@@ -35,21 +35,12 @@ import java.util.Set;
 /**
  * This class represent a FinancialGroup entity
  */
+@Setter
 @Entity
 @NoArgsConstructor
 @Getter
 @Table(name = "group_table")
-public class FinancialGroup implements Group<FinancialTag, FinancialCategory, String, FinancialAccount>, Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long groupId;
-
-    @Setter
-    private String name;
-
-    @Setter
-    private String currency;
+public class FinancialGroup extends AbstractGroup<FinancialTag, FinancialCategory, FinancialAccount> implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -57,11 +48,9 @@ public class FinancialGroup implements Group<FinancialTag, FinancialCategory, St
             joinColumns = @JoinColumn(name = "groupid"),
             inverseJoinColumns = @JoinColumn(name = "tagid")
     )
-    @Setter
     private Set<FinancialTag> tags;
 
     @OneToMany(mappedBy = "groupId", fetch = FetchType.EAGER)
-    @Setter
     private Set<FinancialAccount> accounts;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -70,7 +59,6 @@ public class FinancialGroup implements Group<FinancialTag, FinancialCategory, St
             joinColumns = @JoinColumn(name = "groupid"),
             inverseJoinColumns = @JoinColumn(name = "categoryid")
     )
-    @Setter
     private Set<FinancialCategory> categories;
 
     public FinancialGroup(String name, String currency) {
@@ -88,10 +76,5 @@ public class FinancialGroup implements Group<FinancialTag, FinancialCategory, St
         setName(name);
         setCurrency(currency);
         setAccounts(accounts);
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 }

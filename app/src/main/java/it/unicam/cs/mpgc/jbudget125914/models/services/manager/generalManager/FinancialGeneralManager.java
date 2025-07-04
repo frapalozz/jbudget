@@ -5,6 +5,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialSchedule;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.*;
 
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 
 public class FinancialGeneralManager extends AbstractGeneralManager<
         FinancialTransaction,
+        FinancialSchedule,
         FinancialAmount,
         BigDecimal,
         FinancialAccount,
@@ -21,8 +23,9 @@ public class FinancialGeneralManager extends AbstractGeneralManager<
         FinancialCategory,
         FinancialGroup,
         TransactionService<FinancialTransaction, FinancialAccount, FinancialTag, BigDecimal, LocalDate, FinancialAmount, FinancialGroup>,
-        AccountService<FinancialAccount, BigDecimal, FinancialGroup>,
+        AccountService<FinancialAccount>,
         CategoryService<FinancialAmount, BigDecimal, FinancialAccount, FinancialTransaction, FinancialTag, FinancialCategory, LocalDate>,
         GroupService<FinancialGroup>,
-        TagService<FinancialTag, FinancialCategory>> {
+        TagService<FinancialTag, FinancialCategory>,
+        ScheduleService<FinancialSchedule, FinancialAccount, FinancialTag, BigDecimal, LocalDate, FinancialAmount, FinancialGroup>> {
 }

@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 import java.io.IOException;
@@ -67,7 +66,10 @@ public class MainController implements Initializable {
 
     @FXML
     private void generateScheduler() {
-
+        addHorizontalDivider(scheduler);
+        buildBlock(("FilterBarSchedule"), scheduler);
+        addHorizontalDivider(scheduler);
+        buildBlock("ScheduleTable", scheduler);
     }
 
     private void addHorizontalDivider(VBox vbox) {

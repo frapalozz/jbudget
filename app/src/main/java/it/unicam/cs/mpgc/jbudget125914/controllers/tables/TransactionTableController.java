@@ -1,11 +1,7 @@
-package it.unicam.cs.mpgc.jbudget125914.controllers;
+package it.unicam.cs.mpgc.jbudget125914.controllers.tables;
 
-import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
-import it.unicam.cs.mpgc.jbudget125914.models.services.TransactionService;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.manager.FinancialServiceManager;
 import javafx.fxml.FXML;
@@ -17,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -32,9 +27,9 @@ public class TransactionTableController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         table.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
-        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            service.getFilterManager().setTransaction(newValue);
-        });
+        table.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
+            service.getFilterManager().setTransaction(newValue)
+        );
 
         service.getChanges().addListener((observable, oldValue, newValue) -> {
             table.getItems().clear();

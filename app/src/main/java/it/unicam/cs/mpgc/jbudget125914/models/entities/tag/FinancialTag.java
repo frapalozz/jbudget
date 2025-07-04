@@ -26,30 +26,21 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.io.Serializable;
 
 /**
  * This class represent a FinancialTag entity
  */
+@Setter
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "tag")
-public class FinancialTag implements Tag<FinancialCategory>, Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tagId;
-
-    @Column(length = 50)
-    @Setter
-    private String name;
+public class FinancialTag extends AbstractTag<FinancialCategory> implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "category", nullable = false)
-    @Setter
     private FinancialCategory category;
 
     /**
@@ -60,12 +51,7 @@ public class FinancialTag implements Tag<FinancialCategory>, Serializable {
     public FinancialTag(String name, FinancialCategory category) {
         if(name == null)
             throw new NullPointerException("name is null");
-        this.name = name;
+        setName(name);
         this.category = category;
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 }

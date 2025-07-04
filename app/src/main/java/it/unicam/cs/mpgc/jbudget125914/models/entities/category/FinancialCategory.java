@@ -25,7 +25,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -38,14 +37,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "category")
-public class FinancialCategory implements Category<FinancialTag>, Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long categoryId;
-
-    @Column(length = 50)
-    private String name;
+public class FinancialCategory extends AbstractCategory<FinancialTag> implements Serializable {
 
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private Set<FinancialTag> tags;
@@ -58,11 +50,6 @@ public class FinancialCategory implements Category<FinancialTag>, Serializable {
     public FinancialCategory(String name, Set<FinancialTag> tags) {
         setName(name);
         setTags(tags);
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     @Override

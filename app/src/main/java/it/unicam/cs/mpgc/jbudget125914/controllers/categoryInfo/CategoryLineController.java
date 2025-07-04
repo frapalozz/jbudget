@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.jbudget125914.controllers;
+package it.unicam.cs.mpgc.jbudget125914.controllers.categoryInfo;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

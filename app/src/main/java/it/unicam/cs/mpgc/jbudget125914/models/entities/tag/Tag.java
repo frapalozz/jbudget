@@ -30,12 +30,6 @@ import lombok.NonNull;
 public interface Tag<C> extends Nameable<String> {
 
     /**
-     * Return the Tag ID
-     * @return the Tag ID
-     */
-    Long getTagId();
-
-    /**
      * Return the Tag category
      * @return the Tag category
      */

@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.jbudget125914.controllers;
+package it.unicam.cs.mpgc.jbudget125914.controllers.categoryInfo;
 
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
@@ -42,7 +42,7 @@ public class CategoryBlockController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         generateCategoryBlocks();
 
-        service.getChanges().addListener((observable, oldValue, newValue) -> {
+        service.getChanges().addListener((observable, oldValue, newValue) ->
             Platform.runLater(() -> {
                 income.getChildren().clear();
                 expenses.getChildren().clear();
@@ -50,8 +50,8 @@ public class CategoryBlockController implements Initializable {
                 chartExpenses.getData().clear();
 
                 generateCategoryBlocks();
-            });
-        });
+            })
+        );
     }
 
     private void generateCategoryBlocks() {

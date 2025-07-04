@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.jbudget125914.controllers;
+package it.unicam.cs.mpgc.jbudget125914.controllers.dialogs;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
@@ -25,7 +25,9 @@ public class NewTagDialogController {
         service.getGeneralManager().getTagService().create(tag);
         service.getFilterManager().getGroup().getTags().add(tag);
         service.getGeneralManager().getGroupService().update(service.getFilterManager().getGroup());
+        service.getFilterManager().updateGroup(service.getGeneralManager());
         action.execute();
+        System.out.println(service.getFilterManager().getGroup().getTags());
     }
 
 }

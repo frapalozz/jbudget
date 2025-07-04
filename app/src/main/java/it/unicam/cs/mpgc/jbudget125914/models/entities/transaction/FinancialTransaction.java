@@ -26,7 +26,6 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -42,24 +41,11 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Table(name = "transaction")
-public class FinancialTransaction implements Transaction<FinancialAmount, LocalDate, FinancialTag, FinancialAccount>, Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long transactionId;
-
-    @Column(columnDefinition = "DATE")
-    private LocalDate date;
-
-    @Column(columnDefinition = "TEXT")
-    private String description;
+public class FinancialTransaction extends AbstractTransaction<FinancialAmount, LocalDate, FinancialTag, FinancialAccount> implements Serializable {
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "accountid", name = "account")
     private FinancialAccount account;
-
-    @Embedded
-    private FinancialAmount amount;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -91,21 +77,5 @@ public class FinancialTransaction implements Transaction<FinancialAmount, LocalD
         setAmount(amount);
         setDate(date);
         setDescription(description);
-    }
-
-    @Override
-    public void setAmount(@NonNull FinancialAmount amount) {
-        if(amount.isZero())
-            throw new IllegalArgumentException("Amount must be greater or less than zero");
-        this.amount = amount;
-    }
-
-    @Override
-    public String toString() {
-        return "Financial Transaction [account: " + account +
-                ", amount: " + amount +
-                ", date: " + this.getDate() +
-                ", description: " + this.getDescription() +
-                ", tags: " + tags + "]";
     }
 }

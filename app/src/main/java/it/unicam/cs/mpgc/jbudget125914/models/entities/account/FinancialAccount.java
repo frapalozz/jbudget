@@ -33,27 +33,15 @@ import java.io.Serializable;
 /**
  * This class represent a FinancialAccount entity
  */
+@Setter
 @Entity
 @Getter
 @NoArgsConstructor
 @Table(name = "account")
-public class FinancialAccount implements Account<FinancialAmount>, Serializable, Comparable<FinancialAccount> {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long accountId;
-
-    @Column(nullable = false, unique = true, length = 50)
-    @Setter
-    private String name;
-
-    @Embedded
-    @AttributeOverride(name = "amount", column = @Column(name = "initialAmount"))
-    private FinancialAmount initialAmount;
+public class FinancialAccount extends AbstractAccount<FinancialAmount> implements Serializable, Comparable<FinancialAccount> {
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "groupid", name = "groupid")
-    @Setter
     private FinancialGroup groupId;
 
     /**
@@ -75,12 +63,7 @@ public class FinancialAccount implements Account<FinancialAmount>, Serializable,
         if(initialAmount.signum() == 0) {
             throw new IllegalArgumentException("Initial amount cannot be zero");
         }
-        this.initialAmount = initialAmount;
-    }
-
-    @Override
-    public String toString() {
-        return this.getName();
+        super.setInitialAmount(initialAmount);
     }
 
     @Override

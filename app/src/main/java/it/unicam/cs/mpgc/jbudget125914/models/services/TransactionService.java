@@ -20,12 +20,6 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.services;
 
-import it.unicam.cs.mpgc.jbudget125914.models.entities.account.Account;
-import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.Amount;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.util.CriteriaQueryHelper;
 import it.unicam.cs.mpgc.jbudget125914.models.services.util.TransactionUtil;
 import jakarta.persistence.criteria.Expression;
@@ -57,16 +51,6 @@ public class TransactionService<
      */
     public TransactionService(Class<T> transactionClass) {
         super(transactionClass);
-    }
-
-    /**
-     * Return all the transaction between date {@code from} and {@code to} (inclusive)
-     * @param from date start
-     * @param to date end
-     * @return all the transaction between date {@code from} and {@code to} (inclusive)
-     */
-    public List<T> findAll(D from, D to, G group) {
-        return findAll(from, to, new HashSet<>(), group);
     }
 
     /**

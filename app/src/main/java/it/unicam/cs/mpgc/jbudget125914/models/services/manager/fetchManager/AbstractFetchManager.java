@@ -18,6 +18,7 @@ import java.util.Map;
 @Setter
 public abstract class AbstractFetchManager<
         T extends Transaction<AM,D,TA,A>,
+        S extends Transaction<AM,D,TA,A>,
         AM extends Amount<N, AM>,
         N extends Number,
         A extends Account<AM>,
@@ -25,14 +26,16 @@ public abstract class AbstractFetchManager<
         TA extends Tag<C>,
         C extends Category<TA>,
         G extends Group<TA,C,?,A>,
-        GM extends GeneralManager<T,AM,N,A,D,TA,C,G, ?, ?, ?, ?, ?>,
-        FM extends AbstractFilterManager<T,AM,N,A,D,TA,C,G>> implements FetchManager<T,AM,N,A,D,TA,C,G,GM,FM> {
+        GM extends GeneralManager<T,S,AM,N,A,D,TA,C,G, ?, ?, ?, ?, ?,?>,
+        FM extends AbstractFilterManager<T,AM,N,A,D,TA,C,G,S>> implements FetchManager<T,S,AM,N,A,D,TA,C,G,GM,FM> {
 
     private AM balance;
 
     private List<T> transactions;
 
-    List<Map<C, AM>> categoryBalance;
+    private List<S> schedules;
 
-    List<G> groups;
+    private List<Map<C, AM>> categoryBalance;
+
+    private List<G> groups;
 }

@@ -6,6 +6,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
+import it.unicam.cs.mpgc.jbudget125914.models.services.manager.generalManager.GeneralManager;
 
 import java.time.temporal.Temporal;
 import java.util.Set;
@@ -22,6 +23,7 @@ public interface FilterManager<
 
     G getGroup();
     void setGroup(G group);
+    <GM extends GeneralManager<?,?,?,?,?,?,?,?,G,?,?,?,?,?,?>> void updateGroup(GM generalManager);
 
     D getStartDate();
     void setStartDate(D startDate);

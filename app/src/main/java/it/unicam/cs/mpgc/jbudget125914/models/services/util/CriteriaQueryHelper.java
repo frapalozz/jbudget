@@ -79,16 +79,6 @@ public class CriteriaQueryHelper<R, Q> {
     }
 
     /**
-     * Set the order of the query
-     * @param orders to add
-     * @return this CriteriaQueryHelper with the new orders
-     */
-    public CriteriaQueryHelper<R, Q> orderBy(Order... orders) {
-        cq.orderBy(orders);
-        return this;
-    }
-
-    /**
      * Filter if two collections has an intersection
      * @param field of the database to get the collection
      * @param items collection passed

@@ -53,11 +53,11 @@ public class CategoryService<
         categoryBalance.add(new HashMap<>());
         categoryBalance.add(new HashMap<>());
 
-        transactions.forEach(t -> {
+        transactions.forEach(t ->
             t.getTags().stream()
                     .findFirst()
-                    .ifPresent(tag -> addTo(categoryBalance, tag.getCategory(), t.getAmount()));
-        });
+                    .ifPresent(tag -> addTo(categoryBalance, tag.getCategory(), t.getAmount()))
+        );
 
         return categoryBalance;
     }

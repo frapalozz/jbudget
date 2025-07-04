@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
-<VBox prefHeight="430.0" prefWidth="300.0" spacing="10" style="-fx-background-color: #121212; -fx-padding: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.jbudget125914.controllers.TransactionDialogController">
+<VBox prefHeight="430.0" prefWidth="300.0" spacing="10" style="-fx-background-color: #121212; -fx-padding: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.jbudget125914.controllers.dialogs.TransactionDialogController">
    <children>
       <Label style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;" text="New Transaction" />
       <Separator style="-fx-background-color: #333;" />

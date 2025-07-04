@@ -12,6 +12,7 @@ import java.time.temporal.Temporal;
 
 public interface GeneralManager<
         T extends Transaction<AM,D,TA,A>,
+        S extends Transaction<AM,D,TA,A>,
         AM extends Amount<N, AM>,
         N extends Number,
         A extends Account<AM>,
@@ -20,10 +21,11 @@ public interface GeneralManager<
         C extends Category<TA>,
         G extends Group<TA,C,?,A>,
         TS extends TransactionService<T, A, TA, N, D, AM, G>,
-        AS extends AccountService<A, N, G>,
+        AS extends AccountService<A>,
         CS extends CategoryService<AM, N, A, T, TA, C, D>,
         GS extends GroupService<G>,
-        TAS extends TagService<TA, C>> {
+        TAS extends TagService<TA, C>,
+        SS extends ScheduleService<S, A, TA, N, D, AM, G>> {
 
     TS getTransactionService();
     void setTransactionService(TS ts);
@@ -39,4 +41,7 @@ public interface GeneralManager<
 
     TAS getTagService();
     void setTagService(TAS ts);
+
+    SS getScheduleService();
+    void setScheduleService(SS s);
 }

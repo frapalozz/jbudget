@@ -5,6 +5,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialSchedule;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.manager.Action;
 import it.unicam.cs.mpgc.jbudget125914.models.services.manager.filterManager.FinancialFilterManager;
@@ -15,13 +16,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class FinancialFetchManager extends AbstractFetchManager<
         FinancialTransaction,
+        FinancialSchedule,
         FinancialAmount,
         BigDecimal,
         FinancialAccount,
@@ -40,8 +39,9 @@ public class FinancialFetchManager extends AbstractFetchManager<
             futures.add(CompletableFuture.runAsync(() -> setBalance(generalManager, filterManager)));
             futures.add(CompletableFuture.runAsync(() -> updateTransactions(generalManager, filterManager)));
             futures.add(CompletableFuture.runAsync(() -> updateCategoryBalance(generalManager, filterManager)));
+            futures.add(CompletableFuture.runAsync(() -> updateSchedules(generalManager, filterManager)));
         }
-        futures.add(CompletableFuture.runAsync(() -> updateGroups(generalManager, filterManager)));
+        futures.add(CompletableFuture.runAsync(() -> updateGroups(generalManager)));
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                 .thenRunAsync(action::execute, Platform::runLater)
@@ -77,6 +77,16 @@ public class FinancialFetchManager extends AbstractFetchManager<
         ));
     }
 
+    private void updateSchedules(FinancialGeneralManager generalManager, FinancialFilterManager filterManager) {
+        setSchedules(generalManager.getScheduleService().findAll(
+                filterManager.getStartDate(),
+                filterManager.getEndDate(),
+                filterManager.getAccounts(),
+                filterManager.getTags(),
+                filterManager.getGroup()
+        ));
+    }
+
     private void updateCategoryBalance(FinancialGeneralManager generalManager, FinancialFilterManager filterManager) {
         setCategoryBalance(generalManager.getCategoryService().getCategoryBalance(
                 FinancialTransaction.class,
@@ -87,7 +97,7 @@ public class FinancialFetchManager extends AbstractFetchManager<
         ));
     }
 
-    private void updateGroups(FinancialGeneralManager generalManager, FinancialFilterManager filterManager) {
+    private void updateGroups(FinancialGeneralManager generalManager) {
         setGroups(generalManager.getGroupService().findAll());
     }
 }

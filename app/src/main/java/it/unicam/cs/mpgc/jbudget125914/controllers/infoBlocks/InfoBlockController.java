@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.jbudget125914.controllers;
+package it.unicam.cs.mpgc.jbudget125914.controllers.infoBlocks;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.manager.FinancialServiceManager;
@@ -25,13 +25,13 @@ public class InfoBlockController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        service.getChanges().addListener((obs, oldValue, newValue) -> {
+        service.getChanges().addListener((obs, oldValue, newValue) ->
             Platform.runLater(() -> {
                 String currency = service.getFilterManager().getGroup() != null ? service.getFilterManager().getGroup().getCurrency() : "";
 
                 generateCategoryBlocks(currency, service.getFetchManager().getTransactions());
-            });
-        });
+            })
+        );
 
         String currency = service.getFilterManager().getGroup() != null ? service.getFilterManager().getGroup().getCurrency() : "";
         generateCategoryBlocks(currency, service.getFetchManager().getTransactions());

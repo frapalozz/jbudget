@@ -7,7 +7,6 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.models.services.*;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +14,9 @@ import java.time.temporal.Temporal;
 
 @Getter
 @Setter
-public class AbstractGeneralManager<
+public abstract class AbstractGeneralManager<
         T extends Transaction<AM,D,TA,A>,
+        S extends Transaction<AM,D,TA,A>,
         AM extends Amount<N, AM>,
         N extends Number,
         A extends Account<AM>,
@@ -25,10 +25,11 @@ public class AbstractGeneralManager<
         C extends Category<TA>,
         G extends Group<TA,C,?,A>,
         TS extends TransactionService<T, A, TA, N, D, AM, G>,
-        AS extends AccountService<A, N, G>,
+        AS extends AccountService<A>,
         CS extends CategoryService<AM, N, A, T, TA, C, D>,
         GS extends GroupService<G>,
-        TAS extends TagService<TA, C>> implements GeneralManager<T,AM,N,A,D,TA,C,G,TS,AS,CS,GS,TAS> {
+        TAS extends TagService<TA, C>,
+        SS extends ScheduleService<S, A, TA, N, D, AM, G>> implements GeneralManager<T,S,AM,N,A,D,TA,C,G,TS,AS,CS,GS,TAS,SS> {
 
     private TS transactionService;
 
@@ -39,4 +40,6 @@ public class AbstractGeneralManager<
     private GS groupService;
 
     private TAS tagService;
+
+    private SS scheduleService;
 }

@@ -1,12 +1,13 @@
-package it.unicam.cs.mpgc.jbudget125914.controllers;
+package it.unicam.cs.mpgc.jbudget125914.controllers.filterBar;
 
+import it.unicam.cs.mpgc.jbudget125914.controllers.dialogs.TransactionDialogController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 
-public class FilterBarTransactionsController extends FilterBarBase{
+public class FilterBarTransactionsController extends FilterBarBase {
 
     @FXML
     private void openNewTransactionDialog() {

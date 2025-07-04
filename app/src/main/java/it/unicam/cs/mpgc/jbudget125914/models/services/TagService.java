@@ -23,8 +23,6 @@ package it.unicam.cs.mpgc.jbudget125914.models.services;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 
-import java.util.List;
-
 public class TagService<
         T extends Tag<C>,
         C extends Category<T>
@@ -32,9 +30,5 @@ public class TagService<
 
     public TagService(Class<T> entityClass) {
         super(entityClass);
-    }
-
-    public List<T> findAll(C category) {
-        return List.of();
     }
 }

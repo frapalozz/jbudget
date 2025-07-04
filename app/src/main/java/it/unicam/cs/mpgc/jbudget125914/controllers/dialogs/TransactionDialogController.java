@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.jbudget125914.controllers;
+package it.unicam.cs.mpgc.jbudget125914.controllers.dialogs;
 
 import it.unicam.cs.mpgc.jbudget125914.controllers.util.ControllerUtil;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
@@ -45,9 +45,9 @@ public class TransactionDialogController implements Initializable {
         account.getItems().addAll(service.getFilterManager().getGroup().getAccounts());
         category.getItems().addAll(service.getFilterManager().getGroup().getCategories());
 
-        category.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
-            setCategory(newValue);
-        });
+        category.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) ->
+                setCategory(newValue)
+        );
     }
 
     @FXML
@@ -145,14 +145,14 @@ public class TransactionDialogController implements Initializable {
     }
 
     public void setActiveTags(Set<FinancialTag> tags) {
-        tags.forEach(t -> {
+        tags.forEach(t ->
             this.tags.getChildren().forEach(tag -> {
                 if(tag instanceof CheckBox checkBox) {
                     if(checkBox.getText().equals(t.getName()))
                         checkBox.setSelected(true);
                 }
-            });
-        });
+            })
+        );
     }
 
     private List<CheckBox> generateTags(FinancialCategory category) {

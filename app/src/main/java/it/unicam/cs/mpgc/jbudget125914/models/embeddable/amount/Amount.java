@@ -20,8 +20,6 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount;
 
-import lombok.NonNull;
-
 /**
  * This interface represent an Amount
  * @param <N> amount type

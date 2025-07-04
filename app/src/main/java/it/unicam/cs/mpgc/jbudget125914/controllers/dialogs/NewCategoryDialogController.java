@@ -1,4 +1,4 @@
-package it.unicam.cs.mpgc.jbudget125914.controllers;
+package it.unicam.cs.mpgc.jbudget125914.controllers.dialogs;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
 import it.unicam.cs.mpgc.jbudget125914.models.services.manager.FinancialServiceManager;
@@ -20,5 +20,6 @@ public class NewCategoryDialogController {
         service.getGeneralManager().getCategoryService().create(category);
         service.getFilterManager().getGroup().getCategories().add(category);
         service.getGeneralManager().getGroupService().update(service.getFilterManager().getGroup());
+        service.getFilterManager().updateGroup(service.getGeneralManager());
     }
 }

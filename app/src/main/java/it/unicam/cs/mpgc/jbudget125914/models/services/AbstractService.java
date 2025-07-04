@@ -52,9 +52,9 @@ public abstract class AbstractService<T> implements crudService<T> {
 
     @Override
     public  void create(@NonNull List<T> entities) {
-        TransactionUtil.executeInTransaction(em -> {
-            entities.forEach(em::persist);
-        });
+        TransactionUtil.executeInTransaction(em ->
+            entities.forEach(em::persist)
+        );
     }
 
     @Override

@@ -36,14 +36,6 @@ public record TransactionUtil() {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("JBudget");
 
     /**
-     * Return the EntityManagerFactory
-     * @return the EntityManagerFactory
-     */
-    public static EntityManagerFactory getEntityManagerFactory() {
-        return emf;
-    }
-
-    /**
      * Execute operation with elements expected
      * @param operation operation to execute
      * @return the result of the operation
@@ -78,14 +70,5 @@ public record TransactionUtil() {
             operation.accept(em);
             return null;
         });
-    }
-
-    /**
-     * Close the EntityManagerFactory
-     */
-    public static void close() {
-        if (emf != null && emf.isOpen()) {
-            emf.close();
-        }
     }
 }

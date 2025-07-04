@@ -5,6 +5,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialSchedule;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ public class FinancialFilterManager extends AbstractFilterManager<
         LocalDate,
         FinancialTag,
         FinancialCategory,
-        FinancialGroup> {
+        FinancialGroup,
+        FinancialSchedule> {
 
 }

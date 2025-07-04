@@ -1,15 +1,11 @@
-package it.unicam.cs.mpgc.jbudget125914.controllers;
+package it.unicam.cs.mpgc.jbudget125914.controllers.dialogs;
 
 import it.unicam.cs.mpgc.jbudget125914.controllers.util.ControllerUtil;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.services.manager.FinancialServiceManager;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 
 import java.math.BigDecimal;
@@ -40,5 +36,6 @@ public class NewAccountDialogController implements Initializable {
                 );
         service.getGeneralManager().getAccountService().create(account);
         service.getFilterManager().getGroup().getAccounts().add(account);
+        service.getFilterManager().updateGroup(service.getGeneralManager());
     }
 }

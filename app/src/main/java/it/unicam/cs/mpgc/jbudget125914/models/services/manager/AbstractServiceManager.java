@@ -19,6 +19,7 @@ import java.time.temporal.Temporal;
 @Setter
 public abstract class AbstractServiceManager<
         T extends Transaction<AM, D, TA, A>,
+        S extends Transaction<AM, D, TA, A>,
         A extends Account<AM>,
         TA extends Tag<C>,
         N extends Number,
@@ -26,10 +27,10 @@ public abstract class AbstractServiceManager<
         AM extends Amount<N ,AM>,
         C extends Category<TA>,
         G extends Group<TA, C, ?, A>,
-        GM extends GeneralManager<T,AM,N,A,D,TA,C,G,?,?,?,?,?>,
+        GM extends GeneralManager<T,S,AM,N,A,D,TA,C,G,?,?,?,?,?,?>,
         FM extends FilterManager<T,AM,N,A,D,TA,C,G>,
-        FTC extends FetchManager<T,AM,N,A,D,TA,C,G,GM,FM>> implements ServiceManager<
-            D, C, A, TA, T, AM, N, G,GM,FM,FTC> {
+        FTC extends FetchManager<T,S,AM,N,A,D,TA,C,G,GM,FM>> implements ServiceManager<
+            D, S, C, A, TA, T, AM, N, G,GM,FM,FTC> {
 
     private SimpleBooleanProperty changes = new SimpleBooleanProperty(false);
 

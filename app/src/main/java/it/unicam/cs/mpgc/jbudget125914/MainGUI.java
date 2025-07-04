@@ -10,7 +10,8 @@ import java.io.IOException;
 public class MainGUI extends Application {
 
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/COMPONENTS/newMain.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/COMPONENTS/newMain.fxml"));
+        Parent root = loader.load();
         primaryStage.setTitle("JBudget");
         primaryStage.setScene(new javafx.scene.Scene(root));
         primaryStage.setMinHeight(450);

@@ -31,12 +31,6 @@ import lombok.NonNull;
 public interface Account<A> extends Nameable<String> {
 
     /**
-     * Return the Account ID
-     * @return the Account ID
-     */
-    Long getAccountId();
-
-    /**
      * Return the Account initial Amount
      * @return the Account initial Amount
      */

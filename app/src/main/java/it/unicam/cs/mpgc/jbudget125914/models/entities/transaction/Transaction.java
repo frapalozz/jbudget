@@ -37,12 +37,6 @@ public interface Transaction<
         > extends Taggable<T>, AccountLinked<A>, Describable<String> {
 
     /**
-     * Return the Transaction ID
-     * @return the Transaction ID
-     */
-    Long getTransactionId();
-
-    /**
      * Return the Transaction amount
      * @return the Transaction amount
      */

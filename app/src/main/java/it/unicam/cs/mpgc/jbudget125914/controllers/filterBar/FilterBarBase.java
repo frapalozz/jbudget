@@ -1,13 +1,11 @@
-package it.unicam.cs.mpgc.jbudget125914.controllers;
+package it.unicam.cs.mpgc.jbudget125914.controllers.filterBar;
 
 import it.unicam.cs.mpgc.jbudget125914.controllers.util.ControllerUtil;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.services.manager.FinancialServiceManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import lombok.Getter;
 
@@ -47,7 +45,7 @@ public abstract class FilterBarBase implements Initializable {
             }
         });
 
-        service.getChanges().addListener((obs, oldValue, newValue) -> {
+        service.getChanges().addListener((obs, oldValue, newValue) ->
             Platform.runLater(() -> {
                 selectGroup.setValue(service.getFilterManager().getGroup());
 
@@ -55,9 +53,9 @@ public abstract class FilterBarBase implements Initializable {
                 endDate.setValue(service.getFilterManager().getEndDate());
 
                 if(info.getText().equals("Loading..."))
-                    info.setText("New Data loaded.");
-            });
-        });
+                    info.setText("Data loaded");
+            })
+        );
     }
 
     @FXML
@@ -65,9 +63,9 @@ public abstract class FilterBarBase implements Initializable {
         selectGroup.getItems().clear();
         selectGroup.setValue(service.getFilterManager().getGroup());
         if(service.getFetchManager().getGroups() != null)
-            service.getFetchManager().getGroups().forEach(group -> {
-                selectGroup.getItems().add(group);
-            });
+            service.getFetchManager().getGroups().forEach(group ->
+                selectGroup.getItems().add(group)
+            );
     }
 
     @FXML

@@ -2,6 +2,7 @@
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
     <persistence-unit name="JBudget">
         <class>it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction</class>
+        <class>it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialSchedule</class>
         <class>it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount</class>
         <class>it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag</class>
         <class>it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup</class>
