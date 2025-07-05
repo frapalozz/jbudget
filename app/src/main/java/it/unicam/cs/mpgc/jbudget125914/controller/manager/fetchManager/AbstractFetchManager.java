@@ -67,6 +67,8 @@ public abstract class AbstractFetchManager<
 
     private List<T> transactions;
 
+    private List<T> chartTransactions;
+
     private List<S> schedules;
 
     private List<Map<C, AM>> categoryBalance;

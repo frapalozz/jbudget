@@ -26,6 +26,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.stage.Stage;
 
 /**
  * This class is the controller of FilterBarTransactions
@@ -52,13 +53,13 @@ public class FilterBarTransactionsController extends FilterBarBase {
 
             Parent root = loader.load();
             TransactionDialogController controller = loader.getController();
-
             setData(controller);
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setTitle("Update Transaction");
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CLOSE);
             dialog.getDialogPane().setContent(root);
+            controller.setStage((Stage) dialog.getDialogPane().getScene().getWindow());
 
             dialog.showAndWait();
         } catch (Exception e) {
@@ -84,7 +85,8 @@ public class FilterBarTransactionsController extends FilterBarBase {
     }
 
     private void setData(TransactionDialogController controller) {
-        controller.setCategory(getService().getFilterManager().getTransaction().getTags().stream().findFirst().get().getCategory());
+        if(!getService().getFilterManager().getTransaction().getTags().isEmpty())
+            controller.setCategory(getService().getFilterManager().getTransaction().getTags().stream().findFirst().get().getCategory());
         controller.setDescription(getService().getFilterManager().getTransaction().getDescription());
         controller.setAccount(getService().getFilterManager().getTransaction().getAccount());
         controller.setActiveTags(getService().getFilterManager().getTransaction().getTags());

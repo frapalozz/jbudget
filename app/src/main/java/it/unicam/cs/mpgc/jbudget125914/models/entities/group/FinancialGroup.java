@@ -26,7 +26,10 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -68,14 +71,16 @@ public class FinancialGroup extends AbstractGroup<FinancialTag, FinancialCategor
             joinColumns = @JoinColumn(name = "groupid"),
             inverseJoinColumns = @JoinColumn(name = "categoryid")
     )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<FinancialCategory> categories;
 
     /**
      * Financial Group constructor
      * @param name name of the group
      * @param currency currency of the group
+     * @throws NullPointerException if any of the params is null
      */
-    public FinancialGroup(String name, String currency) {
+    public FinancialGroup(@NonNull String name, @NonNull String currency) {
         this(name, currency, new HashSet<>());
     }
 
@@ -86,7 +91,7 @@ public class FinancialGroup extends AbstractGroup<FinancialTag, FinancialCategor
      * @param accounts accounts associated to the Group
      * @throws NullPointerException if any of the params are null
      */
-    FinancialGroup(String name, String currency, Set<FinancialAccount> accounts) {
+    FinancialGroup(@NonNull String name, @NonNull String currency, @NonNull Set<FinancialAccount> accounts) {
         setName(name);
         setCurrency(currency);
         setAccounts(accounts);

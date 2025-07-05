@@ -20,12 +20,14 @@
 
 package it.unicam.cs.mpgc.jbudget125914.view.util;
 
+import it.unicam.cs.mpgc.jbudget125914.view.dialogs.BaseDialog;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.stage.Stage;
 
 /**
  * Controller utilities class
@@ -55,10 +57,13 @@ public class ControllerUtil {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/COMPONENTS/"+path+".fxml"));
 
             Parent root = loader.load();
+
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setTitle(title);
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CLOSE);
             dialog.getDialogPane().setContent(root);
+            BaseDialog controller = loader.getController();
+            controller.setStage((Stage) dialog.getDialogPane().getScene().getWindow());
 
             dialog.showAndWait();
         } catch (Exception e) {

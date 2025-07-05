@@ -38,7 +38,7 @@ public abstract class AbstractTag<C> implements Tag<C> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tagId;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     @Setter
     private String name;
 

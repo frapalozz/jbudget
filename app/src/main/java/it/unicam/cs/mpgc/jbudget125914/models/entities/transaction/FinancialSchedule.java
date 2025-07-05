@@ -42,7 +42,7 @@ import java.util.Set;
 public class FinancialSchedule extends AbstractTransaction<FinancialAmount, LocalDate, FinancialTag, FinancialAccount> {
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "accountid", name = "account")
+    @JoinColumn(referencedColumnName = "accountid", name = "account", nullable = false)
     private FinancialAccount account;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -51,29 +51,6 @@ public class FinancialSchedule extends AbstractTransaction<FinancialAmount, Loca
             joinColumns = @JoinColumn(name = "transactionid", table = "schedule"),
             inverseJoinColumns = @JoinColumn(name = "tagid", table = "tag")
     )
+    @Column(nullable = false)
     private Set<FinancialTag> tags;
-
-    /**
-     * Construct a new FinancialSchedule
-     * @param amount amount of the Schedule
-     * @param date date of the Schedule
-     * @param description description of the Schedule
-     * @param account account associated to the Schedule
-     * @param tags tags associated to the Schedule
-     * @throws NullPointerException if any of the params are null
-     * @throws IllegalArgumentException if {@code amount} is ZERO
-     */
-    public FinancialSchedule(
-            FinancialAmount amount,
-            LocalDate date,
-            String description,
-            FinancialAccount account,
-            Set<FinancialTag> tags) {
-
-        setAccount(account);
-        setTags(tags);
-        setAmount(amount);
-        setDate(date);
-        setDescription(description);
-    }
 }

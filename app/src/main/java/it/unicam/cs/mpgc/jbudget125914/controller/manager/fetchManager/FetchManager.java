@@ -26,7 +26,6 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
-import it.unicam.cs.mpgc.jbudget125914.interfaces.Action;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.filterManager.FilterManager;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.generalManager.GeneralManager;
 import lombok.NonNull;
@@ -67,7 +66,7 @@ public interface FetchManager<
      * @param filterManager FilterManager
      * @param action this action is used to update the UI
      */
-    void update(@NonNull GM generalManager, @NonNull FM filterManager, Action action);
+    void update(@NonNull GM generalManager, @NonNull FM filterManager, Runnable action);
 
     /**
      * Update the Group without causing an update to the data

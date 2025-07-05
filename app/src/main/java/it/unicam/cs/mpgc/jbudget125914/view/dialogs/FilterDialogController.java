@@ -22,7 +22,6 @@ package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
-import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,7 +32,7 @@ import java.util.HashSet;
 /**
  * This class is the controller for FilterDialog.fxml view
  */
-public class FilterDialogController extends BaseController {
+public class FilterDialogController extends BaseDialog {
     @FXML
     private ListView<FinancialAccount> accountsList;
     @FXML
@@ -100,6 +99,7 @@ public class FilterDialogController extends BaseController {
         getService().getFilterManager().setTags(new HashSet<>(selectedTags));
         getService().getFilterManager().setAccounts(new HashSet<>(selectedAccounts));
         getService().update();
+        getStage().close();
     }
 
 }

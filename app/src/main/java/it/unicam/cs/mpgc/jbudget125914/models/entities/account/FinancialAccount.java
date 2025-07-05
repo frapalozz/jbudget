@@ -27,6 +27,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 
@@ -45,6 +47,7 @@ public class FinancialAccount extends AbstractAccount<FinancialAmount> implement
      */
     @ManyToOne
     @JoinColumn(referencedColumnName = "groupid", name = "groupid")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private FinancialGroup groupId;
 
     /**
@@ -55,18 +58,10 @@ public class FinancialAccount extends AbstractAccount<FinancialAmount> implement
      * @throws NullPointerException if any of the params is null
      * @throws IllegalArgumentException if {@code initialAmount} is zero
      */
-    public FinancialAccount(String name, FinancialAmount initialAmount, FinancialGroup group) {
+    public FinancialAccount(@NonNull String name, @NonNull FinancialAmount initialAmount, @NonNull FinancialGroup group) {
         setName(name);
         setInitialAmount(initialAmount);
         setGroupId(group);
-    }
-
-    @Override
-    public void setInitialAmount(@NonNull FinancialAmount initialAmount) {
-        if(initialAmount.signum() == 0) {
-            throw new IllegalArgumentException("Initial amount cannot be zero");
-        }
-        super.setInitialAmount(initialAmount);
     }
 
     @Override

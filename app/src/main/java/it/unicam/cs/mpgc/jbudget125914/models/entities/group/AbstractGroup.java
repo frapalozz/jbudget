@@ -20,10 +20,7 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.entities.group;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -52,12 +49,14 @@ public abstract class AbstractGroup<TA, C, A> implements Group<TA, C, String, A>
      * Group Name
      */
     @Setter
+    @Column(nullable = false)
     private String name;
 
     /**
      * Group currency
      */
     @Setter
+    @Column(nullable = false)
     private String currency;
 
     @Override

@@ -41,8 +41,5 @@ public interface Taggable<T> {
      * @param tags the new tags
      * @throws NullPointerException if {@code tags} is null
      */
-    default void setTags(@NonNull Set<T> tags) {
-        getTags().clear();
-        getTags().addAll(tags);
-    }
+    void setTags(@NonNull Set<T> tags);
 }

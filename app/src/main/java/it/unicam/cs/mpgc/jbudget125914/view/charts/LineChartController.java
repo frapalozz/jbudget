@@ -31,8 +31,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.Labeled;
 
 import java.net.URL;
-import java.util.Comparator;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * This controller is for LineChart.fxml view
@@ -69,7 +68,7 @@ public class LineChartController extends BaseController implements Initializable
 
     private void buildSeries(XYChart.Series<String, Number> a, XYChart.Series<String, Number> b) {
         if(getService().getFetchManager().getTransactions() == null) return;
-        getService().getFetchManager().getTransactions().stream()
+        getService().getFetchManager().getChartTransactions().stream()
             .filter(t ->
                     t.getDate().isAfter(getService().getFilterManager().getStartDate().minusDays(1)) &&
                             t.getDate().isBefore(getService().getFilterManager().getEndDate().plusDays(1)))

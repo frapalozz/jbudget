@@ -26,6 +26,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.stage.Stage;
 
 /**
  * This controller is used for FilterBarSchedule.fxml view
@@ -52,12 +53,14 @@ public class FilterBarScheduleController extends FilterBarBase {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/COMPONENTS/dialogs/NewScheduleDialog.fxml"));
 
             Parent root = loader.load();
-            setData(loader.getController());
+            ScheduleDialogController controller = loader.getController();
+            setData(controller);
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setTitle("Update Schedule");
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CLOSE);
             dialog.getDialogPane().setContent(root);
+            controller.setStage((Stage) dialog.getDialogPane().getScene().getWindow());
 
             dialog.showAndWait();
         } catch (Exception e) {
@@ -84,7 +87,8 @@ public class FilterBarScheduleController extends FilterBarBase {
 
     private void setData(ScheduleDialogController controller) {
 
-        controller.setCategory(getService().getFilterManager().getSchedule().getTags().stream().findFirst().get().getCategory());
+        if(!getService().getFilterManager().getSchedule().getTags().isEmpty())
+            controller.setCategory(getService().getFilterManager().getSchedule().getTags().stream().findFirst().get().getCategory());
         controller.setDescription(getService().getFilterManager().getSchedule().getDescription());
         controller.setAccount(getService().getFilterManager().getSchedule().getAccount());
         controller.setActiveTags(getService().getFilterManager().getSchedule().getTags());

@@ -46,7 +46,7 @@ public abstract class AbstractCategory<TA> implements Category<TA>, Serializable
     /**
      * Category Name
      */
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String name;
 
     @Override

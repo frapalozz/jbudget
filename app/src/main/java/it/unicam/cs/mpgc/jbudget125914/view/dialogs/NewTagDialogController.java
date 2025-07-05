@@ -22,8 +22,6 @@ package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
-import it.unicam.cs.mpgc.jbudget125914.interfaces.Action;
-import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import lombok.Setter;
@@ -31,7 +29,7 @@ import lombok.Setter;
 /**
  * This class is the controller for NewTagDialog.fxml view
  */
-public class NewTagDialogController extends BaseController {
+public class NewTagDialogController extends BaseDialog {
 
     @FXML
     private TextField name;
@@ -40,20 +38,25 @@ public class NewTagDialogController extends BaseController {
     private FinancialCategory category;
 
     @Setter
-    Action action;
+    Runnable action;
 
     /**
      * Create new Tag
      */
     @FXML
     public void apply() {
+        if(name.getText().isEmpty()) {
+            alertBuilder("Name not valid");
+            return;
+        }
         FinancialTag tag = new FinancialTag(name.getText(), category);
         getService().getGeneralManager().getTagDAO().create(tag);
         getService().getFilterManager().getGroup().getTags().add(tag);
         getService().getGeneralManager().getGroupDAO().update(getService().getFilterManager().getGroup());
         getService().getFetchManager().updateGroup(getService().getGeneralManager(), getService().getFilterManager());
-        action.execute();
-        System.out.println(getService().getFilterManager().getGroup().getTags());
+        action.run();
+        getStage().close();
+        alertBuilder("Now select the tags");
     }
 
 }

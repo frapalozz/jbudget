@@ -47,7 +47,7 @@ public class FinancialTransaction extends AbstractTransaction<FinancialAmount, L
      * Transaction account
      */
     @ManyToOne
-    @JoinColumn(referencedColumnName = "accountid", name = "account")
+    @JoinColumn(referencedColumnName = "accountid", name = "account", nullable = false)
     private FinancialAccount account;
 
     /**
@@ -59,6 +59,7 @@ public class FinancialTransaction extends AbstractTransaction<FinancialAmount, L
             joinColumns = @JoinColumn(name = "transactionid", table = "transaction"),
             inverseJoinColumns = @JoinColumn(name = "tagid", table = "tag")
     )
+    @Column(nullable = false)
     private Set<FinancialTag> tags;
 
     /**

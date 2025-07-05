@@ -25,6 +25,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategor
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -50,11 +51,10 @@ public class FinancialTag extends AbstractTag<FinancialCategory> implements Seri
      * Construct a new FinancialTag
      * @param name name of the Tag
      * @param category category associated to the Tag
+     * @throws NullPointerException if any params is null
      */
-    public FinancialTag(String name, FinancialCategory category) {
-        if(name == null)
-            throw new NullPointerException("name is null");
+    public FinancialTag(@NonNull String name, @NonNull FinancialCategory category) {
         setName(name);
-        this.category = category;
+        setCategory(category);
     }
 }

@@ -27,7 +27,6 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialSchedule;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
-import it.unicam.cs.mpgc.jbudget125914.interfaces.Action;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.filterManager.FinancialFilterManager;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.generalManager.FinancialGeneralManager;
 import javafx.application.Platform;
@@ -56,19 +55,22 @@ public class FinancialFetchManager extends AbstractFetchManager<
         FinancialFilterManager> {
 
     @Override
-    public void update(@NonNull FinancialGeneralManager generalManager, @NonNull FinancialFilterManager filterManager, Action action) {
+    public void update(@NonNull FinancialGeneralManager generalManager, @NonNull FinancialFilterManager filterManager, Runnable action) {
         List<CompletableFuture<Void>> futures = new ArrayList<>();
 
         if(filterManager.getGroup() != null) {
             futures.add(CompletableFuture.runAsync(() -> setBalance(generalManager, filterManager)));
             futures.add(CompletableFuture.runAsync(() -> updateTransactions(generalManager, filterManager)));
-            futures.add(CompletableFuture.runAsync(() -> updateCategoryBalance(generalManager, filterManager)));
             futures.add(CompletableFuture.runAsync(() -> updateSchedules(generalManager, filterManager)));
         }
         futures.add(CompletableFuture.runAsync(() -> updateGroups(generalManager)));
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
-                .thenRunAsync(action::execute, Platform::runLater)
+                .thenRun(() -> {
+                    updateCategoryBalance(generalManager);
+                    updateChartTransactions();
+                })
+                .thenRun(action)
                 .exceptionally(ex -> {
                     Platform.runLater(() -> System.out.println("Error: " + ex.getMessage()));
                     return null;
@@ -111,17 +113,38 @@ public class FinancialFetchManager extends AbstractFetchManager<
         ));
     }
 
-    private void updateCategoryBalance(FinancialGeneralManager generalManager, FinancialFilterManager filterManager) {
-        setCategoryBalance(generalManager.getCategoryDAO().getCategoryBalance(
-                FinancialTransaction.class,
-                filterManager.getStartDate(),
-                filterManager.getEndDate(),
-                filterManager.getAccounts(),
-                filterManager.getGroup()
-        ));
+    private void updateCategoryBalance(FinancialGeneralManager generalManager) {
+        setCategoryBalance(generalManager.getCategoryDAO().getCategoryBalance(getTransactions()));
     }
 
     private void updateGroups(FinancialGeneralManager generalManager) {
         setGroups(generalManager.getGroupDAO().findAll());
+    }
+
+    private void updateChartTransactions() {
+        if(getTransactions() == null) return;
+        setChartTransactions(new ArrayList<>());
+
+        sumTransactions();
+    }
+
+    private void sumTransactions() {
+        getTransactions().forEach(ft -> {
+
+            FinancialTransaction chartTransaction = getChartTransactions().stream()
+                    .filter(t -> t.getDate().equals(ft.getDate()) && t.getAmount().signum() == ft.getAmount().signum())
+                    .findFirst()
+                    .orElse(null);
+
+            if(chartTransaction != null) {
+                FinancialTransaction transaction = new FinancialTransaction();
+                transaction.setAmount(chartTransaction.getAmount().add(ft.getAmount()));
+                transaction.setDate(chartTransaction.getDate());
+                getChartTransactions().remove(chartTransaction);
+                getChartTransactions().add(transaction);
+            } else {
+                getChartTransactions().add(ft);
+            }
+        });
     }
 }

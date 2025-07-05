@@ -25,7 +25,6 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
-import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import it.unicam.cs.mpgc.jbudget125914.view.util.ControllerUtil;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,6 +32,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import lombok.Getter;
 
 import java.math.BigDecimal;
@@ -47,7 +47,7 @@ import java.util.*;
 @Getter
 public abstract class BaseTransactionController<
         T extends Transaction<FinancialAmount,LocalDate,FinancialTag,FinancialAccount>
-        > extends BaseController implements Initializable {
+        > extends BaseDialog implements Initializable {
 
     @FXML
     private TextField description;
@@ -158,6 +158,7 @@ public abstract class BaseTransactionController<
             dialog.setTitle("New Tag");
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.CLOSE);
             dialog.getDialogPane().setContent(root);
+            controller.setStage((Stage) dialog.getDialogPane().getScene().getWindow());
 
             dialog.showAndWait();
         } catch (Exception e) {
@@ -169,12 +170,43 @@ public abstract class BaseTransactionController<
      * Apply the changes to the Transaction
      * @param transaction the Transaction to change
      */
-    protected void applyChanges(T transaction) {
-        transaction.setDate(date.getValue());
+    protected boolean applyChanges(T transaction) {
+        if(description.getText().isEmpty()) {
+            alertBuilder("Description not valid");
+            return false;
+        }
         transaction.setDescription(description.getText());
+
+        if(amount.getText().isEmpty() || amount.getText().equals("-")) {
+            alertBuilder("Amount not valid");
+            return false;
+        }
+        BigDecimal value = BigDecimal.valueOf(Double.parseDouble(amount.getText()));
+        if(value.compareTo(BigDecimal.ZERO) == 0) {
+            alertBuilder("Amount not valid");
+            return false;
+        }
+        transaction.setAmount(new FinancialAmount(value));
+
+        if(date.getValue() == null) {
+            alertBuilder("Date not valid");
+            return false;
+        }
+        transaction.setDate(date.getValue());
+
+        if(account.getValue() == null) {
+            alertBuilder("Account not valid");
+            return false;
+        }
         transaction.setAccount(account.getValue());
+
+        Set<FinancialTag> tags = getTags();
+        if(tags.isEmpty()) {
+            alertBuilder("Insert a tag");
+            return false;
+        }
         transaction.setTags(getTags());
-        transaction.setAmount(new FinancialAmount(BigDecimal.valueOf(Double.parseDouble(amount.getText()))));
+        return true;
     }
 
     private Set<FinancialTag> getTags() {

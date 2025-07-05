@@ -44,10 +44,10 @@ public abstract class AbstractTransaction<AM extends Amount<? extends Number,AM>
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long transactionId;
 
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "DATE", nullable = false)
     private D date;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String description;
 
     @Embedded

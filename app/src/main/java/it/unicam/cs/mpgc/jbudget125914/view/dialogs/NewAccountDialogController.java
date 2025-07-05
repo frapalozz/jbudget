@@ -20,11 +20,9 @@
 
 package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 
-import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import it.unicam.cs.mpgc.jbudget125914.view.util.ControllerUtil;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.FinancialServiceManager;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -36,7 +34,7 @@ import java.util.ResourceBundle;
 /**
  * This class is the controller for NewAccountDialog.fxml view
  */
-public class NewAccountDialogController extends BaseController implements Initializable {
+public class NewAccountDialogController extends BaseDialog implements Initializable {
 
     @FXML
     private TextField name;
@@ -54,13 +52,25 @@ public class NewAccountDialogController extends BaseController implements Initia
      */
     @FXML
     public void apply() {
+        if(name.getText().isEmpty()) {
+            alertBuilder("Please enter a name");
+            return;
+        }
+
+        if(initialAmount.getText().isEmpty() || initialAmount.getText().contains("-")) {
+            alertBuilder("Initial amount not valid");
+            return;
+        }
+        BigDecimal value = BigDecimal.valueOf(Double.parseDouble(initialAmount.getText()));
         FinancialAccount account = new FinancialAccount(
                 name.getText(),
-                new FinancialAmount(BigDecimal.valueOf(Double.parseDouble(initialAmount.getText()))),
+                new FinancialAmount(value),
                 getService().getFilterManager().getGroup()
                 );
         getService().getGeneralManager().getAccountDAO().create(account);
         getService().getFilterManager().getGroup().getAccounts().add(account);
         getService().getFetchManager().updateGroup(getService().getGeneralManager(), getService().getFilterManager());
+        getStage().close();
+        alertBuilder("Now select the new account");
     }
 }

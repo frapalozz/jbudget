@@ -64,9 +64,7 @@ public abstract class FilterBarBase extends BaseController implements Initializa
         selectGroup.getItems().clear();
         selectGroup.setValue(getService().getFilterManager().getGroup());
         if(getService().getFetchManager().getGroups() != null)
-            getService().getFetchManager().getGroups().forEach(group ->
-                selectGroup.getItems().add(group)
-            );
+            getService().getFetchManager().getGroups().forEach(group -> selectGroup.getItems().add(group));
     }
 
     /**

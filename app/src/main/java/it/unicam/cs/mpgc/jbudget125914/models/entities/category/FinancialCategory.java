@@ -24,7 +24,10 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.util.Set;
@@ -49,8 +52,9 @@ public class FinancialCategory extends AbstractCategory<FinancialTag> implements
      * Construct a new FinancialCategory
      * @param name name of the Category
      * @param tags tags associated to the Category
+     * @throws NullPointerException if any of the params is null
      */
-    public FinancialCategory(String name, Set<FinancialTag> tags) {
+    public FinancialCategory(@NonNull String name, @NonNull Set<FinancialTag> tags) {
         setName(name);
         setTags(tags);
     }

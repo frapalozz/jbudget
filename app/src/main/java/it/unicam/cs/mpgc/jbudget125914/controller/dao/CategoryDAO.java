@@ -64,17 +64,11 @@ public class CategoryDAO<
     /**
      * Return a list of two maps, the first map contains category-income, and the second one contains category-expenses
      * These map connect the category with the amount of transaction
-     * @param entityClass transaction class
-     * @param from date start
-     * @param to date end
-     * @param account account filtering
-     * @param group group filtering
+     * @param transactions filtered transaction
      * @return a list of two maps, the first map contains category-income, and the second one contains category-expenses
      */
-    public List<Map<C, AM>> getCategoryBalance(@NonNull Class<T> entityClass, @NonNull D from, @NonNull D to, @NonNull Set<A> account, @NonNull G group) {
-        TransactionDAO<T, A, TA, N, D, AM, G> transactionService = new TransactionDAO<>(entityClass);
-        List<T> transactions = transactionService.findAll(from, to, account, group);
-
+    public List<Map<C, AM>> getCategoryBalance(List<T> transactions) {
+        if(transactions == null) return Collections.emptyList();
         List<Map<C, AM>> categoryBalance = new ArrayList<>();
         categoryBalance.add(new HashMap<>());
         categoryBalance.add(new HashMap<>());

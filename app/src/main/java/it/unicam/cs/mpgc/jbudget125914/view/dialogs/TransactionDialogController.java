@@ -27,21 +27,23 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTran
  */
 public class TransactionDialogController extends BaseTransactionController<FinancialTransaction> {
 
-
-
     protected void applyCreate() {
         FinancialTransaction transaction = new FinancialTransaction();
-        applyChanges(transaction);
-        getService().getGeneralManager().getTransactionDAO().create(transaction);
-        getService().update();
+        if(applyChanges(transaction)) {
+            getService().getGeneralManager().getTransactionDAO().create(transaction);
+            getService().update();
+            getStage().close();
+        }
     }
 
     protected void applyUpdate() {
         FinancialTransaction transaction = getService().getFilterManager().getTransaction();
-        applyChanges(transaction);
-        getService().getGeneralManager().getTransactionDAO().update(transaction);
-        getService().update();
-        getService().getFilterManager().setTransaction(transaction);
+        if(applyChanges(transaction)) {
+            getService().getGeneralManager().getTransactionDAO().update(transaction);
+            getService().update();
+            getService().getFilterManager().setTransaction(transaction);
+            getStage().close();
+        }
     }
 }
 

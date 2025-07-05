@@ -34,8 +34,10 @@ public class ScheduleTableController extends BaseTableController<FinancialSchedu
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        getTable().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->
-                getService().getFilterManager().setSchedule(newValue)
+        getTable().getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+                getService().getFilterManager().setSchedule(newValue);
+                System.out.println(getService().getFilterManager().getSchedule());
+            }
         );
 
         getService().getChanges().addListener((observable, oldValue, newValue) -> {

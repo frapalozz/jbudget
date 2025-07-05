@@ -42,7 +42,7 @@ public class FinancialAmount implements Amount<BigDecimal, FinancialAmount>, Com
      * @param amount the new amount
      * @throws NullPointerException if {@code amount} is null
      */
-    public FinancialAmount(BigDecimal amount) {
+    public FinancialAmount(@NonNull BigDecimal amount) {
         this.amount = amount;
     }
 

@@ -21,20 +21,30 @@
 package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
-import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * This class is the controller for NewGroupDialog.fxml view
  */
-public class NewGroupDialogController extends BaseController /* extends Dialog<ButtonType>*/ {
+public class NewGroupDialogController extends BaseDialog implements Initializable {
 
     @FXML
     private TextField groupName;
 
     @FXML
-    private TextField currency;
+    private ChoiceBox<String> currency;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        currency.getItems().addAll("$", "€", "£");
+    }
 
     /**
      * Create group
@@ -42,14 +52,35 @@ public class NewGroupDialogController extends BaseController /* extends Dialog<B
     @FXML
     public void apply() {
         String groupName = this.groupName.getText();
-        String currency = this.currency.getText();
-        if(groupName.isEmpty() || currency.isEmpty()) {
+        if(groupName.isEmpty()) {
+            alertGroupName();
+            return;
+        }
+        String currency = this.currency.getValue();
+        if(currency == null || currency.isEmpty()) {
+            alertCurrency();
             return;
         }
         FinancialGroup group = new FinancialGroup(groupName, currency);
 
         getService().getGeneralManager().getGroupDAO().create(group);
-        getService().getFilterManager().setGroup(group);
         getService().update();
+        getStage().close();
+    }
+
+    private void alertGroupName() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error!");
+        alert.setHeaderText(null);
+        alert.setContentText("Enter a group name");
+        alert.showAndWait();
+    }
+
+    private void alertCurrency() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Error!");
+        alert.setHeaderText(null);
+        alert.setContentText("Enter a currency");
+        alert.showAndWait();
     }
 }

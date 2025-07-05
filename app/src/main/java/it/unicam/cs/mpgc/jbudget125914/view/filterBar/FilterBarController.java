@@ -35,6 +35,7 @@ public class FilterBarController extends FilterBarBase implements Initializable 
     public void openDialogGroup() {
         if(getInfo().getText().equals("Loading...")) return;
         openDialogBuilder("dialogs/NewGroupDialog", "New Group");
+        getSelectGroup().setValue(getService().getFilterManager().getGroup());
     }
 
     /**

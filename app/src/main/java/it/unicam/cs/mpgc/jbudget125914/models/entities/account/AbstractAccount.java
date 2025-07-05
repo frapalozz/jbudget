@@ -22,7 +22,6 @@ package it.unicam.cs.mpgc.jbudget125914.models.entities.account;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
