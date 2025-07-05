@@ -37,7 +37,7 @@
                         <VBox fx:id="income" maxWidth="1.7976931348623157E308" minWidth="-Infinity" spacing="10.0" />
                      </content>
                   </ScrollPane>
-                  <PieChart fx:id="chartIncome" legendVisible="false" maxHeight="500.0" style="-fx-text-fill: white;" stylesheets="@../../CSS/piechart.css" />
+                  <PieChart fx:id="chartIncome" maxHeight="500.0" style="-fx-text-fill: white;" stylesheets="@../../CSS/piechart.css" />
                </children>
                <padding>
                   <Insets left="15.0" right="15.0" top="15.0" />
@@ -69,7 +69,7 @@
                         <VBox fx:id="expenses" maxWidth="1.7976931348623157E308" minWidth="-Infinity" spacing="10.0" />
                      </content>
                   </ScrollPane>
-                  <PieChart fx:id="chartExpenses" legendVisible="false" maxHeight="500.0" style="-fx-text-fill: white;" stylesheets="@../../CSS/piechart.css" />
+                  <PieChart fx:id="chartExpenses" maxHeight="500.0" style="-fx-text-fill: white;" stylesheets="@../../CSS/piechart.css" />
                </children>
                <padding>
                   <Insets left="15.0" right="15.0" top="15.0" />

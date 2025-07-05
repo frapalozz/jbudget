@@ -22,7 +22,6 @@ package it.unicam.cs.mpgc.jbudget125914.controller.dao;
 
 import it.unicam.cs.mpgc.jbudget125914.controller.util.CriteriaQueryHelper;
 import it.unicam.cs.mpgc.jbudget125914.controller.util.TransactionUtil;
-import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import lombok.NonNull;

@@ -20,6 +20,7 @@
 
 package it.unicam.cs.mpgc.jbudget125914.controller.manager.filterManager;
 
+import it.unicam.cs.mpgc.jbudget125914.controller.manager.filterManager.filters.*;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.Amount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.Account;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
@@ -28,7 +29,6 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 
 import java.time.temporal.Temporal;
-import java.util.Set;
 
 /**
  * FilterManager gives you the ability to set the filter for the next fetch or to save the selected items
@@ -51,89 +51,11 @@ public interface FilterManager<
         D extends Temporal & Comparable<? super D>,
         TA extends Tag<C>,
         C extends Category<TA>,
-        G extends Group<TA,C,?,A>> {
-
-    /**
-     * Return the current Group
-     * @return the current Group
-     */
-    G getGroup();
-
-    /**
-     * Set the new Group
-     * @param group the new Group
-     */
-    void setGroup(G group);
-
-    /**
-     * Return the start date
-     * @return the start date
-     */
-    D getStartDate();
-
-    /**
-     * Set the new start date
-     * @param startDate the new start date
-     */
-    void setStartDate(D startDate);
-
-    /**
-     * Return the end date
-     * @return the end date
-     */
-    D getEndDate();
-
-    /**
-     * Set the new end date
-     * @param endDate the new end date
-     */
-    void setEndDate(D endDate);
-
-    /**
-     * Return the set of accounts
-     * @return the set of accounts
-     */
-    Set<A> getAccounts();
-
-    /**
-     * Set the new set of accounts
-     * @param accounts the new set of accounts
-     */
-    void setAccounts(Set<A> accounts);
-
-    /**
-     * Return the set of tags
-     * @return the set of tags
-     */
-    Set<TA> getTags();
-
-    /**
-     * Set the new set of tags
-     * @param tags the new set of tags
-     */
-    void setTags(Set<TA> tags);
-
-    /**
-     * Return the transaction
-     * @return the transaction
-     */
-    T getTransaction();
-
-    /**
-     * Set the new transaction
-     * @param transaction the new transaction
-     */
-    void setTransaction(T transaction);
-
-    /**
-     * Return the schedule
-     * @return the schedule
-     */
-    S getSchedule();
-
-    /**
-     * Set the new schedule
-     * @param schedule the new schedule
-     */
-    void setSchedule(S schedule);
+        G extends Group<TA,C,?,A>> extends
+        GroupFilter<G>,
+        DateFilter<D>,
+        AccountsFilter<A>,
+            TagsFilter<TA>,
+        TransactionSelector<T>,
+        ScheduleSelector<S> {
 }
