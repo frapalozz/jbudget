@@ -46,12 +46,12 @@ public abstract class AbstractDAO<T> implements CrudDAO<T> {
     }
 
     @Override
-    public void create(@NonNull T entity) {
-        TransactionUtil.executeInTransaction(em -> em.persist(entity));
+    public T create(@NonNull T entity) {
+        return TransactionUtil.executeInTransactionReturn(em -> em.merge(entity));
     }
 
     @Override
-    public  void create(@NonNull List<T> entities) {
+    public void create(@NonNull List<T> entities) {
         TransactionUtil.executeInTransaction(em ->
             entities.forEach(em::persist)
         );
@@ -63,8 +63,8 @@ public abstract class AbstractDAO<T> implements CrudDAO<T> {
     }
 
     @Override
-    public void delete(@NonNull T entity) {
-        TransactionUtil.executeInTransaction(em -> em.remove(em.merge(entity)));
+    public <D> void delete(@NonNull D id) {
+        TransactionUtil.executeInTransaction(em -> em.remove(em.merge(findById(id))));
     }
 
     @Override

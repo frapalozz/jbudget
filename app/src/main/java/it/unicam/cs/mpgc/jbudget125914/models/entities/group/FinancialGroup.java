@@ -48,24 +48,26 @@ public class FinancialGroup extends AbstractGroup<FinancialTag, FinancialCategor
     /**
      * Group tags
      */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
             name = "group_tag_relationship",
             joinColumns = @JoinColumn(name = "groupid"),
             inverseJoinColumns = @JoinColumn(name = "tagid")
     )
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<FinancialTag> tags;
 
     /**
      * Group accounts
      */
-    @OneToMany(mappedBy = "groupId", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "groupId", fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<FinancialAccount> accounts;
 
     /**
      * Group categories
      */
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
             name = "group_category_relationship",
             joinColumns = @JoinColumn(name = "groupid"),

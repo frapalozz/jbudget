@@ -60,7 +60,7 @@ public interface GeneralManager<
         G extends Group<TA,C,?,A>,
         TD extends TransactionDAO<T, A, TA, N, D, AM, G>,
         AD extends AccountDAO<A>,
-        CD extends CategoryDAO<AM, N, A, T, TA, C, D, G>,
+        CD extends CategoryDAO<C>,
         GD extends GroupDAO<G>,
         TAD extends TagDAO<TA, C>,
         SD extends ScheduleDAO<S, A, TA, N, D, AM, G>> {

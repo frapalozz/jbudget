@@ -68,8 +68,8 @@ public abstract class BaseTransactionController<
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ControllerUtil cUtil = new ControllerUtil();
         cUtil.formatAmount(getAmount());
-        getAccount().getItems().addAll(getService().getFilterManager().getGroup().getAccounts());
-        getCategory().getItems().addAll(getService().getFilterManager().getGroup().getCategories());
+        populateAccounts();
+        populateCategory();
 
         getCategory().getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) ->
                 setCategory(newValue)
@@ -89,46 +89,13 @@ public abstract class BaseTransactionController<
     }
 
     /**
-     * Create the new Transaction
-     */
-    protected abstract void applyCreate();
-
-    /**
-     * Update the Transaction
-     */
-    protected abstract void applyUpdate();
-
-    /**
-     * Populate category ChoiceBox
-     */
-    @FXML
-    public void populateCategory() {
-        FinancialCategory category = getCategory().getValue();
-        getCategory().getItems().clear();
-        if(category != null)
-            getCategory().setValue(category);
-        getCategory().getItems().addAll(getService().getFilterManager().getGroup().getCategories());
-    }
-
-    /**
-     * Populate account ChoiceBox
-     */
-    @FXML
-    public void populateAccounts() {
-        FinancialAccount account = getAccount().getValue();
-        getAccount().getItems().clear();
-        if(account != null)
-            getAccount().setValue(account);
-        getAccount().getItems().addAll(getService().getFilterManager().getGroup().getAccounts());
-    }
-
-    /**
      * Open new account dialog
      */
     @FXML
     public void openNewAccountDialog() {
         ControllerUtil cUtil = new ControllerUtil();
         cUtil.dialogBuilder("dialogs/NewAccountDialog","New Account");
+        populateAccounts();
     }
 
     /**
@@ -138,6 +105,7 @@ public abstract class BaseTransactionController<
     public void openNewCategoryDialog() {
         ControllerUtil cUtil = new ControllerUtil();
         cUtil.dialogBuilder("dialogs/NewCategoryDialog","New Category");
+        populateCategory();
     }
 
     /**
@@ -164,67 +132,6 @@ public abstract class BaseTransactionController<
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Apply the changes to the Transaction
-     * @param transaction the Transaction to change
-     */
-    protected boolean applyChanges(T transaction) {
-        if(description.getText().isEmpty()) {
-            alertBuilder("Description not valid");
-            return false;
-        }
-        transaction.setDescription(description.getText());
-
-        if(amount.getText().isEmpty() || amount.getText().equals("-")) {
-            alertBuilder("Amount not valid");
-            return false;
-        }
-        BigDecimal value = BigDecimal.valueOf(Double.parseDouble(amount.getText()));
-        if(value.compareTo(BigDecimal.ZERO) == 0) {
-            alertBuilder("Amount not valid");
-            return false;
-        }
-        transaction.setAmount(new FinancialAmount(value));
-
-        if(date.getValue() == null) {
-            alertBuilder("Date not valid");
-            return false;
-        }
-        transaction.setDate(date.getValue());
-
-        if(account.getValue() == null) {
-            alertBuilder("Account not valid");
-            return false;
-        }
-        transaction.setAccount(account.getValue());
-
-        Set<FinancialTag> tags = getTags();
-        if(tags.isEmpty()) {
-            alertBuilder("Insert a tag");
-            return false;
-        }
-        transaction.setTags(getTags());
-        return true;
-    }
-
-    private Set<FinancialTag> getTags() {
-        Set<FinancialTag> tags = new HashSet<>();
-
-        getTagBox().getChildren().forEach(tag -> {
-            if(tag instanceof CheckBox checkBox) {
-                if(checkBox.isSelected()) {
-                    getService().getFilterManager().getGroup().getTags().forEach(t -> {
-                        if(t.getName().equals(checkBox.getText())) {
-                            tags.add(t);
-                        }
-                    });
-                }
-            }
-        });
-
-        return tags;
     }
 
     /**
@@ -276,11 +183,6 @@ public abstract class BaseTransactionController<
         updateTags();
     }
 
-    private void updateTags() {
-        getTagBox().getChildren().clear();
-        getTagBox().getChildren().addAll(generateTags(getCategory().getValue()));
-    }
-
     /**
      * Set the tags of the Transaction
      * Used when modifying a Transaction
@@ -295,6 +197,100 @@ public abstract class BaseTransactionController<
                     }
                 })
         );
+    }
+
+    /**
+     * Apply the changes to the Transaction
+     * @param transaction the Transaction to change
+     */
+    protected boolean applyChanges(T transaction) {
+        Set<FinancialTag> tags = getTags();
+        if(sanityCheck(tags)) {
+            return false;
+        }
+        transaction.setDescription(description.getText());
+        transaction.setAmount(new FinancialAmount(BigDecimal.valueOf(Double.parseDouble(amount.getText()))));
+        transaction.setDate(date.getValue());
+        transaction.setAccount(account.getValue());
+        transaction.setTags(getTags());
+        return true;
+    }
+
+    private boolean sanityCheck(Set<FinancialTag> tags) {
+        if(description.getText().isEmpty()) {
+            alertBuilder("Description not valid");
+            return true;
+        }
+        if(amount.getText().isEmpty() || amount.getText().equals("-")) {
+            alertBuilder("Amount not valid");
+            return true;
+        }
+        if(BigDecimal.valueOf(Double.parseDouble(amount.getText())).equals(BigDecimal.ZERO)) {
+            alertBuilder("Amount not valid");
+            return true;
+        }
+        if(date.getValue() == null) {
+            alertBuilder("Date not valid");
+            return true;
+        }
+        if(account.getValue() == null) {
+            alertBuilder("Account not valid");
+            return true;
+        }
+        if(tags.isEmpty()) {
+            alertBuilder("Insert a tag");
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Create the new Transaction
+     */
+    protected abstract void applyCreate();
+
+    /**
+     * Update the Transaction
+     */
+    protected abstract void applyUpdate();
+
+    private void populateCategory() {
+        FinancialCategory category = getCategory().getValue();
+        getCategory().getItems().clear();
+        if(category != null)
+            getCategory().setValue(category);
+        getCategory().getItems().addAll(getService().getFilterManager().getGroup().getCategories());
+    }
+
+    private void populateAccounts() {
+        FinancialAccount account = getAccount().getValue();
+        getAccount().getItems().clear();
+        if(account != null)
+            getAccount().setValue(account);
+        getAccount().getItems().addAll(getService().getFilterManager().getGroup().getAccounts());
+    }
+
+    private Set<FinancialTag> getTags() {
+        Set<FinancialTag> tags = new HashSet<>();
+
+        getTagBox().getChildren().forEach(tag -> {
+            if(tag instanceof CheckBox checkBox) {
+                if(checkBox.isSelected()) {
+                    getService().getFilterManager().getGroup().getTags().forEach(t -> {
+                        if(t.getName().equals(checkBox.getText())) {
+                            tags.add(t);
+                        }
+                    });
+                }
+            }
+        });
+
+        return tags;
+    }
+
+    private void updateTags() {
+        getTagBox().getChildren().clear();
+        getTagBox().getChildren().addAll(generateTags(getCategory().getValue()));
     }
 
     private List<CheckBox> generateTags(FinancialCategory category) {

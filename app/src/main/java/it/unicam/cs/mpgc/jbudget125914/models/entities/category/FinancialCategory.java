@@ -45,7 +45,7 @@ public class FinancialCategory extends AbstractCategory<FinancialTag> implements
     /**
      * Category Tags
      */
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private Set<FinancialTag> tags;
 
     /**

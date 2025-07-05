@@ -22,12 +22,12 @@ package it.unicam.cs.mpgc.jbudget125914.controller.dao;
 
 import it.unicam.cs.mpgc.jbudget125914.controller.util.CriteriaQueryHelper;
 import it.unicam.cs.mpgc.jbudget125914.controller.util.TransactionUtil;
+import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import lombok.NonNull;
 
 import java.time.temporal.Temporal;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -52,18 +52,6 @@ public class TransactionDAO<
      */
     public TransactionDAO(Class<T> transactionClass) {
         super(transactionClass);
-    }
-
-    /**
-     * Return all the transaction between date {@code from} and {@code to} (inclusive) and filtered by account
-     * @param from date start
-     * @param to date end
-     * @param accounts account filter
-     * @param group group filter
-     * @return all the transaction between date {@code from} and {@code to} (inclusive) and filtered by accounts
-     */
-    public List<T> findAll(@NonNull D from, @NonNull D to, @NonNull Set<A> accounts, G group) {
-        return findAll(from, to, accounts, new HashSet<>(), group);
     }
 
     /**

@@ -26,7 +26,6 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.generalManager.GeneralManager;
 
 import java.time.temporal.Temporal;
 import java.util.Set;

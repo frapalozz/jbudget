@@ -45,18 +45,30 @@ public class NewTagDialogController extends BaseDialog {
      */
     @FXML
     public void apply() {
-        if(name.getText().isEmpty()) {
-            alertBuilder("Name not valid");
+        if(sanityCheck())
             return;
-        }
         FinancialTag tag = new FinancialTag(name.getText(), category);
-        getService().getGeneralManager().getTagDAO().create(tag);
-        getService().getFilterManager().getGroup().getTags().add(tag);
+        getService()
+                .getFilterManager()
+                .getGroup()
+                .getTags()
+                .add(getService()
+                        .getGeneralManager()
+                        .getTagDAO()
+                        .create(tag));
         getService().getGeneralManager().getGroupDAO().update(getService().getFilterManager().getGroup());
         getService().getFetchManager().updateGroup(getService().getGeneralManager(), getService().getFilterManager());
         action.run();
         getStage().close();
         alertBuilder("Now select the tags");
+    }
+
+    private boolean sanityCheck() {
+        if(name.getText().isEmpty()) {
+            alertBuilder("Name not valid");
+            return true;
+        }
+        return false;
     }
 
 }

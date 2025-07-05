@@ -24,6 +24,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import javafx.scene.control.Alert;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -55,6 +56,10 @@ public record TransactionUtil() {
             if(tx.isActive()) {
                 tx.rollback();
             }
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Info");
+            alert.setHeaderText(e.getMessage());
+            alert.showAndWait();
             throw new RuntimeException("Transaction failed", e);
         } finally {
             em.close();

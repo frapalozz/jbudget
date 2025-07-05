@@ -59,6 +59,19 @@ public class FilterDialogController extends BaseDialog {
         buttonAction();
     }
 
+    /**
+     * Apply filters
+     */
+    @FXML
+    public void apply() {
+        getSelectedAccounts();
+        getSelectedTags();
+        getService().getFilterManager().setTags(new HashSet<>(selectedTags));
+        getService().getFilterManager().setAccounts(new HashSet<>(selectedAccounts));
+        getService().update();
+        getStage().close();
+    }
+
     private void selectionModel() {
         accountsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         tagsList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -87,19 +100,6 @@ public class FilterDialogController extends BaseDialog {
 
     private void getSelectedTags() {
         selectedTags.setAll(tagsList.getSelectionModel().getSelectedItems());
-    }
-
-    /**
-     * Apply filters
-     */
-    @FXML
-    public void apply() {
-        getSelectedAccounts();
-        getSelectedTags();
-        getService().getFilterManager().setTags(new HashSet<>(selectedTags));
-        getService().getFilterManager().setAccounts(new HashSet<>(selectedAccounts));
-        getService().update();
-        getStage().close();
     }
 
 }

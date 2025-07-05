@@ -45,7 +45,7 @@ public class FilterBarController extends FilterBarBase implements Initializable 
     public void deleteGroup() {
         if(getInfo().getText().equals("Loading...") || getService().getFilterManager().getGroup() == null) return;
         try {
-            getService().getGeneralManager().getGroupDAO().delete(getService().getFilterManager().getGroup());
+            getService().getGeneralManager().getGroupDAO().delete(getService().getFilterManager().getGroup().getGroupId());
             getInfo().setText(getService().getFilterManager().getGroup().getName()+"'s group has been deleted.");
         } catch (Exception e) {
             getInfo().setText("Error while deleting group.");

@@ -109,7 +109,9 @@ public class CategoryBlockController extends BaseController implements Initializ
             CategoryLineController controller = categoryLine.getController();
 
             controller.setLabel(categoryName);
-            controller.setAmount(amount.toString()+" "+getService().getFilterManager().getGroup().getCurrency());
+
+            String currency = getService().getFilterManager().getGroup() != null ? getService().getFilterManager().getGroup().getCurrency() : "";
+            controller.setAmount(amount.toString()+" "+currency);
 
             return line;
         } catch (Exception e) {

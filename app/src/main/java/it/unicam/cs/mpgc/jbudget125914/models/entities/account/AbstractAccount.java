@@ -46,7 +46,7 @@ public abstract class AbstractAccount<AM> implements Account<AM>, Serializable, 
     /**
      * Account Name
      */
-    @Column(nullable = false, unique = true, length = 50)
+    @Column(nullable = false, length = 50)
     @Setter
     private String name;
 

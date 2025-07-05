@@ -49,13 +49,9 @@ public class InfoBlockController extends BaseController implements Initializable
         getService().getChanges().addListener((obs, oldValue, newValue) ->
             Platform.runLater(() -> {
                 String currency = getService().getFilterManager().getGroup() != null ? getService().getFilterManager().getGroup().getCurrency() : "";
-
                 generateCategoryBlocks(currency, getService().getFetchManager().getTransactions());
             })
         );
-
-        String currency = getService().getFilterManager().getGroup() != null ? getService().getFilterManager().getGroup().getCurrency() : "";
-        generateCategoryBlocks(currency, getService().getFetchManager().getTransactions());
     }
 
     private void generateCategoryBlocks(String currency, List<FinancialTransaction> transactions) {

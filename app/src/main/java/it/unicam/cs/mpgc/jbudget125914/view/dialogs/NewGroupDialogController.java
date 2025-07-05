@@ -51,36 +51,24 @@ public class NewGroupDialogController extends BaseDialog implements Initializabl
      */
     @FXML
     public void apply() {
-        String groupName = this.groupName.getText();
-        if(groupName.isEmpty()) {
-            alertGroupName();
+        if(sanityCheck())
             return;
-        }
-        String currency = this.currency.getValue();
-        if(currency == null || currency.isEmpty()) {
-            alertCurrency();
-            return;
-        }
-        FinancialGroup group = new FinancialGroup(groupName, currency);
+        FinancialGroup group = new FinancialGroup(this.groupName.getText(), this.currency.getValue());
 
-        getService().getGeneralManager().getGroupDAO().create(group);
+        getService().getFilterManager().setGroup(getService().getGeneralManager().getGroupDAO().create(group));
         getService().update();
         getStage().close();
     }
 
-    private void alertGroupName() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error!");
-        alert.setHeaderText(null);
-        alert.setContentText("Enter a group name");
-        alert.showAndWait();
-    }
-
-    private void alertCurrency() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error!");
-        alert.setHeaderText(null);
-        alert.setContentText("Enter a currency");
-        alert.showAndWait();
+    private boolean sanityCheck() {
+        if(groupName.getText().isEmpty()) {
+            alertBuilder("Group name not valid");
+            return true;
+        }
+        if(currency.getValue() == null || currency.getValue().isEmpty()) {
+            alertBuilder("Currency not valid");
+            return true;
+        }
+        return false;
     }
 }

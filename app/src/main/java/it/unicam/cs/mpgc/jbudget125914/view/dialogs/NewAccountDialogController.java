@@ -52,25 +52,38 @@ public class NewAccountDialogController extends BaseDialog implements Initializa
      */
     @FXML
     public void apply() {
-        if(name.getText().isEmpty()) {
-            alertBuilder("Please enter a name");
+        if(sanityCheck())
             return;
-        }
-
-        if(initialAmount.getText().isEmpty() || initialAmount.getText().contains("-")) {
-            alertBuilder("Initial amount not valid");
-            return;
-        }
         BigDecimal value = BigDecimal.valueOf(Double.parseDouble(initialAmount.getText()));
         FinancialAccount account = new FinancialAccount(
                 name.getText(),
                 new FinancialAmount(value),
                 getService().getFilterManager().getGroup()
                 );
-        getService().getGeneralManager().getAccountDAO().create(account);
-        getService().getFilterManager().getGroup().getAccounts().add(account);
+
+        getService()
+                .getFilterManager()
+                .getGroup()
+                .getAccounts()
+                .add(getService()
+                        .getGeneralManager()
+                        .getAccountDAO()
+                        .create(account));
         getService().getFetchManager().updateGroup(getService().getGeneralManager(), getService().getFilterManager());
         getStage().close();
         alertBuilder("Now select the new account");
+    }
+
+    private boolean sanityCheck() {
+        if(name.getText().isEmpty()) {
+            alertBuilder("Please enter a name");
+            return true;
+        }
+
+        if(initialAmount.getText().isEmpty() || initialAmount.getText().contains("-")) {
+            alertBuilder("Initial amount not valid");
+            return true;
+        }
+        return false;
     }
 }

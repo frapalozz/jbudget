@@ -31,8 +31,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.temporal.Temporal;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * AbstractFetchManager is the abstract class for all the fetch mangers

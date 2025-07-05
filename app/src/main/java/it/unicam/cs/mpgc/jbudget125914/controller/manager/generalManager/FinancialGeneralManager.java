@@ -47,7 +47,7 @@ public class FinancialGeneralManager extends AbstractGeneralManager<
         FinancialGroup,
         TransactionDAO<FinancialTransaction, FinancialAccount, FinancialTag, BigDecimal, LocalDate, FinancialAmount, FinancialGroup>,
         AccountDAO<FinancialAccount>,
-        CategoryDAO<FinancialAmount, BigDecimal, FinancialAccount, FinancialTransaction, FinancialTag, FinancialCategory, LocalDate, FinancialGroup>,
+        CategoryDAO<FinancialCategory>,
         GroupDAO<FinancialGroup>,
         TagDAO<FinancialTag, FinancialCategory>,
         ScheduleDAO<FinancialSchedule, FinancialAccount, FinancialTag, BigDecimal, LocalDate, FinancialAmount, FinancialGroup>> {

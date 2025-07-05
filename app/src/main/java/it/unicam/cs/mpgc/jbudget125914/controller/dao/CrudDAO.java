@@ -33,9 +33,10 @@ public interface CrudDAO<T> {
     /**
      * Create a new entity
      * @param entity entity to create
+     * @return the persisted entity
      * @throws NullPointerException if {@code entity} is null
      */
-    void create(@NonNull T entity);
+    T create(@NonNull T entity);
 
     /**
      * Create a new list of entities
@@ -52,10 +53,10 @@ public interface CrudDAO<T> {
 
     /**
      * Delete an entity
-     * @param entity entity to delete
-     * @throws NullPointerException if {@code entity} is null
+     * @param id id of the entity
+     * @throws NullPointerException if {@code id} is null
      */
-    void delete(@NonNull T entity);
+    <D> void delete(@NonNull D id);
 
     /**
      * Find an entity by is ID

@@ -34,8 +34,7 @@ import lombok.NonNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -56,6 +55,7 @@ public class FinancialFetchManager extends AbstractFetchManager<
 
     @Override
     public void update(@NonNull FinancialGeneralManager generalManager, @NonNull FinancialFilterManager filterManager, Runnable action) {
+
         List<CompletableFuture<Void>> futures = new ArrayList<>();
 
         if(filterManager.getGroup() != null) {
@@ -67,7 +67,7 @@ public class FinancialFetchManager extends AbstractFetchManager<
 
         CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]))
                 .thenRun(() -> {
-                    updateCategoryBalance(generalManager);
+                    updateCategoryBalance(getTransactions());
                     updateChartTransactions();
                 })
                 .thenRun(action)
@@ -113,8 +113,8 @@ public class FinancialFetchManager extends AbstractFetchManager<
         ));
     }
 
-    private void updateCategoryBalance(FinancialGeneralManager generalManager) {
-        setCategoryBalance(generalManager.getCategoryDAO().getCategoryBalance(getTransactions()));
+    private void updateCategoryBalance(List<FinancialTransaction> transactions) {
+        setCategoryBalance(getCategoryBalance(transactions));
     }
 
     private void updateGroups(FinancialGeneralManager generalManager) {
@@ -146,5 +146,45 @@ public class FinancialFetchManager extends AbstractFetchManager<
                 getChartTransactions().add(ft);
             }
         });
+    }
+
+
+
+
+    /**
+     * Return a list of two maps, the first map contains category-income, and the second one contains category-expenses
+     * These map connect the category with the amount of transaction
+     * @param transactions filtered transaction
+     * @return a list of two maps, the first map contains category-income, and the second one contains category-expenses
+     */
+    private List<Map<FinancialCategory, FinancialAmount>> getCategoryBalance(List<FinancialTransaction> transactions) {
+        if(transactions == null) return Collections.emptyList();
+        List<Map<FinancialCategory, FinancialAmount>> categoryBalance = new ArrayList<>();
+        categoryBalance.add(new HashMap<>());
+        categoryBalance.add(new HashMap<>());
+
+        transactions.forEach(t ->
+                t.getTags().stream()
+                        .findFirst()
+                        .ifPresent(tag -> addTo(categoryBalance, tag.getCategory(), t.getAmount()))
+        );
+
+        return categoryBalance;
+    }
+
+    private void checkOrAdd(Map<FinancialCategory, FinancialAmount> map, FinancialCategory category, FinancialAmount amount) {
+        if(!map.containsKey(category)) {
+            map.put(category, amount);
+        } else {
+            map.put(category, map.get(category).add(amount));
+        }
+    }
+
+    private void addTo(List<Map<FinancialCategory, FinancialAmount>> categoryBalance, FinancialCategory category, FinancialAmount amount) {
+        if(amount.signum() > 0) {
+            checkOrAdd(categoryBalance.getFirst(), category, amount);
+        } else {
+            checkOrAdd(categoryBalance.get(1), category, amount);
+        }
     }
 }

@@ -22,13 +22,17 @@ package it.unicam.cs.mpgc.jbudget125914.models.entities.tag;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
 
+import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * This class represent a FinancialTag entity
@@ -43,9 +47,20 @@ public class FinancialTag extends AbstractTag<FinancialCategory> implements Seri
     /**
      * Tag category
      */
-    @ManyToOne
-    @JoinColumn(name = "category", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category")
     private FinancialCategory category;
+
+    /**
+     * Group tags
+     */
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "group_tag_relationship",
+            joinColumns = @JoinColumn(name = "tagid"),
+            inverseJoinColumns = @JoinColumn(name = "groupid")
+    )
+    private Set<FinancialTag> groupid;
 
     /**
      * Construct a new FinancialTag

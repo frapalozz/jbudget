@@ -22,6 +22,8 @@ package it.unicam.cs.mpgc.jbudget125914.models.entities.account;
 
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialSchedule;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +33,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * This class represent a FinancialAccount entity
@@ -45,10 +48,23 @@ public class FinancialAccount extends AbstractAccount<FinancialAmount> implement
     /**
      * Account group
      */
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "groupid", name = "groupid")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(referencedColumnName = "groupid", name = "groupid", nullable = false)
     private FinancialGroup groupId;
+
+    /**
+     * account transactions
+     */
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<FinancialTransaction> transactions;
+
+    /**
+     * account schedules
+     */
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<FinancialSchedule> schedules;
 
     /**
      * Constructor for a FinancialAccount
