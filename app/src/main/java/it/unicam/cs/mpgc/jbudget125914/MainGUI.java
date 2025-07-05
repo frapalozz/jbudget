@@ -38,7 +38,7 @@ public class MainGUI extends Application {
         primaryStage.setTitle("JBudget");
         primaryStage.setScene(new javafx.scene.Scene(root));
         primaryStage.setMinHeight(450);
-        primaryStage.setMinWidth(1000);
+        primaryStage.setMinWidth(800);
         primaryStage.setWidth(500);
         primaryStage.setHeight(400);
         primaryStage.setResizable(true);

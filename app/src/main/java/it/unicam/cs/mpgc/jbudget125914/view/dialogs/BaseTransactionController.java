@@ -68,8 +68,13 @@ public abstract class BaseTransactionController<
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ControllerUtil cUtil = new ControllerUtil();
         cUtil.formatAmount(getAmount());
-        populateAccounts();
-        populateCategory();
+        if(getService().getFilterManager().getGroup().getAccounts() != null && !getService().getFilterManager().getGroup().getAccounts().isEmpty()) {
+            populateAccounts();
+        }
+        if(getService().getFilterManager().getGroup().getCategories() != null && !getService().getFilterManager().getGroup().getCategories().isEmpty()) {
+            populateCategory();
+        }
+
 
         getCategory().getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) ->
                 setCategory(newValue)

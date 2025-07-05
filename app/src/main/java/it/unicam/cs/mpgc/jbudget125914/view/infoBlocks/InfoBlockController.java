@@ -61,7 +61,11 @@ public class InfoBlockController extends BaseController implements Initializable
     }
 
     private void setAmount1(String currency) {
-        this.amount1.setText( currency + " " + (getService().getFetchManager().getBalance() != null? getService().getFetchManager().getBalance() : "0"));
+        if(getService().getFilterManager().getGroup() == null) {
+            this.amount1.setText(currency+" "+0);
+        } else {
+            this.amount1.setText(currency + " " + (getService().getFetchManager().getBalance() != null ? getService().getFetchManager().getBalance() : "0"));
+        }
     }
 
     private void setAmount2(String currency, List<FinancialTransaction> transactions) {

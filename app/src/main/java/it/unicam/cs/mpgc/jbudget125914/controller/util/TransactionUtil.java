@@ -56,10 +56,13 @@ public record TransactionUtil() {
             if(tx.isActive()) {
                 tx.rollback();
             }
+            /*
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Info");
             alert.setHeaderText(e.getMessage());
             alert.showAndWait();
+
+             */
             throw new RuntimeException("Transaction failed", e);
         } finally {
             em.close();

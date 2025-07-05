@@ -76,7 +76,7 @@ public class FilterBarScheduleController extends FilterBarBase {
         if(getService().getFilterManager().getSchedule() == null) return;
 
         try {
-            getService().getGeneralManager().getScheduleDAO().delete(getService().getFilterManager().getSchedule());
+            getService().getGeneralManager().getScheduleDAO().delete(getService().getFilterManager().getSchedule().getTransactionId());
             getInfo().setText("Schedule deleted.");
         } catch (Exception e) {
             getInfo().setText("Error while deleting Schedule.");

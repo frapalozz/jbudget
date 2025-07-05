@@ -21,8 +21,7 @@
 package it.unicam.cs.mpgc.jbudget125914.models.entities.tag;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
-
-import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +31,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * This class represent a FinancialTag entity
@@ -47,20 +45,17 @@ public class FinancialTag extends AbstractTag<FinancialCategory> implements Seri
     /**
      * Tag category
      */
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category")
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "categoryid", name = "category", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private FinancialCategory category;
 
     /**
-     * Group tags
+     * tag group
      */
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "group_tag_relationship",
-            joinColumns = @JoinColumn(name = "tagid"),
-            inverseJoinColumns = @JoinColumn(name = "groupid")
-    )
-    private Set<FinancialTag> groupid;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "groupid", name = "groupid", nullable = false)
+    private FinancialGroup groupId;
 
     /**
      * Construct a new FinancialTag

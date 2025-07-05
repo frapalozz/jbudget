@@ -75,7 +75,7 @@ public class FilterBarTransactionsController extends FilterBarBase {
         if(getService().getFilterManager().getTransaction() == null) return;
 
         try {
-            getService().getGeneralManager().getTransactionDAO().delete(getService().getFilterManager().getTransaction());
+            getService().getGeneralManager().getTransactionDAO().delete(getService().getFilterManager().getTransaction().getTransactionId());
             getInfo().setText("Transaction deleted.");
         } catch (Exception e) {
             getInfo().setText("Error while deleting Transaction.");

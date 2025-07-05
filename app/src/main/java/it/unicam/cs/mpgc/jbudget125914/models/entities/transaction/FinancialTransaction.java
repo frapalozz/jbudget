@@ -27,8 +27,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -61,7 +59,6 @@ public class FinancialTransaction extends AbstractTransaction<FinancialAmount, L
             joinColumns = @JoinColumn(name = "transactionid", table = "transaction"),
             inverseJoinColumns = @JoinColumn(name = "tagid", table = "tag")
     )
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<FinancialTag> tags;
 
     /**

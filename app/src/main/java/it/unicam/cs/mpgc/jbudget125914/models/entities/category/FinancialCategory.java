@@ -20,6 +20,7 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.entities.category;
 
+import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -47,6 +48,13 @@ public class FinancialCategory extends AbstractCategory<FinancialTag> implements
      */
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private Set<FinancialTag> tags;
+
+    /**
+     * category group
+     */
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "groupid", name = "groupid", nullable = false)
+    private FinancialGroup groupId;
 
     /**
      * Construct a new FinancialCategory
