@@ -46,8 +46,7 @@ public class FinancialTag extends AbstractTag<FinancialCategory> implements Seri
      * Tag category
      */
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "categoryid", name = "category", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(referencedColumnName = "categoryid", name = "category")
     private FinancialCategory category;
 
     /**

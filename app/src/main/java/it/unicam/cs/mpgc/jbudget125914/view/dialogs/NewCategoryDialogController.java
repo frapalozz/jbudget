@@ -44,6 +44,7 @@ public class NewCategoryDialogController extends BaseDialog {
             return;
         }
         FinancialCategory category = new FinancialCategory(name.getText(), new HashSet<>());
+        category.setGroupId(getService().getFilterManager().getGroup());
         getService()
                 .getFilterManager()
                 .getGroup()
@@ -52,7 +53,6 @@ public class NewCategoryDialogController extends BaseDialog {
                         .getGeneralManager()
                         .getCategoryDAO()
                         .create(category));
-        getService().getGeneralManager().getGroupDAO().update(getService().getFilterManager().getGroup());
         getService().getFetchManager().updateGroup(getService().getGeneralManager(), getService().getFilterManager());
         getStage().close();
         alertBuilder("Now select the new category");

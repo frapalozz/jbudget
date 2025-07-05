@@ -63,10 +63,10 @@ public abstract class AbstractGeneralManager<
         C extends Category<TA>,
         G extends Group<TA,C,?,A>,
         TD extends TransactionDAO<T, A, TA, N, D, AM, G>,
-        AD extends AccountDAO<A>,
-        CD extends CategoryDAO<C>,
-        GD extends GroupDAO<G>,
-        TAD extends TagDAO<TA, C>,
+        AD extends GeneralDAO<A>,
+        CD extends GeneralDAO<C>,
+        GD extends GeneralDAO<G>,
+        TAD extends GeneralDAO<TA>,
         SD extends ScheduleDAO<S, A, TA, N, D, AM, G>> implements GeneralManager<T,S,AM,N,A,D,TA,C,G,TD,AD,CD,GD,TAD,SD> {
 
     private TD transactionDAO;

@@ -48,6 +48,7 @@ public class NewTagDialogController extends BaseDialog {
         if(sanityCheck())
             return;
         FinancialTag tag = new FinancialTag(name.getText(), category);
+        tag.setGroupId(getService().getFilterManager().getGroup());
         getService()
                 .getFilterManager()
                 .getGroup()
@@ -56,7 +57,6 @@ public class NewTagDialogController extends BaseDialog {
                         .getGeneralManager()
                         .getTagDAO()
                         .create(tag));
-        getService().getGeneralManager().getGroupDAO().update(getService().getFilterManager().getGroup());
         getService().getFetchManager().updateGroup(getService().getGeneralManager(), getService().getFilterManager());
         action.run();
         getStage().close();

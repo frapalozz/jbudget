@@ -47,6 +47,7 @@ public class FinancialCategory extends AbstractCategory<FinancialTag> implements
      * Category Tags
      */
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<FinancialTag> tags;
 
     /**

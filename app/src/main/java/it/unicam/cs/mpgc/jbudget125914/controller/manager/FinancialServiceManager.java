@@ -58,10 +58,10 @@ public class FinancialServiceManager extends AbstractServiceManager<
         setFilterManager(new FinancialFilterManager());
         setGeneralManager(new FinancialGeneralManager());
         getGeneralManager().setTransactionDAO(new TransactionDAO<>(FinancialTransaction.class));
-        getGeneralManager().setAccountDAO(new AccountDAO<>(FinancialAccount.class));
-        getGeneralManager().setCategoryDAO(new CategoryDAO<>(FinancialCategory.class));
-        getGeneralManager().setGroupDAO(new GroupDAO<>(FinancialGroup.class));
-        getGeneralManager().setTagDAO(new TagDAO<>(FinancialTag.class));
+        getGeneralManager().setAccountDAO(new GeneralDAO<>(FinancialAccount.class));
+        getGeneralManager().setCategoryDAO(new GeneralDAO<>(FinancialCategory.class));
+        getGeneralManager().setGroupDAO(new GeneralDAO<>(FinancialGroup.class));
+        getGeneralManager().setTagDAO(new GeneralDAO<>(FinancialTag.class));
         getGeneralManager().setScheduleDAO(new ScheduleDAO<>(FinancialSchedule.class));
     }
 

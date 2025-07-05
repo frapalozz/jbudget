@@ -37,8 +37,8 @@ public abstract class AbstractDAO<T> implements CrudDAO<T> {
     private final Class<T> entityClass;
 
     /**
-     * Construct a new AbstractService
-     * @param entityClass the entity for the service
+     * Construct a new AbstractDAO
+     * @param entityClass the entity for the DAO
      * @throws NullPointerException if {@code entityClass} is null
      */
     public AbstractDAO(@NonNull Class<T> entityClass) {

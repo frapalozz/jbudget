@@ -20,24 +20,20 @@
 
 package it.unicam.cs.mpgc.jbudget125914.controller.dao;
 
-import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
+import lombok.NonNull;
 
 /**
- * TagDAO represent a tag DAO
- * @param <T> tag type
- * @param <C> category type
+ * GeneralDAO for basic CRUD operations
+ * @param <G> entity type
  */
-public class TagDAO<
-        T extends Tag<C>,
-        C extends Category<T>
-        > extends AbstractDAO<T> {
+public class GeneralDAO<G> extends AbstractDAO<G> {
 
     /**
-     * TagDAO constructor
-     * @param entityClass tag class
+     * GeneralDAO constructor
+     * @param entityClass the entity for the service
+     * @throws NullPointerException if {@code entityClass} is null
      */
-    public TagDAO(Class<T> entityClass) {
+    public GeneralDAO(@NonNull Class<G> entityClass) {
         super(entityClass);
     }
 }
