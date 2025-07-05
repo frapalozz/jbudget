@@ -39,6 +39,9 @@ import java.util.Set;
 @Table(name = "category")
 public class FinancialCategory extends AbstractCategory<FinancialTag> implements Serializable {
 
+    /**
+     * Category Tags
+     */
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private Set<FinancialTag> tags;
 

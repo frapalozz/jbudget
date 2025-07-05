@@ -40,6 +40,7 @@ import java.util.*;
  * @param <TA> tag type
  * @param <C> category type
  * @param <D> data type
+ * @param <G> group type
  */
 public class CategoryDAO<
         AM extends Amount<N,AM>,
@@ -52,6 +53,10 @@ public class CategoryDAO<
         G extends Group<TA,C,?,A>
         > extends AbstractDAO<C> {
 
+    /**
+     * CategoryDAO constructor
+     * @param entityClass category class
+     */
     public CategoryDAO(@NonNull Class<C> entityClass) {
         super(entityClass);
     }

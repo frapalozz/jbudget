@@ -42,6 +42,9 @@ import java.util.Set;
 @Table(name = "group_table")
 public class FinancialGroup extends AbstractGroup<FinancialTag, FinancialCategory, FinancialAccount> implements Serializable {
 
+    /**
+     * Group tags
+     */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "group_tag_relationship",
@@ -50,9 +53,15 @@ public class FinancialGroup extends AbstractGroup<FinancialTag, FinancialCategor
     )
     private Set<FinancialTag> tags;
 
+    /**
+     * Group accounts
+     */
     @OneToMany(mappedBy = "groupId", fetch = FetchType.EAGER)
     private Set<FinancialAccount> accounts;
 
+    /**
+     * Group categories
+     */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "group_category_relationship",
@@ -61,6 +70,11 @@ public class FinancialGroup extends AbstractGroup<FinancialTag, FinancialCategor
     )
     private Set<FinancialCategory> categories;
 
+    /**
+     * Financial Group constructor
+     * @param name name of the group
+     * @param currency currency of the group
+     */
     public FinancialGroup(String name, String currency) {
         this(name, currency, new HashSet<>());
     }

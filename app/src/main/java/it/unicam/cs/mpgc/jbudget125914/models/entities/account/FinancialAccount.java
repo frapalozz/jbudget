@@ -40,6 +40,9 @@ import java.io.Serializable;
 @Table(name = "account")
 public class FinancialAccount extends AbstractAccount<FinancialAmount> implements Serializable, Comparable<FinancialAccount> {
 
+    /**
+     * Account group
+     */
     @ManyToOne
     @JoinColumn(referencedColumnName = "groupid", name = "groupid")
     private FinancialGroup groupId;

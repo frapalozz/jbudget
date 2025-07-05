@@ -32,22 +32,31 @@ import java.io.Serializable;
 /**
  * AbstractGroup is an abstract class for all the group entities
  * It as an ID, name and currency
- * @param <TA>
- * @param <C>
- * @param <A>
+ * @param <TA> tag type
+ * @param <C> category type
+ * @param <A> account type
  */
 @Getter
 @Setter
 @MappedSuperclass
 public abstract class AbstractGroup<TA, C, A> implements Group<TA, C, String, A>, Serializable {
 
+    /**
+     * Group ID
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long groupId;
 
+    /**
+     * Group Name
+     */
     @Setter
     private String name;
 
+    /**
+     * Group currency
+     */
     @Setter
     private String currency;
 

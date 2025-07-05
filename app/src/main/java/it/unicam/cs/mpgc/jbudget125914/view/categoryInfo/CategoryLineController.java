@@ -34,10 +34,18 @@ public class CategoryLineController {
     @FXML
     private Label amount;
 
+    /**
+     * Set the label
+     * @param label the new label
+     */
     public void setLabel(String label) {
         this.categoryName.setText(label);
     }
 
+    /**
+     * Set the amount
+     * @param amount the new amount
+     */
     public void setAmount(String amount) {
         this.amount.setText(amount);
     }

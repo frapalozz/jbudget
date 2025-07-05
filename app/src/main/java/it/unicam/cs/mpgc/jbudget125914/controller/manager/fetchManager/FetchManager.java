@@ -72,6 +72,7 @@ public interface FetchManager<
     /**
      * Update the Group without causing an update to the data
      * @param generalManager generalManager
+     * @param filterManager filterManager
      */
     void updateGroup(GM generalManager, FM filterManager);
 }

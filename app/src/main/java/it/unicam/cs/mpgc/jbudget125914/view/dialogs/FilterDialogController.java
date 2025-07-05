@@ -22,7 +22,7 @@ package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.FinancialServiceManager;
+import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -33,7 +33,7 @@ import java.util.HashSet;
 /**
  * This class is the controller for FilterDialog.fxml view
  */
-public class FilterDialogController extends Dialog<ButtonType> {
+public class FilterDialogController extends BaseController {
     @FXML
     private ListView<FinancialAccount> accountsList;
     @FXML
@@ -49,8 +49,10 @@ public class FilterDialogController extends Dialog<ButtonType> {
 
     private final ObservableList<FinancialAccount> selectedAccounts = FXCollections.observableArrayList();
     private final ObservableList<FinancialTag> selectedTags = FXCollections.observableArrayList();
-    private final FinancialServiceManager service = FinancialServiceManager.getInstance();
 
+    /**
+     * Initialize the Filter Dialog
+     */
     @FXML
     public void initialize() {
         selectionModel();
@@ -65,11 +67,11 @@ public class FilterDialogController extends Dialog<ButtonType> {
 
     private void populate() {
         accountsList.setItems(FXCollections.observableArrayList(
-                service.getFilterManager().getGroup().getAccounts()
+                getService().getFilterManager().getGroup().getAccounts()
         ));
 
         tagsList.setItems(FXCollections.observableArrayList(
-                service.getFilterManager().getGroup().getTags()
+                getService().getFilterManager().getGroup().getTags()
         ));
     }
 
@@ -80,11 +82,11 @@ public class FilterDialogController extends Dialog<ButtonType> {
         clearAllTags.setOnAction(e -> tagsList.getSelectionModel().clearSelection());
     }
 
-    public void getSelectedAccounts() {
+    private void getSelectedAccounts() {
         selectedAccounts.setAll(accountsList.getSelectionModel().getSelectedItems());
     }
 
-    public void getSelectedTags() {
+    private void getSelectedTags() {
         selectedTags.setAll(tagsList.getSelectionModel().getSelectedItems());
     }
 
@@ -95,8 +97,9 @@ public class FilterDialogController extends Dialog<ButtonType> {
     public void apply() {
         getSelectedAccounts();
         getSelectedTags();
-        service.getFilterManager().setTags(new HashSet<>(selectedTags));
-        service.getFilterManager().setAccounts(new HashSet<>(selectedAccounts));
-        service.update();
+        getService().getFilterManager().setTags(new HashSet<>(selectedTags));
+        getService().getFilterManager().setAccounts(new HashSet<>(selectedAccounts));
+        getService().update();
     }
+
 }

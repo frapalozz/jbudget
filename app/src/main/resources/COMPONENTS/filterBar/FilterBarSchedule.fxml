@@ -12,7 +12,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="50.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.jbudget125914.view.filterBar.FilterBarScheduleController">
    <children>
-      <HBox alignment="CENTER_LEFT" layoutX="132.0" layoutY="114.0" prefHeight="186.0" prefWidth="600.0" spacing="10.0" stylesheets="@../CSS/darkComboBox.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER_LEFT" layoutX="132.0" layoutY="114.0" prefHeight="186.0" prefWidth="600.0" spacing="10.0" stylesheets="@../../CSS/darkComboBox.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#openDialog" style="-fx-background-color: rgba(0,0,0,0);">
                <graphic>
@@ -29,8 +29,8 @@
             <Label fx:id="info" text="Loading..." textFill="WHITE" />
             <HBox alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="30.0" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
-                  <DatePicker fx:id="startDate" onAction="#setStartDate" prefWidth="125.0" promptText="From" stylesheets="@../CSS/darkDatePicker.css" />
-                  <DatePicker fx:id="endDate" onAction="#setEndDate" prefWidth="125.0" promptText="To" style="-fx-background-radius: 0; -fx-background-color: rgba(0,0,0,0);" stylesheets="@../CSS/darkDatePicker.css" />
+                  <DatePicker fx:id="startDate" onAction="#setStartDate" prefWidth="125.0" promptText="From" stylesheets="@../../CSS/darkDatePicker.css" />
+                  <DatePicker fx:id="endDate" onAction="#setEndDate" prefWidth="125.0" promptText="To" style="-fx-background-radius: 0; -fx-background-color: rgba(0,0,0,0);" stylesheets="@../../CSS/darkDatePicker.css" />
                </children>
             </HBox>
          </children>

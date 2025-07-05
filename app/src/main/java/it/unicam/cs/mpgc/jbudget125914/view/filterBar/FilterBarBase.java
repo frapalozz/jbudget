@@ -20,9 +20,9 @@
 
 package it.unicam.cs.mpgc.jbudget125914.view.filterBar;
 
+import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import it.unicam.cs.mpgc.jbudget125914.view.util.ControllerUtil;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.FinancialServiceManager;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,7 +37,7 @@ import java.util.ResourceBundle;
  * FilterBase is an abstract class for all the bar controller
  */
 @Getter
-public abstract class FilterBarBase implements Initializable {
+public abstract class FilterBarBase extends BaseController implements Initializable {
 
     @FXML
     private DatePicker startDate;
@@ -49,8 +49,6 @@ public abstract class FilterBarBase implements Initializable {
 
     @FXML
     private Label info;
-
-    private final FinancialServiceManager service = FinancialServiceManager.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,9 +62,9 @@ public abstract class FilterBarBase implements Initializable {
     @FXML
     public void populateGroups() {
         selectGroup.getItems().clear();
-        selectGroup.setValue(service.getFilterManager().getGroup());
-        if(service.getFetchManager().getGroups() != null)
-            service.getFetchManager().getGroups().forEach(group ->
+        selectGroup.setValue(getService().getFilterManager().getGroup());
+        if(getService().getFetchManager().getGroups() != null)
+            getService().getFetchManager().getGroups().forEach(group ->
                 selectGroup.getItems().add(group)
             );
     }
@@ -76,8 +74,8 @@ public abstract class FilterBarBase implements Initializable {
      */
     @FXML
     public void setStartDate() {
-        service.getFilterManager().setStartDate(startDate.getValue());
-        service.update();
+        getService().getFilterManager().setStartDate(startDate.getValue());
+        getService().update();
     }
 
     /**
@@ -85,8 +83,8 @@ public abstract class FilterBarBase implements Initializable {
      */
     @FXML
     public void setEndDate() {
-        service.getFilterManager().setEndDate(endDate.getValue());
-        service.update();
+        getService().getFilterManager().setEndDate(endDate.getValue());
+        getService().update();
     }
 
     /**
@@ -94,7 +92,7 @@ public abstract class FilterBarBase implements Initializable {
      */
     @FXML
     public void openDialog() {
-        openDialogBuilder("filterDialog", "Filter");
+        openDialogBuilder("dialogs/FilterDialog", "Filter");
     }
 
     /**
@@ -111,21 +109,21 @@ public abstract class FilterBarBase implements Initializable {
         selectGroup.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if(selectGroup.getSelectionModel().isEmpty()) return;
             if(oldValue != newValue) {
-                service.getFilterManager().setGroup(newValue);
-                service.getFilterManager().setAccounts(new HashSet<>());
-                service.getFilterManager().setTags(new HashSet<>());
-                service.update();
+                getService().getFilterManager().setGroup(newValue);
+                getService().getFilterManager().setAccounts(new HashSet<>());
+                getService().getFilterManager().setTags(new HashSet<>());
+                getService().update();
             }
         });
     }
 
     private void addListener() {
-        service.getChanges().addListener((obs, oldValue, newValue) ->
+        getService().getChanges().addListener((obs, oldValue, newValue) ->
                 Platform.runLater(() -> {
-                    selectGroup.setValue(service.getFilterManager().getGroup());
+                    selectGroup.setValue(getService().getFilterManager().getGroup());
 
-                    startDate.setValue(service.getFilterManager().getStartDate());
-                    endDate.setValue(service.getFilterManager().getEndDate());
+                    startDate.setValue(getService().getFilterManager().getStartDate());
+                    endDate.setValue(getService().getFilterManager().getEndDate());
 
                     if(info.getText().equals("Loading..."))
                         info.setText("Data loaded");

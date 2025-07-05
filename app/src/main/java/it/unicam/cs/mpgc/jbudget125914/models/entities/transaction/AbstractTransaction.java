@@ -30,10 +30,10 @@ import lombok.Setter;
 /**
  * AbstractTransaction is an abstract class for all the transaction entities
  * It has an ID, date, description and amount
- * @param <AM>
- * @param <D>
- * @param <TA>
- * @param <A>
+ * @param <AM> amount type
+ * @param <D> data type
+ * @param <TA> tag type
+ * @param <A> account type
  */
 @MappedSuperclass
 @Getter

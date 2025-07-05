@@ -7,18 +7,16 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox spacing="10" style="-fx-background-color: #121212; -fx-padding: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.jbudget125914.view.dialogs.NewGroupDialogController">
+<VBox spacing="10" style="-fx-background-color: #121212; -fx-padding: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.jbudget125914.view.dialogs.NewCategoryDialogController">
    <children>
-      <Label style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;" text="New Group" />
+      <Label style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;" text="New Category" />
       <Separator style="-fx-background-color: #333;" />
-      <VBox>
+      <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
          <children>
             <VBox spacing="5" style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-border-color: #333; -fx-border-radius: 5;">
                <children>
-                  <Label style="-fx-text-fill: #e0e0e0; -fx-font-weight: bold;" text="Group Name" />
-                  <TextField fx:id="groupName" stylesheets="@../CSS/darkTextField.css" />
-                  <Label style="-fx-text-fill: #e0e0e0; -fx-font-weight: bold;" text="Currency" />
-                  <TextField fx:id="currency" stylesheets="@../CSS/darkTextField.css" />
+                  <Label style="-fx-text-fill: #e0e0e0; -fx-font-weight: bold;" text="Name" />
+                  <TextField fx:id="name" stylesheets="@../../CSS/darkTextField.css" />
                </children>
             </VBox>
          </children>

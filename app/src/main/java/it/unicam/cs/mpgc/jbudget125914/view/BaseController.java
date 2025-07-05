@@ -18,29 +18,17 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.controller.dao;
+package it.unicam.cs.mpgc.jbudget125914.view;
 
-import java.time.temporal.Temporal;
+import it.unicam.cs.mpgc.jbudget125914.controller.manager.FinancialServiceManager;
+import lombok.Getter;
 
 /**
- * ScheduleDAO represent a schedule DAO
- * @param <T> transaction type
- * @param <A> account type
- * @param <TA> tag type
- * @param <N> number type
- * @param <D> data type
- * @param <AM> amount type
- * @param <G> group type
+ * Base controller for all the controllers
+ * It has the service for all the controllers
  */
-public class ScheduleDAO<
-        T, A, TA, N extends Number, D extends Temporal & Comparable<? super D>, AM, G
-        > extends TransactionDAO<T,A,TA,N,D,AM,G> {
+@Getter
+public abstract class BaseController {
 
-    /**
-     * ScheduleDAO constructor
-     * @param transactionClass schedule class
-     */
-    public ScheduleDAO(Class<T> transactionClass) {
-        super(transactionClass);
-    }
+    private final FinancialServiceManager service = FinancialServiceManager.getInstance();
 }

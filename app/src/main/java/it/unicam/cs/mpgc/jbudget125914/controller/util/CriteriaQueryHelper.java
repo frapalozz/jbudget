@@ -33,6 +33,7 @@ import java.util.Set;
 /**
  * This class is a util class used to build a criteria query
  * @param <R> is the entity of the query
+ * @param <Q> is the criteria query type
  */
 public class CriteriaQueryHelper<R, Q> {
 
@@ -48,6 +49,7 @@ public class CriteriaQueryHelper<R, Q> {
      * CriteriaQueryHelper constructor
      * @param em EntityManager
      * @param entityClass entityClass
+     * @param queryClass queryClass
      * @throws NullPointerException if {@code em} is null
      * @throws NullPointerException if {@code entityClass} is null
      */
@@ -82,6 +84,7 @@ public class CriteriaQueryHelper<R, Q> {
      * Filter if two collections has an intersection
      * @param field of the database to get the collection
      * @param items collection passed
+     * @return return a predicate
      */
     public Predicate containsAny(String field, Set<?> items) {
         if(items == null || items.isEmpty())
@@ -98,6 +101,8 @@ public class CriteriaQueryHelper<R, Q> {
      * Filter if the field is present in items
      * @param field field to filter
      * @param items items passed
+     * @return return a predicate
+     * @param <T> items type
      */
     public <T> Predicate in(String field, Set<T> items) {
         if(items == null || items.isEmpty())

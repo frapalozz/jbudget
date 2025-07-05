@@ -20,6 +20,7 @@
 
 package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 
+import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import it.unicam.cs.mpgc.jbudget125914.view.util.ControllerUtil;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
@@ -35,14 +36,12 @@ import java.util.ResourceBundle;
 /**
  * This class is the controller for NewAccountDialog.fxml view
  */
-public class NewAccountDialogController implements Initializable {
+public class NewAccountDialogController extends BaseController implements Initializable {
 
     @FXML
     private TextField name;
     @FXML
     private TextField initialAmount;
-
-    private final FinancialServiceManager service = FinancialServiceManager.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -58,10 +57,10 @@ public class NewAccountDialogController implements Initializable {
         FinancialAccount account = new FinancialAccount(
                 name.getText(),
                 new FinancialAmount(BigDecimal.valueOf(Double.parseDouble(initialAmount.getText()))),
-                service.getFilterManager().getGroup()
+                getService().getFilterManager().getGroup()
                 );
-        service.getGeneralManager().getAccountDAO().create(account);
-        service.getFilterManager().getGroup().getAccounts().add(account);
-        service.getFetchManager().updateGroup(service.getGeneralManager(), service.getFilterManager());
+        getService().getGeneralManager().getAccountDAO().create(account);
+        getService().getFilterManager().getGroup().getAccounts().add(account);
+        getService().getFetchManager().updateGroup(getService().getGeneralManager(), getService().getFilterManager());
     }
 }

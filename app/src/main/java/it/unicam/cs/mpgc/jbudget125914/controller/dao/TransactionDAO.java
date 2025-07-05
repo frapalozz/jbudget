@@ -39,6 +39,7 @@ import java.util.Set;
  * @param <N> number type (of the amount)
  * @param <D> date type
  * @param <AM> amount type
+ * @param <G> group type
  */
 public class TransactionDAO<
         T, A, TA, N extends Number, D extends Temporal & Comparable<? super D>, AM, G
@@ -58,6 +59,7 @@ public class TransactionDAO<
      * @param from date start
      * @param to date end
      * @param accounts account filter
+     * @param group group filter
      * @return all the transaction between date {@code from} and {@code to} (inclusive) and filtered by accounts
      */
     public List<T> findAll(@NonNull D from, @NonNull D to, @NonNull Set<A> accounts, G group) {
@@ -70,6 +72,7 @@ public class TransactionDAO<
      * @param to date end
      * @param accounts accounts filter
      * @param tags tags filter
+     * @param group group filter
      * @return all the transaction between date {@code from} and {@code to} (inclusive) and filtered by accounts and tags
      */
     public List<T> findAll(@NonNull D from, @NonNull D to, @NonNull Set<A> accounts, @NonNull Set<TA> tags, @NonNull G group) {
@@ -93,6 +96,7 @@ public class TransactionDAO<
      * @param cutoff cutoff date
      * @param amountClass amount class
      * @param numberClass number class (of amount attribute)
+     * @param accounts accounts filter
      * @return the total amount period to the cutoff (inclusive)
      */
     public AM getTransactionAmount(@NonNull D cutoff, @NonNull Class<AM> amountClass, @NonNull Class<N> numberClass, @NonNull Set<A> accounts) {

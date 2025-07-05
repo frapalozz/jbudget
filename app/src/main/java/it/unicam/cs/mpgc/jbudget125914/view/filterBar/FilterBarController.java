@@ -34,7 +34,7 @@ public class FilterBarController extends FilterBarBase implements Initializable 
     @FXML
     public void openDialogGroup() {
         if(getInfo().getText().equals("Loading...")) return;
-        openDialogBuilder("NewGroupDialog", "New Group");
+        openDialogBuilder("dialogs/NewGroupDialog", "New Group");
     }
 
     /**

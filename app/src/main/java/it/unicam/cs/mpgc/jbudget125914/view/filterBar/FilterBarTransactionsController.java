@@ -37,7 +37,8 @@ public class FilterBarTransactionsController extends FilterBarBase {
      */
     @FXML
     private void openNewTransactionDialog() {
-        openDialogBuilder("NewTransactionDialog", "New Transaction");
+        if(getInfo().getText().equals("Loading...")) return;
+        openDialogBuilder("dialogs/NewTransactionDialog", "New Transaction");
     }
 
     /**
@@ -47,18 +48,12 @@ public class FilterBarTransactionsController extends FilterBarBase {
     private void openUpdateTransactionDialog() {
         if(getService().getFilterManager().getTransaction() == null) return;
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/COMPONENTS/NewTransactionDialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/COMPONENTS/dialogs/NewTransactionDialog.fxml"));
 
             Parent root = loader.load();
             TransactionDialogController controller = loader.getController();
 
-            controller.setCategory(getService().getFilterManager().getTransaction().getTags().stream().findFirst().get().getCategory());
-            controller.setDescription(getService().getFilterManager().getTransaction().getDescription());
-            controller.setAccount(getService().getFilterManager().getTransaction().getAccount());
-            controller.setActiveTags(getService().getFilterManager().getTransaction().getTags());
-            controller.setDate(getService().getFilterManager().getTransaction().getDate());
-            controller.setAmount(getService().getFilterManager().getTransaction().getAmount().getAmount().toString());
-            controller.setApplyButton("Update");
+            setData(controller);
 
             Dialog<ButtonType> dialog = new Dialog<>();
             dialog.setTitle("Update Transaction");
@@ -86,5 +81,15 @@ public class FilterBarTransactionsController extends FilterBarBase {
         }
         getService().getFilterManager().setTransaction(null);
         getService().update();
+    }
+
+    private void setData(TransactionDialogController controller) {
+        controller.setCategory(getService().getFilterManager().getTransaction().getTags().stream().findFirst().get().getCategory());
+        controller.setDescription(getService().getFilterManager().getTransaction().getDescription());
+        controller.setAccount(getService().getFilterManager().getTransaction().getAccount());
+        controller.setActiveTags(getService().getFilterManager().getTransaction().getTags());
+        controller.setDate(getService().getFilterManager().getTransaction().getDate());
+        controller.setAmount(getService().getFilterManager().getTransaction().getAmount().getAmount().toString());
+        controller.setApplyButton("Update");
     }
 }

@@ -21,24 +21,20 @@
 package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.FinancialServiceManager;
+import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import javafx.fxml.FXML;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 
 /**
  * This class is the controller for NewGroupDialog.fxml view
  */
-public class NewGroupDialogController extends Dialog<ButtonType> {
+public class NewGroupDialogController extends BaseController /* extends Dialog<ButtonType>*/ {
 
     @FXML
     private TextField groupName;
 
     @FXML
     private TextField currency;
-
-    private final FinancialServiceManager service = FinancialServiceManager.getInstance();
 
     /**
      * Create group
@@ -52,8 +48,8 @@ public class NewGroupDialogController extends Dialog<ButtonType> {
         }
         FinancialGroup group = new FinancialGroup(groupName, currency);
 
-        service.getGeneralManager().getGroupDAO().create(group);
-        service.getFilterManager().setGroup(group);
-        service.update();
+        getService().getGeneralManager().getGroupDAO().create(group);
+        getService().getFilterManager().setGroup(group);
+        getService().update();
     }
 }

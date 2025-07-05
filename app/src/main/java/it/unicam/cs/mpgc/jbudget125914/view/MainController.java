@@ -1,6 +1,25 @@
+/**
+ * MIT License
+ * Copyright (c) 2025 Francesco Palozzi
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+
 package it.unicam.cs.mpgc.jbudget125914.view;
 
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.FinancialServiceManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,9 +31,10 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.*;
 
-public class MainController implements Initializable {
-
-    private FinancialServiceManager service;
+/**
+ * Main controller for Main.fxml view
+ */
+public class MainController extends BaseController implements Initializable {
 
     @FXML
     private VBox dashboard;
@@ -26,7 +46,6 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        service = FinancialServiceManager.getInstance();
         fetchStartData();
 
         generateDashboard();
@@ -35,41 +54,41 @@ public class MainController implements Initializable {
     }
 
     private void fetchStartData() {
-        service.getFilterManager().setGroup(null);
-        service.getFilterManager().setEndDate(LocalDate.now());
-        service.getFilterManager().setStartDate(LocalDate.now().minusDays(90));
-        service.getFilterManager().setAccounts(new HashSet<>());
-        service.getFilterManager().setTags(new HashSet<>());
-        service.update();
+        getService().getFilterManager().setGroup(null);
+        getService().getFilterManager().setEndDate(LocalDate.now());
+        getService().getFilterManager().setStartDate(LocalDate.now().minusDays(30));
+        getService().getFilterManager().setAccounts(new HashSet<>());
+        getService().getFilterManager().setTags(new HashSet<>());
+        getService().update();
     }
 
     @FXML
-    public void generateDashboard() {
+    private void generateDashboard() {
 
         addHorizontalDivider(dashboard);
-        buildBlock("InfoBlock", dashboard);
+        buildBlock("infoBlocks/InfoBlock", dashboard);
         addHorizontalDivider(dashboard);
-        buildBlock("FilterBar", dashboard);
+        buildBlock("filterBar/FilterBar", dashboard);
         addHorizontalDivider(dashboard);
-        buildBlock("LineChart", dashboard);
+        buildBlock("charts/LineChart", dashboard);
         addHorizontalDivider(dashboard);
-        buildBlock("CategoryBlock", dashboard);
+        buildBlock("categoryInfo/CategoryBlock", dashboard);
     }
 
     @FXML
     private void generateTransactions() {
         addHorizontalDivider(transactions);
-        buildBlock("FilterBarTransactions", transactions);
+        buildBlock("filterBar/FilterBarTransactions", transactions);
         addHorizontalDivider(transactions);
-        buildBlock("TransactionTable", transactions);
+        buildBlock("tables/TransactionTable", transactions);
     }
 
     @FXML
     private void generateScheduler() {
         addHorizontalDivider(scheduler);
-        buildBlock(("FilterBarSchedule"), scheduler);
+        buildBlock(("filterBar/FilterBarSchedule"), scheduler);
         addHorizontalDivider(scheduler);
-        buildBlock("ScheduleTable", scheduler);
+        buildBlock("tables/ScheduleTable", scheduler);
     }
 
     private void addHorizontalDivider(VBox vbox) {

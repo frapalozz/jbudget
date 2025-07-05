@@ -20,7 +20,6 @@
 
 package it.unicam.cs.mpgc.jbudget125914.view.filterBar;
 
-import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.view.dialogs.ScheduleDialogController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +27,9 @@ import javafx.scene.Parent;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 
+/**
+ * This controller is used for FilterBarSchedule.fxml view
+ */
 public class FilterBarScheduleController extends FilterBarBase {
 
     /**
@@ -35,7 +37,8 @@ public class FilterBarScheduleController extends FilterBarBase {
      */
     @FXML
     private void openNewScheduleDialog() {
-        openDialogBuilder("NewScheduleDialog", "New Transaction");
+        if(getInfo().getText().equals("Loading...")) return;
+        openDialogBuilder("dialogs/NewScheduleDialog", "New Transaction");
     }
 
     /**
@@ -46,7 +49,7 @@ public class FilterBarScheduleController extends FilterBarBase {
         if(getService().getFilterManager().getSchedule() == null) return;
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/COMPONENTS/NewScheduleDialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/COMPONENTS/dialogs/NewScheduleDialog.fxml"));
 
             Parent root = loader.load();
             setData(loader.getController());

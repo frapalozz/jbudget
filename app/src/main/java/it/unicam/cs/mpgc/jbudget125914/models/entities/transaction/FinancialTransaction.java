@@ -43,10 +43,16 @@ import java.util.Set;
 @Table(name = "transaction")
 public class FinancialTransaction extends AbstractTransaction<FinancialAmount, LocalDate, FinancialTag, FinancialAccount> implements Serializable {
 
+    /**
+     * Transaction account
+     */
     @ManyToOne
     @JoinColumn(referencedColumnName = "accountid", name = "account")
     private FinancialAccount account;
 
+    /**
+     * Transaction tags
+     */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "transaction_tag_relationship",

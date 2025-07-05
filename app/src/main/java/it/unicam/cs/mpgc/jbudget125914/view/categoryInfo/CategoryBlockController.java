@@ -22,7 +22,7 @@ package it.unicam.cs.mpgc.jbudget125914.view.categoryInfo;
 
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.FinancialServiceManager;
+import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
 /**
  * This class is the controller of CategoryBlock.fxml view
  */
-public class CategoryBlockController implements Initializable {
+public class CategoryBlockController extends BaseController implements Initializable {
 
     @FXML
     private VBox income;
@@ -59,26 +59,26 @@ public class CategoryBlockController implements Initializable {
     @FXML
     private PieChart chartExpenses;
 
-    private final FinancialServiceManager service = FinancialServiceManager.getInstance();
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        generateCategoryBlocks();
+        addListener();
+    }
 
-        service.getChanges().addListener((observable, oldValue, newValue) ->
-            Platform.runLater(() -> {
-                income.getChildren().clear();
-                expenses.getChildren().clear();
-                chartIncome.getData().clear();
-                chartExpenses.getData().clear();
+    private void addListener() {
+        getService().getChanges().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(() -> {
+                    income.getChildren().clear();
+                    expenses.getChildren().clear();
+                    chartIncome.getData().clear();
+                    chartExpenses.getData().clear();
 
-                generateCategoryBlocks();
-            })
+                    generateCategoryBlocks();
+                })
         );
     }
 
     private void generateCategoryBlocks() {
-        List<Map<FinancialCategory, FinancialAmount>> categoryBalance = service.getFetchManager().getCategoryBalance();
+        List<Map<FinancialCategory, FinancialAmount>> categoryBalance = getService().getFetchManager().getCategoryBalance();
         if(categoryBalance != null &&!categoryBalance.isEmpty()) {
             addValues(income, categoryBalance.getFirst(), chartIncome);
             addValues(expenses, categoryBalance.getLast(), chartExpenses);
@@ -89,7 +89,7 @@ public class CategoryBlockController implements Initializable {
     }
 
     private void setDate(Label cat) {
-        cat.setText(service.getFilterManager().getStartDate() + " | " + service.getFilterManager().getEndDate());
+        cat.setText(getService().getFilterManager().getStartDate() + " | " + getService().getFilterManager().getEndDate());
     }
 
     private void addValues(VBox table, Map<FinancialCategory, FinancialAmount> map, PieChart chart) {
@@ -102,7 +102,7 @@ public class CategoryBlockController implements Initializable {
     }
 
     private Parent generateLine(String categoryName, FinancialAmount amount) {
-        FXMLLoader categoryLine = new FXMLLoader(getClass().getResource("/COMPONENTS/CategoryLine.fxml"));
+        FXMLLoader categoryLine = new FXMLLoader(getClass().getResource("/COMPONENTS/categoryInfo/CategoryLine.fxml"));
 
         try {
             Parent line = categoryLine.load();

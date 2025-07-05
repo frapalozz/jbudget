@@ -36,10 +36,16 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class AbstractCategory<TA> implements Category<TA>, Serializable {
 
+    /**
+     * Category ID
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long categoryId;
 
+    /**
+     * Category Name
+     */
     @Column(length = 50)
     private String name;
 

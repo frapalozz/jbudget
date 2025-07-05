@@ -27,7 +27,7 @@ import lombok.Setter;
 /**
  * AbstractTag is an abstract tag for all the tag entities
  * It as an ID and name
- * @param <C>
+ * @param <C> category type
  */
 @Getter
 @Setter

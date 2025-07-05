@@ -21,7 +21,7 @@
 package it.unicam.cs.mpgc.jbudget125914.view.charts;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.FinancialServiceManager;
+import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -37,22 +37,23 @@ import java.util.ResourceBundle;
 /**
  * This controller is for LineChart.fxml view
  */
-public class LineChartController implements Initializable {
+public class LineChartController extends BaseController implements Initializable {
 
     @FXML
     private LineChart<String, Number> chart;
 
-    private final FinancialServiceManager service = FinancialServiceManager.getInstance();
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        service.getChanges().addListener((observable, oldValue, newValue) ->
-            Platform.runLater(() -> {
-                chart.getData().clear();
-                generateChart();
-            })
+        addListener();
+    }
+
+    private void addListener() {
+        getService().getChanges().addListener((observable, oldValue, newValue) ->
+                Platform.runLater(() -> {
+                    chart.getData().clear();
+                    generateChart();
+                })
         );
-        generateChart();
     }
 
     private void generateChart() {
@@ -66,31 +67,12 @@ public class LineChartController implements Initializable {
         setChartStyle(income, expenses);
     }
 
-    private void setChartStyle(XYChart.Series<String, Number> income, XYChart.Series<String, Number> expenses) {
-        income.getNode().setStyle("-fx-stroke: #89b4fa; -fx-background-color: #89b4fa;");
-        expenses.getNode().setStyle("-fx-stroke: #f38ba8");
-        setColor("#89b4fa, #1e1e2e", income);
-        setColor("#f38ba8, #1e1e2e", expenses);
-
-        Parent legend = (Parent) chart.lookup(".chart-legend");
-        if(legend != null) {
-            legend.getChildrenUnmodifiable().forEach(node -> {
-                if(node instanceof Labeled labeled) {
-                    if(labeled.getText().equals("Income")) {
-                        labeled.setGraphic(new javafx.scene.shape.Circle(5, javafx.scene.paint.Color.rgb(137, 180, 250)));
-                    } else
-                        labeled.setGraphic(new javafx.scene.shape.Circle(5, javafx.scene.paint.Color.rgb(243, 139, 168)));
-                }
-            });
-        }
-    }
-
     private void buildSeries(XYChart.Series<String, Number> a, XYChart.Series<String, Number> b) {
-        if(service.getFetchManager().getTransactions() == null) return;
-        service.getFetchManager().getTransactions().stream()
+        if(getService().getFetchManager().getTransactions() == null) return;
+        getService().getFetchManager().getTransactions().stream()
             .filter(t ->
-                    t.getDate().isAfter(service.getFilterManager().getStartDate().minusDays(1)) &&
-                            t.getDate().isBefore(service.getFilterManager().getEndDate().plusDays(1)))
+                    t.getDate().isAfter(getService().getFilterManager().getStartDate().minusDays(1)) &&
+                            t.getDate().isBefore(getService().getFilterManager().getEndDate().plusDays(1)))
             .sorted(Comparator.comparing(FinancialTransaction::getDate))
             .forEach(t -> {
                 XYChart.Data<String, Number> newNode = new XYChart.Data<>(t.getDate().toString(), t.getAmount().getAmount().abs());
@@ -115,6 +97,25 @@ public class LineChartController implements Initializable {
     private void setColor(String color, XYChart.Series<String, Number> series) {
         for(XYChart.Data<String, Number> data: series.getData()) {
             data.getNode().setStyle("-fx-background-color: " + color);
+        }
+    }
+
+    private void setChartStyle(XYChart.Series<String, Number> income, XYChart.Series<String, Number> expenses) {
+        income.getNode().setStyle("-fx-stroke: #89b4fa; -fx-background-color: #89b4fa;");
+        expenses.getNode().setStyle("-fx-stroke: #f38ba8");
+        setColor("#89b4fa, #1e1e2e", income);
+        setColor("#f38ba8, #1e1e2e", expenses);
+
+        Parent legend = (Parent) chart.lookup(".chart-legend");
+        if(legend != null) {
+            legend.getChildrenUnmodifiable().forEach(node -> {
+                if(node instanceof Labeled labeled) {
+                    if(labeled.getText().equals("Income")) {
+                        labeled.setGraphic(new javafx.scene.shape.Circle(5, javafx.scene.paint.Color.rgb(137, 180, 250)));
+                    } else
+                        labeled.setGraphic(new javafx.scene.shape.Circle(5, javafx.scene.paint.Color.rgb(243, 139, 168)));
+                }
+            });
         }
     }
 }

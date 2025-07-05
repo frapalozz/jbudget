@@ -22,10 +22,14 @@ package it.unicam.cs.mpgc.jbudget125914.controller.dao;
 
 /**
  * GroupDAO represent a group DAO
- * @param <G>
+ * @param <G> group type
  */
 public class GroupDAO<G> extends AbstractDAO<G> {
 
+    /**
+     * GroupDAO constructor
+     * @param entityClass group class
+     */
     public GroupDAO(Class<G> entityClass) {
         super(entityClass);
     }

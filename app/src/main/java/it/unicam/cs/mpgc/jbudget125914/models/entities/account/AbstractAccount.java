@@ -22,6 +22,7 @@ package it.unicam.cs.mpgc.jbudget125914.models.entities.account;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -36,14 +37,23 @@ import java.io.Serializable;
 @MappedSuperclass
 public abstract class AbstractAccount<AM> implements Account<AM>, Serializable, Comparable<FinancialAccount> {
 
+    /**
+     * Account ID
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
+    /**
+     * Account Name
+     */
     @Column(nullable = false, unique = true, length = 50)
     @Setter
     private String name;
 
+    /**
+     * Account Initial Amount
+     */
     @Embedded
     @AttributeOverride(name = "amount", column = @Column(name = "initialAmount"))
     private AM initialAmount;

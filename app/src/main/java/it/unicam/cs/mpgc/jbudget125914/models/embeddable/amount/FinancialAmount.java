@@ -46,6 +46,9 @@ public class FinancialAmount implements Amount<BigDecimal, FinancialAmount>, Com
         this.amount = amount;
     }
 
+    /**
+     * Financial Amount default constructor
+     */
     public FinancialAmount() {
         amount = BigDecimal.ZERO;
     }

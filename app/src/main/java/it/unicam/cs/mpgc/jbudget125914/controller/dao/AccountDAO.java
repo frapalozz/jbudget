@@ -26,6 +26,10 @@ package it.unicam.cs.mpgc.jbudget125914.controller.dao;
  */
 public class AccountDAO<A> extends AbstractDAO<A> {
 
+    /**
+     * AccountDAO constructor
+     * @param entityClass entityClass for the DAO
+     */
     public AccountDAO(Class<A> entityClass) {
         super(entityClass);
     }

@@ -39,6 +39,9 @@ import java.io.Serializable;
 @Table(name = "tag")
 public class FinancialTag extends AbstractTag<FinancialCategory> implements Serializable {
 
+    /**
+     * Tag category
+     */
     @ManyToOne
     @JoinColumn(name = "category", nullable = false)
     private FinancialCategory category;

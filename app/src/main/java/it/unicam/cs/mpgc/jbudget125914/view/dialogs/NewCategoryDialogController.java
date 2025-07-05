@@ -22,6 +22,7 @@ package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.FinancialServiceManager;
+import it.unicam.cs.mpgc.jbudget125914.view.BaseController;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 
@@ -30,12 +31,10 @@ import java.util.HashSet;
 /**
  * This class is the controller for NewCategoryDialog.fxml view
  */
-public class NewCategoryDialogController {
+public class NewCategoryDialogController extends BaseController {
 
     @FXML
     private TextField name;
-
-    private final FinancialServiceManager service = FinancialServiceManager.getInstance();
 
     /**
      * Create new category
@@ -43,9 +42,9 @@ public class NewCategoryDialogController {
     @FXML
     public void apply() {
         FinancialCategory category = new FinancialCategory(name.getText(), new HashSet<>());
-        service.getGeneralManager().getCategoryDAO().create(category);
-        service.getFilterManager().getGroup().getCategories().add(category);
-        service.getGeneralManager().getGroupDAO().update(service.getFilterManager().getGroup());
-        service.getFetchManager().updateGroup(service.getGeneralManager(), service.getFilterManager());
+        getService().getGeneralManager().getCategoryDAO().create(category);
+        getService().getFilterManager().getGroup().getCategories().add(category);
+        getService().getGeneralManager().getGroupDAO().update(getService().getFilterManager().getGroup());
+        getService().getFetchManager().updateGroup(getService().getGeneralManager(), getService().getFilterManager());
     }
 }

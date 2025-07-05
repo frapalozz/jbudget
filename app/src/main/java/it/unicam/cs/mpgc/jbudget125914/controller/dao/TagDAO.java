@@ -33,6 +33,10 @@ public class TagDAO<
         C extends Category<T>
         > extends AbstractDAO<T> {
 
+    /**
+     * TagDAO constructor
+     * @param entityClass tag class
+     */
     public TagDAO(Class<T> entityClass) {
         super(entityClass);
     }

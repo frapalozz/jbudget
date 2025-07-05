@@ -22,7 +22,8 @@ package it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount;
 
 /**
  * This interface represent an Amount
- * @param <N> amount type
+ * @param <N> amount number type
+ * @param <A> amount type
  */
 public interface Amount<N, A extends Amount<N ,A>> {
 
