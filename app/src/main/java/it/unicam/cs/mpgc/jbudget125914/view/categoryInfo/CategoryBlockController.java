@@ -96,7 +96,7 @@ public class CategoryBlockController extends BaseController implements Initializ
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
         map.forEach((key, value) -> {
             table.getChildren().add(generateLine(key.getName(), value));
-            pieChartData.add(new PieChart.Data(key.getName(), value.getAmount().doubleValue()));
+            pieChartData.add(new PieChart.Data(key.getName(), value.getAmount().abs().doubleValue()));
         });
         chart.setData(pieChartData);
     }
@@ -109,7 +109,7 @@ public class CategoryBlockController extends BaseController implements Initializ
             CategoryLineController controller = categoryLine.getController();
 
             controller.setLabel(categoryName);
-            controller.setAmount(amount.toString());
+            controller.setAmount(amount.toString()+" "+getService().getFilterManager().getGroup().getCurrency());
 
             return line;
         } catch (Exception e) {
