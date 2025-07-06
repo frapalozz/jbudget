@@ -53,7 +53,7 @@ public class FinancialCategory extends AbstractCategory<FinancialTag> implements
     /**
      * category group
      */
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "groupid", name = "groupid", nullable = false)
     private FinancialGroup groupId;
 

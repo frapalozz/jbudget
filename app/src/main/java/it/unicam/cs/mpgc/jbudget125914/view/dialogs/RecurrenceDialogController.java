@@ -18,31 +18,33 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.models.dao;
+package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 
-import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
-
-import java.time.temporal.Temporal;
+import it.unicam.cs.mpgc.jbudget125914.view.util.ControllerUtil;
+import javafx.fxml.FXML;
 
 /**
- * ScheduleDAO represent a schedule DAO
- * @param <T> transaction type
- * @param <A> account type
- * @param <TA> tag type
- * @param <N> number type
- * @param <D> data type
- * @param <AM> amount type
- * @param <G> group type
+ * This controller is for RecurrenceSelectorDialog.fxml view
  */
-public class ScheduleDAO<
-        T extends Transaction<AM, D, TA, A>, A, TA, N extends Number, D extends Temporal & Comparable<? super D>, AM, G
-        > extends TransactionDAO<T,A,TA,N,D,AM,G> {
+public class RecurrenceDialogController extends BaseDialog {
 
     /**
-     * ScheduleDAO constructor
-     * @param transactionClass schedule class
+     * Open new transaction
      */
-    public ScheduleDAO(Class<T> transactionClass) {
-        super(transactionClass);
+    @FXML
+    public void openNewTransactionDialog() {
+        ControllerUtil cUtil = new ControllerUtil();
+        cUtil.dialogBuilder("dialogs/NewTransactionDialog", "New Transaction");
+        getStage().close();
+    }
+
+    /**
+     * Open new recurrent transaction
+     */
+    @FXML
+    public void openNewRecurrentTransactionDialog() {
+        ControllerUtil cUtil = new ControllerUtil();
+        cUtil.dialogBuilder("dialogs/NewRecurrentTransactionDialog", "New Recurrent Transaction");
+        getStage().close();
     }
 }

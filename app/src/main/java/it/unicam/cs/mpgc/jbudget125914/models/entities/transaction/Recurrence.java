@@ -18,31 +18,11 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.models.dao;
-
-import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
-
-import java.time.temporal.Temporal;
+package it.unicam.cs.mpgc.jbudget125914.models.entities.transaction;
 
 /**
- * ScheduleDAO represent a schedule DAO
- * @param <T> transaction type
- * @param <A> account type
- * @param <TA> tag type
- * @param <N> number type
- * @param <D> data type
- * @param <AM> amount type
- * @param <G> group type
+ * Recurrence frequency enum
  */
-public class ScheduleDAO<
-        T extends Transaction<AM, D, TA, A>, A, TA, N extends Number, D extends Temporal & Comparable<? super D>, AM, G
-        > extends TransactionDAO<T,A,TA,N,D,AM,G> {
-
-    /**
-     * ScheduleDAO constructor
-     * @param transactionClass schedule class
-     */
-    public ScheduleDAO(Class<T> transactionClass) {
-        super(transactionClass);
-    }
+public enum Recurrence {
+    DAILY, WEEKLY, MONTHLY, YEARLY;
 }

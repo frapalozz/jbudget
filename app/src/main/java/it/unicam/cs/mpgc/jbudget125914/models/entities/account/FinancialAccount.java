@@ -48,21 +48,21 @@ public class FinancialAccount extends AbstractAccount<FinancialAmount> implement
     /**
      * Account group
      */
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "groupid", name = "groupid", nullable = false)
     private FinancialGroup groupId;
 
     /**
      * account transactions
      */
-    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<FinancialTransaction> transactions;
 
     /**
      * account schedules
      */
-    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<FinancialSchedule> schedules;
 

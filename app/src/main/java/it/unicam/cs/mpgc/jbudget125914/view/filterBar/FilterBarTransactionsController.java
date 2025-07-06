@@ -39,7 +39,7 @@ public class FilterBarTransactionsController extends FilterBarBase {
     @FXML
     private void openNewTransactionDialog() {
         if(getInfo().getText().equals("Loading...")) return;
-        openDialogBuilder("dialogs/NewTransactionDialog", "New Transaction");
+        openDialogBuilder("dialogs/RecurrenceSelectorDialog", "Recurrence Selector");
     }
 
     /**
@@ -75,6 +75,7 @@ public class FilterBarTransactionsController extends FilterBarBase {
         if(getService().getFilterManager().getTransaction() == null) return;
 
         try {
+            System.out.println("Transaction ID: " + getService().getFilterManager().getTransaction().getTransactionId());
             getService().getDaoManager().getTransactionDAO().delete(getService().getFilterManager().getTransaction().getTransactionId());
             getInfo().setText("Transaction deleted.");
         } catch (Exception e) {

@@ -27,8 +27,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 
@@ -45,14 +43,14 @@ public class FinancialTag extends AbstractTag<FinancialCategory> implements Seri
     /**
      * Tag category
      */
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "categoryid", name = "category")
     private FinancialCategory category;
 
     /**
      * tag group
      */
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "groupid", name = "groupid", nullable = false)
     private FinancialGroup groupId;
 

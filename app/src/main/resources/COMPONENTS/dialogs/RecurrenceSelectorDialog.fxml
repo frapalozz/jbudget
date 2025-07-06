@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="10" style="-fx-background-color: #121212; -fx-padding: 15;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.mpgc.jbudget125914.view.dialogs.RecurrenceDialogController">
+   <children>
+      <Label style="-fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold;" text="Recurrence" />
+      <Separator style="-fx-background-color: #333;" />
+      <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+         <children>
+            <HBox spacing="15.0" style="-fx-background-color: #1e1e1e; -fx-padding: 10; -fx-border-color: #333; -fx-border-radius: 5;">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#openNewTransactionDialog" style="-fx-background-color: #4C5255;" text="No" textFill="WHITE" />
+                  <Button mnemonicParsing="false" onAction="#openNewRecurrentTransactionDialog" style="-fx-background-color: #4C5255;" text="Yes" textFill="WHITE" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Separator style="-fx-background-color: #333;" />
+   </children>
+</VBox>
