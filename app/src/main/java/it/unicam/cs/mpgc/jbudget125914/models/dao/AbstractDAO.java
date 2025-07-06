@@ -64,7 +64,7 @@ public abstract class AbstractDAO<T> implements CrudDAO<T> {
 
     @Override
     public <D> void delete(@NonNull D id) {
-        TransactionUtil.executeInTransaction(em -> em.remove(em.merge(findById(id))));
+        TransactionUtil.executeInTransaction(em -> em.remove((em.find(entityClass, id))));
     }
 
     @Override

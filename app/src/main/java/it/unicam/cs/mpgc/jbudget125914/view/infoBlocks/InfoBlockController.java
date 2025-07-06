@@ -55,9 +55,24 @@ public class InfoBlockController extends BaseController implements Initializable
     }
 
     private void generateCategoryBlocks(String currency, List<FinancialTransaction> transactions) {
+
+        final BigDecimal[] balances = {BigDecimal.ZERO, BigDecimal.ZERO};
+
+        transactions
+                .stream()
+                .filter(t -> t.getDate().isAfter(getService().getFilterManager().getStartDate().minusDays(1)) &&
+                        t.getDate().isBefore(getService().getFilterManager().getEndDate().plusDays(1)))
+                .forEach(t -> {
+                    if(t.getAmount().signum() > 0) {
+                        balances[0] = balances[0].add(t.getAmount().getAmount());
+                    } else {
+                        balances[1] = balances[1].add(t.getAmount().getAmount());
+                    }
+                });
+
         setAmount1(currency);
-        setAmount2(currency, transactions);
-        setAmount3(currency, transactions);
+        setAmount2(currency, balances[0]);
+        setAmount3(currency, balances[1]);
     }
 
     private void setAmount1(String currency) {
@@ -68,35 +83,11 @@ public class InfoBlockController extends BaseController implements Initializable
         }
     }
 
-    private void setAmount2(String currency, List<FinancialTransaction> transactions) {
-        if(transactions == null || transactions.isEmpty()) {
-            this.amount2.setText("0");
-            return;
-        }
-        this.amount2.setText(
-                currency + " " + transactions
-                        .stream()
-                        .filter(t -> t.getAmount().signum() > 0)
-                        .filter(t -> t.getDate().isAfter(getService().getFilterManager().getStartDate().minusDays(1)) &&
-                                t.getDate().isBefore(getService().getFilterManager().getEndDate().plusDays(1)))
-                        .map(t -> t.getAmount().getAmount())
-                        .reduce(BigDecimal.ZERO, BigDecimal::add)
-        );
+    private void setAmount2(String currency, BigDecimal income) {
+        this.amount2.setText(currency + " " + income);
     }
 
-    private void setAmount3(String currency, List<FinancialTransaction> transactions) {
-        if(transactions == null || transactions.isEmpty()) {
-            this.amount3.setText("0");
-            return;
-        }
-        this.amount3.setText(
-                currency + " " + transactions
-                        .stream()
-                        .filter(t -> t.getAmount().signum() < 0)
-                        .filter(t -> t.getDate().isAfter(getService().getFilterManager().getStartDate().minusDays(1)) &&
-                                t.getDate().isBefore(getService().getFilterManager().getEndDate().plusDays(1)))
-                        .map(t -> t.getAmount().getAmount())
-                        .reduce(BigDecimal.ZERO, BigDecimal::add)
-        );
+    private void setAmount3(String currency, BigDecimal expenses) {
+        this.amount3.setText(currency + " " + expenses);
     }
 }
