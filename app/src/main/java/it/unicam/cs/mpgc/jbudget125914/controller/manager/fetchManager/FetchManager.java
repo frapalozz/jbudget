@@ -27,7 +27,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.filterManager.FilterManager;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.generalManager.GeneralManager;
+import it.unicam.cs.mpgc.jbudget125914.controller.manager.daoManager.DaoManager;
 import lombok.NonNull;
 
 import java.time.temporal.Temporal;
@@ -56,7 +56,7 @@ public interface FetchManager<
         TA extends Tag<C>,
         C extends Category<TA>,
         G extends Group<TA,C,?,A>,
-        GM extends GeneralManager<T,S,AM,N,A,D,TA,C,G, ?, ?, ?, ?,?,?>,
+        GM extends DaoManager<T,S,AM,N,A,D,TA,C,G, ?, ?, ?, ?,?,?>,
         FM extends FilterManager<T,S,AM,N,A,D,TA,C,G>
         > {
 

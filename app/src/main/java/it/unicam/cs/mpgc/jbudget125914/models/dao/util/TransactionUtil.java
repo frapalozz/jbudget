@@ -18,7 +18,7 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.controller.util;
+package it.unicam.cs.mpgc.jbudget125914.models.dao.util;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;

@@ -18,7 +18,7 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.controller.dao;
+package it.unicam.cs.mpgc.jbudget125914.models.dao;
 
 import lombok.NonNull;
 

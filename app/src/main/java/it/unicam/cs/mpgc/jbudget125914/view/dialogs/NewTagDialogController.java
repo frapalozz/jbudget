@@ -54,10 +54,10 @@ public class NewTagDialogController extends BaseDialog {
                 .getGroup()
                 .getTags()
                 .add(getService()
-                        .getGeneralManager()
+                        .getDaoManager()
                         .getTagDAO()
                         .create(tag));
-        getService().getFetchManager().updateGroup(getService().getGeneralManager(), getService().getFilterManager());
+        getService().getFetchManager().updateGroup(getService().getDaoManager(), getService().getFilterManager());
         action.run();
         getStage().close();
         alertBuilder("Now select the tags");

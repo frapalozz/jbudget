@@ -30,7 +30,7 @@ public class ScheduleDialogController extends BaseTransactionController<Financia
     protected void applyCreate() {
         FinancialSchedule transaction = new FinancialSchedule();
         if(applyChanges(transaction)) {
-            getService().getGeneralManager().getScheduleDAO().create(transaction);
+            getService().getDaoManager().getScheduleDAO().create(transaction);
             getService().update();
             getStage().close();
         }
@@ -39,7 +39,7 @@ public class ScheduleDialogController extends BaseTransactionController<Financia
     protected void applyUpdate() {
         FinancialSchedule transaction = getService().getFilterManager().getSchedule();
         if(applyChanges(transaction)) {
-            getService().getGeneralManager().getScheduleDAO().update(transaction);
+            getService().getDaoManager().getScheduleDAO().update(transaction);
             getService().update();
             getService().getFilterManager().setSchedule(transaction);
             getStage().close();

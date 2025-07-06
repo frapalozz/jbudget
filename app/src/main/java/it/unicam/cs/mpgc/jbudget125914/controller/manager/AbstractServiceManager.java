@@ -28,7 +28,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.fetchManager.FetchManager;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.filterManager.FilterManager;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.generalManager.GeneralManager;
+import it.unicam.cs.mpgc.jbudget125914.controller.manager.daoManager.DaoManager;
 import javafx.beans.property.SimpleBooleanProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -62,7 +62,7 @@ public abstract class AbstractServiceManager<
         AM extends Amount<N ,AM>,
         C extends Category<TA>,
         G extends Group<TA, C, ?, A>,
-        GM extends GeneralManager<T,S,AM,N,A,D,TA,C,G,?,?,?,?,?,?>,
+        GM extends DaoManager<T,S,AM,N,A,D,TA,C,G,?,?,?,?,?,?>,
         FM extends FilterManager<T,S,AM,N,A,D,TA,C,G>,
         FTC extends FetchManager<T,S,AM,N,A,D,TA,C,G,GM,FM>> implements ServiceManager<
             D, S, C, A, TA, T, AM, N, G,GM,FM,FTC> {
@@ -73,6 +73,6 @@ public abstract class AbstractServiceManager<
 
     private FM filterManager;
 
-    private GM generalManager;
+    private GM daoManager;
 
 }

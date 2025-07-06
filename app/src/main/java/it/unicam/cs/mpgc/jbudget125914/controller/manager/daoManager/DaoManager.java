@@ -18,9 +18,11 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.controller.manager.generalManager;
+package it.unicam.cs.mpgc.jbudget125914.controller.manager.daoManager;
 
-import it.unicam.cs.mpgc.jbudget125914.controller.dao.*;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.GeneralDAO;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.ScheduleDAO;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.TransactionDAO;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.Amount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.Account;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.Category;
@@ -48,7 +50,7 @@ import java.time.temporal.Temporal;
  * @param <TAD> tag DAO type
  * @param <SD> schedule DAO type
  */
-public interface GeneralManager<
+public interface DaoManager<
         T extends Transaction<AM,D,TA,A>,
         S extends Transaction<AM,D,TA,A>,
         AM extends Amount<N, AM>,

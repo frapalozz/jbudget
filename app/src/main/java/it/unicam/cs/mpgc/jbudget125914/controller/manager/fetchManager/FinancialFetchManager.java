@@ -28,7 +28,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialSchedule;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.filterManager.FinancialFilterManager;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.generalManager.FinancialGeneralManager;
+import it.unicam.cs.mpgc.jbudget125914.controller.manager.daoManager.FinancialDaoManager;
 import javafx.application.Platform;
 import lombok.NonNull;
 
@@ -50,11 +50,11 @@ public class FinancialFetchManager extends AbstractFetchManager<
         FinancialTag,
         FinancialCategory,
         FinancialGroup,
-        FinancialGeneralManager,
+        FinancialDaoManager,
         FinancialFilterManager> {
 
     @Override
-    public void update(@NonNull FinancialGeneralManager generalManager, @NonNull FinancialFilterManager filterManager, Runnable action) {
+    public void update(@NonNull FinancialDaoManager generalManager, @NonNull FinancialFilterManager filterManager, Runnable action) {
 
         List<CompletableFuture<Void>> futures = new ArrayList<>();
 
@@ -77,7 +77,7 @@ public class FinancialFetchManager extends AbstractFetchManager<
                 });
     }
 
-    private void setBalance(FinancialGeneralManager generalManager, FinancialFilterManager filterManager) {
+    private void setBalance(FinancialDaoManager generalManager, FinancialFilterManager filterManager) {
 
         if(filterManager.getGroup().getAccounts().isEmpty()) {
             setBalance(new FinancialAmount(BigDecimal.ZERO));
@@ -93,7 +93,7 @@ public class FinancialFetchManager extends AbstractFetchManager<
                 .add(amount));
     }
 
-    private void updateTransactions(FinancialGeneralManager generalManager, FinancialFilterManager filterManager) {
+    private void updateTransactions(FinancialDaoManager generalManager, FinancialFilterManager filterManager) {
         setTransactions(generalManager.getTransactionDAO().findAll(
                 filterManager.getStartDate(),
                 filterManager.getEndDate(),
@@ -103,7 +103,7 @@ public class FinancialFetchManager extends AbstractFetchManager<
         ));
     }
 
-    private void updateSchedules(FinancialGeneralManager generalManager, FinancialFilterManager filterManager) {
+    private void updateSchedules(FinancialDaoManager generalManager, FinancialFilterManager filterManager) {
         setSchedules(generalManager.getScheduleDAO().findAll(
                 filterManager.getStartDate(),
                 filterManager.getEndDate(),
@@ -117,7 +117,7 @@ public class FinancialFetchManager extends AbstractFetchManager<
         setCategoryBalance(getCategoryBalance(transactions));
     }
 
-    private void updateGroups(FinancialGeneralManager generalManager) {
+    private void updateGroups(FinancialDaoManager generalManager) {
         setGroups(generalManager.getGroupDAO().findAll());
     }
 

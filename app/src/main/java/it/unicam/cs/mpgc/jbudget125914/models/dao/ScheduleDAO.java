@@ -18,22 +18,29 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.controller.dao;
+package it.unicam.cs.mpgc.jbudget125914.models.dao;
 
-import lombok.NonNull;
+import java.time.temporal.Temporal;
 
 /**
- * GeneralDAO for basic CRUD operations
- * @param <G> entity type
+ * ScheduleDAO represent a schedule DAO
+ * @param <T> transaction type
+ * @param <A> account type
+ * @param <TA> tag type
+ * @param <N> number type
+ * @param <D> data type
+ * @param <AM> amount type
+ * @param <G> group type
  */
-public class GeneralDAO<G> extends AbstractDAO<G> {
+public class ScheduleDAO<
+        T, A, TA, N extends Number, D extends Temporal & Comparable<? super D>, AM, G
+        > extends TransactionDAO<T,A,TA,N,D,AM,G> {
 
     /**
-     * GeneralDAO constructor
-     * @param entityClass the entity for the service
-     * @throws NullPointerException if {@code entityClass} is null
+     * ScheduleDAO constructor
+     * @param transactionClass schedule class
      */
-    public GeneralDAO(@NonNull Class<G> entityClass) {
-        super(entityClass);
+    public ScheduleDAO(Class<T> transactionClass) {
+        super(transactionClass);
     }
 }

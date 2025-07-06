@@ -18,9 +18,11 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.controller.manager.generalManager;
+package it.unicam.cs.mpgc.jbudget125914.controller.manager.daoManager;
 
-import it.unicam.cs.mpgc.jbudget125914.controller.dao.*;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.GeneralDAO;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.ScheduleDAO;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.TransactionDAO;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
@@ -35,7 +37,7 @@ import java.time.LocalDate;
 /**
  * This class represent a Financial General Manager
  */
-public class FinancialGeneralManager extends AbstractGeneralManager<
+public class FinancialDaoManager extends AbstractDaoManager<
         FinancialTransaction,
         FinancialSchedule,
         FinancialAmount,

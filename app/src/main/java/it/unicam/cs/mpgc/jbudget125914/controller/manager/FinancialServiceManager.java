@@ -20,7 +20,9 @@
 
 package it.unicam.cs.mpgc.jbudget125914.controller.manager;
 
-import it.unicam.cs.mpgc.jbudget125914.controller.dao.*;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.GeneralDAO;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.ScheduleDAO;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.TransactionDAO;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
@@ -30,7 +32,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialSche
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.fetchManager.FinancialFetchManager;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.filterManager.FinancialFilterManager;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.generalManager.FinancialGeneralManager;
+import it.unicam.cs.mpgc.jbudget125914.controller.manager.daoManager.FinancialDaoManager;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -49,20 +51,20 @@ public class FinancialServiceManager extends AbstractServiceManager<
         FinancialAmount,
         FinancialCategory,
         FinancialGroup,
-        FinancialGeneralManager,
+        FinancialDaoManager,
         FinancialFilterManager,
         FinancialFetchManager> {
 
     private FinancialServiceManager() {
         setFetchManager(new FinancialFetchManager());
         setFilterManager(new FinancialFilterManager());
-        setGeneralManager(new FinancialGeneralManager());
-        getGeneralManager().setTransactionDAO(new TransactionDAO<>(FinancialTransaction.class));
-        getGeneralManager().setAccountDAO(new GeneralDAO<>(FinancialAccount.class));
-        getGeneralManager().setCategoryDAO(new GeneralDAO<>(FinancialCategory.class));
-        getGeneralManager().setGroupDAO(new GeneralDAO<>(FinancialGroup.class));
-        getGeneralManager().setTagDAO(new GeneralDAO<>(FinancialTag.class));
-        getGeneralManager().setScheduleDAO(new ScheduleDAO<>(FinancialSchedule.class));
+        setDaoManager(new FinancialDaoManager());
+        getDaoManager().setTransactionDAO(new TransactionDAO<>(FinancialTransaction.class));
+        getDaoManager().setAccountDAO(new GeneralDAO<>(FinancialAccount.class));
+        getDaoManager().setCategoryDAO(new GeneralDAO<>(FinancialCategory.class));
+        getDaoManager().setGroupDAO(new GeneralDAO<>(FinancialGroup.class));
+        getDaoManager().setTagDAO(new GeneralDAO<>(FinancialTag.class));
+        getDaoManager().setScheduleDAO(new ScheduleDAO<>(FinancialSchedule.class));
     }
 
     private static FinancialServiceManager instance = new FinancialServiceManager();
@@ -80,7 +82,7 @@ public class FinancialServiceManager extends AbstractServiceManager<
 
     @Override
     public void update() {
-        getFetchManager().update(getGeneralManager(), getFilterManager(), this::reflectUpdate);
+        getFetchManager().update(getDaoManager(), getFilterManager(), this::reflectUpdate);
     }
 
     private void reflectUpdate() {

@@ -30,7 +30,7 @@ public class TransactionDialogController extends BaseTransactionController<Finan
     protected void applyCreate() {
         FinancialTransaction transaction = new FinancialTransaction();
         if(applyChanges(transaction)) {
-            getService().getGeneralManager().getTransactionDAO().create(transaction);
+            getService().getDaoManager().getTransactionDAO().create(transaction);
             getService().update();
             getStage().close();
         }
@@ -39,7 +39,7 @@ public class TransactionDialogController extends BaseTransactionController<Finan
     protected void applyUpdate() {
         FinancialTransaction transaction = getService().getFilterManager().getTransaction();
         if(applyChanges(transaction)) {
-            getService().getGeneralManager().getTransactionDAO().update(transaction);
+            getService().getDaoManager().getTransactionDAO().update(transaction);
             getService().update();
             getService().getFilterManager().setTransaction(transaction);
             getStage().close();

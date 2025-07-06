@@ -28,7 +28,7 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.fetchManager.FetchManager;
 import it.unicam.cs.mpgc.jbudget125914.controller.manager.filterManager.FilterManager;
-import it.unicam.cs.mpgc.jbudget125914.controller.manager.generalManager.GeneralManager;
+import it.unicam.cs.mpgc.jbudget125914.controller.manager.daoManager.DaoManager;
 import javafx.beans.property.SimpleBooleanProperty;
 
 import java.time.temporal.Temporal;
@@ -44,7 +44,7 @@ import java.time.temporal.Temporal;
  * @param <AM> amount typ
  * @param <N> number type
  * @param <G> group type
- * @param <GM> GeneralManager type
+ * @param <GM> DaoManager type
  * @param <FM> FilterManager type
  * @param <FTC> FetchManager type
  */
@@ -58,7 +58,7 @@ public interface ServiceManager<
         AM extends Amount<N,AM>,
         N extends Number,
         G extends Group<TA, C,?,A>,
-        GM extends GeneralManager<T,S,AM,N,A,D,TA,C,G,?,?,?,?,?,?>,
+        GM extends DaoManager<T,S,AM,N,A,D,TA,C,G,?,?,?,?,?,?>,
         FM extends FilterManager<T,S,AM,N,A,D,TA,C,G>,
         FTC extends FetchManager<T,S,AM,N,A,D,TA,C,G,GM,FM>> {
 
@@ -80,10 +80,10 @@ public interface ServiceManager<
     FTC getFetchManager();
 
     /**
-     * Return the GeneralManager
-     * @return the GeneralManager
+     * Return the DaoManager
+     * @return the DaoManager
      */
-    GM getGeneralManager();
+    GM getDaoManager();
 
     /**
      * Return the change variable

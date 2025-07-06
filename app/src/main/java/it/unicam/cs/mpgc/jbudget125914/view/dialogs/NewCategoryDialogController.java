@@ -50,10 +50,10 @@ public class NewCategoryDialogController extends BaseDialog {
                 .getGroup()
                 .getCategories()
                 .add(getService()
-                        .getGeneralManager()
+                        .getDaoManager()
                         .getCategoryDAO()
                         .create(category));
-        getService().getFetchManager().updateGroup(getService().getGeneralManager(), getService().getFilterManager());
+        getService().getFetchManager().updateGroup(getService().getDaoManager(), getService().getFilterManager());
         getStage().close();
         alertBuilder("Now select the new category");
     }

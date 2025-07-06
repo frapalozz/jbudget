@@ -23,7 +23,6 @@ package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
@@ -55,7 +54,7 @@ public class NewGroupDialogController extends BaseDialog implements Initializabl
             return;
         FinancialGroup group = new FinancialGroup(this.groupName.getText(), this.currency.getValue());
 
-        getService().getFilterManager().setGroup(getService().getGeneralManager().getGroupDAO().create(group));
+        getService().getFilterManager().setGroup(getService().getDaoManager().getGroupDAO().create(group));
         getService().update();
         getStage().close();
     }

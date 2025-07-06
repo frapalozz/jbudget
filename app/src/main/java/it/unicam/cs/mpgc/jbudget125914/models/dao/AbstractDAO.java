@@ -18,10 +18,10 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.controller.dao;
+package it.unicam.cs.mpgc.jbudget125914.models.dao;
 
-import it.unicam.cs.mpgc.jbudget125914.controller.util.CriteriaQueryHelper;
-import it.unicam.cs.mpgc.jbudget125914.controller.util.TransactionUtil;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.util.CriteriaQueryHelper;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.util.TransactionUtil;
 import lombok.Getter;
 import lombok.NonNull;
 
