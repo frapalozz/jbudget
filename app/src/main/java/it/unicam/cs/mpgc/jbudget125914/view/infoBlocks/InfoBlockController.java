@@ -58,6 +58,14 @@ public class InfoBlockController extends BaseController implements Initializable
 
         final BigDecimal[] balances = {BigDecimal.ZERO, BigDecimal.ZERO};
 
+        getAmounts(balances, transactions);
+
+        setAmount1(currency);
+        setAmount2(currency, balances[0]);
+        setAmount3(currency, balances[1]);
+    }
+
+    private void getAmounts(BigDecimal[] balances, List<FinancialTransaction> transactions) {
         transactions
                 .stream()
                 .filter(t -> t.getDate().isAfter(getService().getFilterManager().getStartDate().minusDays(1)) &&
@@ -69,10 +77,6 @@ public class InfoBlockController extends BaseController implements Initializable
                         balances[1] = balances[1].add(t.getAmount().getAmount());
                     }
                 });
-
-        setAmount1(currency);
-        setAmount2(currency, balances[0]);
-        setAmount3(currency, balances[1]);
     }
 
     private void setAmount1(String currency) {

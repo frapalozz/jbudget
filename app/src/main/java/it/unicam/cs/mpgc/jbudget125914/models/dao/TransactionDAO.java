@@ -22,20 +22,14 @@ package it.unicam.cs.mpgc.jbudget125914.models.dao;
 
 import it.unicam.cs.mpgc.jbudget125914.models.dao.util.CriteriaQueryHelper;
 import it.unicam.cs.mpgc.jbudget125914.models.dao.util.TransactionUtil;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Recurrence;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import lombok.NonNull;
 
-import java.time.Period;
 import java.time.temporal.Temporal;
-import java.time.temporal.TemporalAmount;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 /**
  * This class represent a TransactionService, it is used to get specified Transaction entity from the database
@@ -58,34 +52,6 @@ public class TransactionDAO<
      */
     public TransactionDAO(Class<T> transactionClass) {
         super(transactionClass);
-    }
-
-    /**
-     * Generate the recurrence transactions
-     * @param startDate start date of the recurrence
-     * @param endDate end date of the recurrence
-     * @param recurrence recurrence frequency
-     * @param transaction transaction data
-     * @param cloner transaction cloner
-     */
-    public void createRecurrenceTransactions(@NonNull D startDate, @NonNull D endDate, Recurrence recurrence, T transaction, Function<T, T> cloner) {
-        List<T> transactions = new ArrayList<>();
-
-        TemporalAmount plusDays = switch (recurrence) {
-            case DAILY -> Period.ofDays(1);
-            case WEEKLY -> Period.ofDays(7);
-            case MONTHLY -> Period.ofDays(30);
-            case YEARLY -> Period.ofDays(365);
-        };
-
-        Stream.iterate(startDate, date -> date.compareTo(endDate) <= 0, date -> (D) date.plus(plusDays))
-                .forEach(t -> {
-                    T clone = cloner.apply(transaction);
-                    clone.setDate(t);
-                    transactions.add(clone);
-                });
-
-        create(transactions);
     }
 
     /**

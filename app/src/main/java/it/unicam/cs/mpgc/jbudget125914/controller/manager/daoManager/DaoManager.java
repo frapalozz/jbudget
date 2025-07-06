@@ -65,7 +65,7 @@ public interface DaoManager<
         CD extends GeneralDAO<C>,
         GD extends GeneralDAO<G>,
         TAD extends GeneralDAO<TA>,
-        SD extends ScheduleDAO<S, A, TA, N, D, AM, G>> {
+        SD extends ScheduleDAO<S, A, TA, N, D, AM, G>> extends RecurrentTransactions<D,T> {
 
     /**
      * Return the transaction DAO

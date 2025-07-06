@@ -30,9 +30,13 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialSchedule;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
+import lombok.NonNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * This class represent a Financial General Manager
@@ -63,5 +67,31 @@ public class FinancialDaoManager extends AbstractDaoManager<
                 new GeneralDAO<>(FinancialTag.class),
                 new ScheduleDAO<>(FinancialSchedule.class)
         );
+    }
+
+    @Override
+    public void generateRecurrentTransactions(@NonNull LocalDate startDate, @NonNull LocalDate endDate, Recurrence recurrence, FinancialTransaction transaction) {
+
+        getTransactionDAO().create(transactionGenerator(
+                new ArrayList<>(),
+                startDate,
+                endDate,
+                transaction,
+                Recurrence.recurrenceAmount(recurrence)));
+    }
+
+    private List<FinancialTransaction> transactionGenerator(List<FinancialTransaction> transactions, LocalDate startDate, LocalDate endDate, FinancialTransaction transaction, int days) {
+        Stream.iterate(startDate, date -> date.minusDays(1).isBefore(endDate), date -> date.plusDays(days))
+                .forEach(d -> {
+                    FinancialTransaction clone = new FinancialTransaction(
+                            transaction.getAmount(),
+                            d,
+                            transaction.getDescription(),
+                            transaction.getAccount(),
+                            transaction.getTags());
+                    transactions.add(clone);
+                });
+
+        return transactions;
     }
 }

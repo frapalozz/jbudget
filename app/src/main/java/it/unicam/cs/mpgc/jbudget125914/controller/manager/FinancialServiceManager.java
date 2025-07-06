@@ -73,10 +73,10 @@ public class FinancialServiceManager extends AbstractServiceManager<
 
     @Override
     public void update() {
-        getFetchManager().update(getDaoManager(), getFilterManager(), this::reflectUpdate);
+        getFetchManager().update(getDaoManager(), getFilterManager(), this::render);
     }
 
-    private void reflectUpdate() {
+    private void render() {
         getChanges().set(!getChanges().getValue());
     }
 }

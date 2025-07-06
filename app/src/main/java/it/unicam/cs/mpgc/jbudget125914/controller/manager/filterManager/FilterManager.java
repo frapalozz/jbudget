@@ -52,10 +52,10 @@ public interface FilterManager<
         TA extends Tag<C>,
         C extends Category<TA>,
         G extends Group<TA,C,?,A>> extends
-        GroupFilter<G>,
-        DateFilter<D>,
-        AccountsFilter<A>,
+            GroupFilter<G>,
+            DateFilter<D>,
+            AccountsFilter<A>,
             TagsFilter<TA>,
-        TransactionSelector<T>,
-        ScheduleSelector<S> {
+            TransactionSelector<T>,
+            ScheduleSelector<S> {
 }

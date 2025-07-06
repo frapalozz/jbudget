@@ -58,7 +58,7 @@ public interface FetchManager<
         G extends Group<TA,C,?,A>,
         GM extends DaoManager<T,S,AM,N,A,D,TA,C,G, ?, ?, ?, ?,?,?>,
         FM extends FilterManager<T,S,AM,N,A,D,TA,C,G>
-        > {
+        > extends UpdateGroup<GM,FM> {
 
     /**
      * Update the fetched data with the new data filtered by the FilterManger
@@ -68,10 +68,4 @@ public interface FetchManager<
      */
     void update(@NonNull GM generalManager, @NonNull FM filterManager, Runnable action);
 
-    /**
-     * Update the Group without causing an update to the data
-     * @param generalManager generalManager
-     * @param filterManager filterManager
-     */
-    void updateGroup(GM generalManager, FM filterManager);
 }

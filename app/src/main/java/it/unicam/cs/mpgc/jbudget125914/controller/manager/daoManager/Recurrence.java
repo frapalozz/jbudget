@@ -18,11 +18,20 @@
  * SOFTWARE.
  */
 
-package it.unicam.cs.mpgc.jbudget125914.models.entities.transaction;
+package it.unicam.cs.mpgc.jbudget125914.controller.manager.daoManager;
 
 /**
  * Recurrence frequency enum
  */
 public enum Recurrence {
     DAILY, WEEKLY, MONTHLY, YEARLY;
+
+    public static int recurrenceAmount(Recurrence recurrence) {
+        return switch (recurrence) {
+            case DAILY -> 1;
+            case WEEKLY -> 7;
+            case MONTHLY -> 30;
+            case YEARLY -> 365;
+        };
+    }
 }

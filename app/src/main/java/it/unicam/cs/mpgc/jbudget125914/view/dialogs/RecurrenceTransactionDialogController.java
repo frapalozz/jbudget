@@ -23,7 +23,7 @@ package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
-import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Recurrence;
+import it.unicam.cs.mpgc.jbudget125914.controller.manager.daoManager.Recurrence;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -76,24 +76,13 @@ public class RecurrenceTransactionDialogController extends BaseNewTransactionCon
                 getAccount().getValue(),
                 tags
         );
-        getService().getDaoManager().getTransactionDAO().createRecurrenceTransactions(
+        getService().getDaoManager().generateRecurrentTransactions(
                 startDate.getValue(),
                 endDate.getValue(),
                 recurrence.getValue(),
-                transaction,
-                this::cloneTransaction
+                transaction
         );
         getStage().close();
-    }
-
-    private FinancialTransaction cloneTransaction(FinancialTransaction transaction) {
-        FinancialTransaction transactionClone = new FinancialTransaction();
-        transactionClone.setAmount(transaction.getAmount());
-        transactionClone.setDescription(transaction.getDescription());
-        transactionClone.setAccount(transaction.getAccount());
-        transactionClone.setDate(transaction.getDate());
-        transactionClone.setTags(transaction.getTags());
-        return transactionClone;
     }
 
     private boolean sanityCheckRecurrence() {
