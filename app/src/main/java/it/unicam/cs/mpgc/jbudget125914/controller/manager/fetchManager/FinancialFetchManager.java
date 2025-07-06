@@ -62,6 +62,10 @@ public class FinancialFetchManager extends AbstractFetchManager<
             futures.add(CompletableFuture.runAsync(() -> setBalance(generalManager, filterManager)));
             futures.add(CompletableFuture.runAsync(() -> updateTransactions(generalManager, filterManager)));
             futures.add(CompletableFuture.runAsync(() -> updateSchedules(generalManager, filterManager)));
+        } else {
+            setBalance(new FinancialAmount(BigDecimal.ZERO));
+            setTransactions(new ArrayList<>());
+            setSchedules(new ArrayList<>());
         }
         futures.add(CompletableFuture.runAsync(() -> updateGroups(generalManager)));
 

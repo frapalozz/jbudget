@@ -69,7 +69,7 @@ public class InfoBlockController extends BaseController implements Initializable
     }
 
     private void setAmount2(String currency, List<FinancialTransaction> transactions) {
-        if(transactions == null) {
+        if(transactions == null || transactions.isEmpty()) {
             this.amount2.setText("0");
             return;
         }
@@ -85,7 +85,7 @@ public class InfoBlockController extends BaseController implements Initializable
     }
 
     private void setAmount3(String currency, List<FinancialTransaction> transactions) {
-        if(transactions == null) {
+        if(transactions == null || transactions.isEmpty()) {
             this.amount3.setText("0");
             return;
         }
