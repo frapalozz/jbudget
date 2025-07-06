@@ -30,7 +30,6 @@ import it.unicam.cs.mpgc.jbudget125914.models.entities.group.Group;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.Tag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.time.temporal.Temporal;
 
@@ -53,7 +52,6 @@ import java.time.temporal.Temporal;
  * @param <SD> schedule DAO type
  */
 @Getter
-@Setter
 public abstract class AbstractDaoManager<
         T extends Transaction<AM,D,TA,A>,
         S extends Transaction<AM,D,TA,A>,
@@ -71,15 +69,25 @@ public abstract class AbstractDaoManager<
         TAD extends GeneralDAO<TA>,
         SD extends ScheduleDAO<S, A, TA, N, D, AM, G>> implements DaoManager<T,S,AM,N,A,D,TA,C,G,TD,AD,CD,GD,TAD,SD> {
 
-    private TD transactionDAO;
+    private final TD transactionDAO;
 
-    private AD accountDAO;
+    private final AD accountDAO;
 
-    private CD categoryDAO;
+    private final CD categoryDAO;
 
-    private GD groupDAO;
+    private final GD groupDAO;
 
-    private TAD tagDAO;
+    private final TAD tagDAO;
 
-    private SD scheduleDAO;
+    private final SD scheduleDAO;
+
+    public AbstractDaoManager(TD td, AD ad, CD cd, GD gd, TAD tad, SD sd) {
+        this.transactionDAO = td;
+        this.accountDAO = ad;
+        this.categoryDAO = cd;
+        this.groupDAO = gd;
+        this.tagDAO = tad;
+        this.scheduleDAO = sd;
+
+    }
 }

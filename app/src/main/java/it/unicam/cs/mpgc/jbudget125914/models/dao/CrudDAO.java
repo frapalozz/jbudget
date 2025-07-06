@@ -49,7 +49,7 @@ public interface CrudDAO<T> {
      * @param entity entity to update
      * @throws NullPointerException if {@code entity} is null
      */
-    void update(@NonNull T entity);
+    T update(@NonNull T entity);
 
     /**
      * Delete an entity

@@ -58,8 +58,8 @@ public abstract class AbstractDAO<T> implements CrudDAO<T> {
     }
 
     @Override
-    public void update(@NonNull T entity) {
-        TransactionUtil.executeInTransaction(em -> em.merge(entity));
+    public T update(@NonNull T entity) {
+        return TransactionUtil.executeInTransactionReturn(em -> em.merge(entity));
     }
 
     @Override

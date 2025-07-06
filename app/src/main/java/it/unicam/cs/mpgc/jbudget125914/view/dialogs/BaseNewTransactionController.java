@@ -107,6 +107,7 @@ public class BaseNewTransactionController<T extends Transaction<FinancialAmount,
             Parent root = loader.load();
             NewTagDialogController controller = loader.getController();
             controller.setCategory(getCategory().getValue());
+            controller.setCategoryChoice(getCategory());
             controller.setAction(this::updateTags);
 
             Dialog<ButtonType> dialog = new Dialog<>();

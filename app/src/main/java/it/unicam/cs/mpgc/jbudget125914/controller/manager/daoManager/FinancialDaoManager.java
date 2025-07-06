@@ -53,4 +53,15 @@ public class FinancialDaoManager extends AbstractDaoManager<
         GeneralDAO<FinancialGroup>,
         GeneralDAO<FinancialTag>,
         ScheduleDAO<FinancialSchedule, FinancialAccount, FinancialTag, BigDecimal, LocalDate, FinancialAmount, FinancialGroup>> {
+
+    public FinancialDaoManager() {
+        super(
+                new TransactionDAO<>(FinancialTransaction.class),
+                new GeneralDAO<>(FinancialAccount.class),
+                new GeneralDAO<>(FinancialCategory.class),
+                new GeneralDAO<>(FinancialGroup.class),
+                new GeneralDAO<>(FinancialTag.class),
+                new ScheduleDAO<>(FinancialSchedule.class)
+        );
+    }
 }

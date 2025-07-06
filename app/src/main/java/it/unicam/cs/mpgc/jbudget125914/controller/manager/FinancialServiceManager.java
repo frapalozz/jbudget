@@ -20,9 +20,6 @@
 
 package it.unicam.cs.mpgc.jbudget125914.controller.manager;
 
-import it.unicam.cs.mpgc.jbudget125914.models.dao.GeneralDAO;
-import it.unicam.cs.mpgc.jbudget125914.models.dao.ScheduleDAO;
-import it.unicam.cs.mpgc.jbudget125914.models.dao.TransactionDAO;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
@@ -59,12 +56,6 @@ public class FinancialServiceManager extends AbstractServiceManager<
         setFetchManager(new FinancialFetchManager());
         setFilterManager(new FinancialFilterManager());
         setDaoManager(new FinancialDaoManager());
-        getDaoManager().setTransactionDAO(new TransactionDAO<>(FinancialTransaction.class));
-        getDaoManager().setAccountDAO(new GeneralDAO<>(FinancialAccount.class));
-        getDaoManager().setCategoryDAO(new GeneralDAO<>(FinancialCategory.class));
-        getDaoManager().setGroupDAO(new GeneralDAO<>(FinancialGroup.class));
-        getDaoManager().setTagDAO(new GeneralDAO<>(FinancialTag.class));
-        getDaoManager().setScheduleDAO(new ScheduleDAO<>(FinancialSchedule.class));
     }
 
     private static FinancialServiceManager instance = new FinancialServiceManager();

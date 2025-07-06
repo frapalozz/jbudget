@@ -74,22 +74,10 @@ public interface DaoManager<
     TD getTransactionDAO();
 
     /**
-     * Set the transaction DAO
-     * @param ts the new transaction DAO
-     */
-    void setTransactionDAO(TD ts);
-
-    /**
      * Return the account DAO
      * @return the account DAO
      */
     AD getAccountDAO();
-
-    /**
-     * Set the account DAO
-     * @param as the new account DAO
-     */
-    void setAccountDAO(AD as);
 
     /**
      * Return the category DAO
@@ -98,22 +86,10 @@ public interface DaoManager<
     CD getCategoryDAO();
 
     /**
-     * Set the category DAO
-     * @param cs the new category DAO
-     */
-    void setCategoryDAO(CD cs);
-
-    /**
      * Return the group DAO
      * @return the group DAO
      */
     GD getGroupDAO();
-
-    /**
-     * Set the group DAO
-     * @param gs the new group DAO
-     */
-    void setGroupDAO(GD gs);
 
     /**
      * Return the tag DAO
@@ -122,20 +98,8 @@ public interface DaoManager<
     TAD getTagDAO();
 
     /**
-     * Set the tag DAO
-     * @param ts the new tag DAO
-     */
-    void setTagDAO(TAD ts);
-
-    /**
      * Return the schedule DAO
      * @return the schedule DAO
      */
     SD getScheduleDAO();
-
-    /**
-     * Set the schedule DAO
-     * @param s the new schedule DAO
-     */
-    void setScheduleDAO(SD s);
 }

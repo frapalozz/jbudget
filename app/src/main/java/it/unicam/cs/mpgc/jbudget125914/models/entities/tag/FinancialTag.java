@@ -22,13 +22,18 @@ package it.unicam.cs.mpgc.jbudget125914.models.entities.tag;
 
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialSchedule;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.FinancialTransaction;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * This class represent a FinancialTag entity
@@ -53,6 +58,30 @@ public class FinancialTag extends AbstractTag<FinancialCategory> implements Seri
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "groupid", name = "groupid", nullable = false)
     private FinancialGroup groupId;
+
+    /**
+     * tags transactions
+     */
+    @ManyToMany
+    @JoinTable(
+            name = "transaction_tag_relationship",
+            joinColumns = @JoinColumn(name = "tagid", table = "tag"),
+            inverseJoinColumns = @JoinColumn(name = "transactionid", table = "transaction")
+    )
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<FinancialTransaction> transactions;
+
+    /**
+     * tags transactions
+     */
+    @ManyToMany
+    @JoinTable(
+            name = "schedule_tag_relationship",
+            joinColumns = @JoinColumn(name = "tagid", table = "tag"),
+            inverseJoinColumns = @JoinColumn(name = "transactionid", table = "schedule")
+    )
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Set<FinancialSchedule> schedules;
 
     /**
      * Construct a new FinancialTag

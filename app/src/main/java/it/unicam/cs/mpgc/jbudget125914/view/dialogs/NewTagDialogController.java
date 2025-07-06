@@ -23,6 +23,7 @@ package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import lombok.Setter;
 
@@ -36,6 +37,8 @@ public class NewTagDialogController extends BaseDialog {
 
     @Setter
     private FinancialCategory category;
+    @Setter
+    private ChoiceBox<FinancialCategory> categoryChoice;
 
     @Setter
     Runnable action;
@@ -49,15 +52,9 @@ public class NewTagDialogController extends BaseDialog {
             return;
         FinancialTag tag = new FinancialTag(name.getText(), category);
         tag.setGroupId(getService().getFilterManager().getGroup());
-        getService()
-                .getFilterManager()
-                .getGroup()
-                .getTags()
-                .add(getService()
-                        .getDaoManager()
-                        .getTagDAO()
-                        .create(tag));
-        getService().getFetchManager().updateGroup(getService().getDaoManager(), getService().getFilterManager());
+        category.getTags().add(tag);
+        getService().getDaoManager().getCategoryDAO().update(category);
+        getService().getFilterManager().getGroup().getTags().add(tag);
         action.run();
         getStage().close();
         alertBuilder("Now select the tags");
