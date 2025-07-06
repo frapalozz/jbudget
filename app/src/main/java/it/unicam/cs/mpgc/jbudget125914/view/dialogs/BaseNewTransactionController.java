@@ -46,7 +46,7 @@ import java.util.*;
  * @param <T> Transaction type
  */
 @Getter
-public class BaseNewTransactionController<T extends Transaction<FinancialAmount, LocalDate,FinancialTag,FinancialAccount>>  extends BaseDialog implements Initializable {
+public abstract class BaseNewTransactionController<T extends Transaction<FinancialAmount, LocalDate,FinancialTag,FinancialAccount>>  extends BaseDialog implements Initializable {
 
     @FXML
     private TextField description;

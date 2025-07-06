@@ -21,8 +21,7 @@
 package it.unicam.cs.mpgc.jbudget125914.controller.manager.daoManager;
 
 import it.unicam.cs.mpgc.jbudget125914.models.dao.GeneralDAO;
-import it.unicam.cs.mpgc.jbudget125914.models.dao.ScheduleDAO;
-import it.unicam.cs.mpgc.jbudget125914.models.dao.TransactionDAO;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.FinancialTransactionDAO;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
@@ -51,21 +50,21 @@ public class FinancialDaoManager extends AbstractDaoManager<
         FinancialTag,
         FinancialCategory,
         FinancialGroup,
-        TransactionDAO<FinancialTransaction, FinancialAccount, FinancialTag, BigDecimal, LocalDate, FinancialAmount, FinancialGroup>,
+        FinancialTransactionDAO<FinancialTransaction, FinancialAccount, FinancialTag, BigDecimal, LocalDate, FinancialAmount, FinancialGroup>,
         GeneralDAO<FinancialAccount>,
         GeneralDAO<FinancialCategory>,
         GeneralDAO<FinancialGroup>,
         GeneralDAO<FinancialTag>,
-        ScheduleDAO<FinancialSchedule, FinancialAccount, FinancialTag, BigDecimal, LocalDate, FinancialAmount, FinancialGroup>> {
+        FinancialTransactionDAO<FinancialSchedule, FinancialAccount, FinancialTag, BigDecimal, LocalDate, FinancialAmount, FinancialGroup>> {
 
     public FinancialDaoManager() {
         super(
-                new TransactionDAO<>(FinancialTransaction.class),
+                new FinancialTransactionDAO<>(FinancialTransaction.class),
                 new GeneralDAO<>(FinancialAccount.class),
                 new GeneralDAO<>(FinancialCategory.class),
                 new GeneralDAO<>(FinancialGroup.class),
                 new GeneralDAO<>(FinancialTag.class),
-                new ScheduleDAO<>(FinancialSchedule.class)
+                new FinancialTransactionDAO<>(FinancialSchedule.class)
         );
     }
 

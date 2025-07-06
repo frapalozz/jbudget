@@ -21,7 +21,7 @@
 package it.unicam.cs.mpgc.jbudget125914.controller.manager.daoManager;
 
 import it.unicam.cs.mpgc.jbudget125914.models.dao.GeneralDAO;
-import it.unicam.cs.mpgc.jbudget125914.models.dao.ScheduleDAO;
+import it.unicam.cs.mpgc.jbudget125914.models.dao.FinancialTransactionDAO;
 import it.unicam.cs.mpgc.jbudget125914.models.dao.TransactionDAO;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.Amount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.Account;
@@ -60,12 +60,12 @@ public interface DaoManager<
         TA extends Tag<C>,
         C extends Category<TA>,
         G extends Group<TA,C,?,A>,
-        TD extends TransactionDAO<T, A, TA, N, D, AM, G>,
+        TD extends FinancialTransactionDAO<T, A, TA, N, D, AM, G>,
         AD extends GeneralDAO<A>,
         CD extends GeneralDAO<C>,
         GD extends GeneralDAO<G>,
         TAD extends GeneralDAO<TA>,
-        SD extends ScheduleDAO<S, A, TA, N, D, AM, G>> extends RecurrentTransactions<D,T> {
+        SD extends TransactionDAO<S, A, TA, N, D, AM, G>> extends RecurrentTransactions<D,T> {
 
     /**
      * Return the transaction DAO

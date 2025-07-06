@@ -62,7 +62,7 @@ public class NewTagDialogController extends BaseDialog {
         getService().update();
         action.run();
         getStage().close();
-        alertBuilder("Now select the tags");
+        alertBuilder("Reselect the category");
     }
 
     private boolean sanityCheck() {

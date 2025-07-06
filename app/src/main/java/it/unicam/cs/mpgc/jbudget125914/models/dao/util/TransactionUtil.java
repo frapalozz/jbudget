@@ -24,7 +24,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
-import javafx.scene.control.Alert;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -34,7 +33,7 @@ import java.util.function.Function;
  */
 public record TransactionUtil() {
 
-    private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("JBudget");
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("JBudget");
 
     /**
      * Execute operation with elements expected
@@ -56,13 +55,8 @@ public record TransactionUtil() {
             if(tx.isActive()) {
                 tx.rollback();
             }
-            /*
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Info");
-            alert.setHeaderText(e.getMessage());
-            alert.showAndWait();
-
-             */
+            emf.close();
+            emf = Persistence.createEntityManagerFactory("JBudget");
             throw new RuntimeException("Transaction failed", e);
         } finally {
             em.close();

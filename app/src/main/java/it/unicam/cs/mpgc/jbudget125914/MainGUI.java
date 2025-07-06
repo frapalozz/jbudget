@@ -37,11 +37,15 @@ public class MainGUI extends Application {
         Parent root = loader.load();
         primaryStage.setTitle("JBudget");
         primaryStage.setScene(new javafx.scene.Scene(root));
+        stageSetter(primaryStage);
+        primaryStage.show();
+    }
+
+    private void stageSetter(Stage primaryStage) {
         primaryStage.setMinHeight(450);
         primaryStage.setMinWidth(800);
         primaryStage.setWidth(500);
         primaryStage.setHeight(400);
         primaryStage.setResizable(true);
-        primaryStage.show();
     }
 }

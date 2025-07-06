@@ -20,11 +20,7 @@
 
 package it.unicam.cs.mpgc.jbudget125914.models.dao;
 
-import it.unicam.cs.mpgc.jbudget125914.models.dao.util.CriteriaQueryHelper;
-import it.unicam.cs.mpgc.jbudget125914.models.dao.util.TransactionUtil;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
-import jakarta.persistence.criteria.Expression;
-import jakarta.persistence.criteria.Predicate;
 import lombok.NonNull;
 
 import java.time.temporal.Temporal;
@@ -32,27 +28,16 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This class represent a TransactionService, it is used to get specified Transaction entity from the database
+ * Transaction DAO interface contract
  * @param <T> transaction type
  * @param <A> account type
- * @param <TA> nag type
- * @param <N> number type (of the amount)
- * @param <D> date type
+ * @param <TA> tag type
+ * @param <N> number type
+ * @param <D> data type
  * @param <AM> amount type
  * @param <G> group type
  */
-public class TransactionDAO<
-        T extends Transaction<AM,D,TA,A>, A, TA, N extends Number, D extends Temporal & Comparable<? super D>, AM, G
-        > extends AbstractDAO<T> {
-
-    /**
-     * TransactionService constructor
-     * @param transactionClass transaction class
-     * @throws NullPointerException if {@code transactionClass} is null
-     */
-    public TransactionDAO(Class<T> transactionClass) {
-        super(transactionClass);
-    }
+public interface TransactionDAO<T extends Transaction<AM,D,TA,A>, A, TA, N extends Number, D extends Temporal & Comparable<? super D>, AM, G> {
 
     /**
      * Return all the transaction between date {@code from} and {@code to} (inclusive) and filtered by accounts and tags
@@ -63,21 +48,7 @@ public class TransactionDAO<
      * @param group group filter
      * @return all the transaction between date {@code from} and {@code to} (inclusive) and filtered by accounts and tags
      */
-    public List<T> findAll(@NonNull D from, @NonNull D to, @NonNull Set<A> accounts, @NonNull Set<TA> tags, @NonNull G group) {
-
-        return TransactionUtil.executeInTransactionReturn(em -> {
-            CriteriaQueryHelper<T, T> helper = new CriteriaQueryHelper<>(em, this.getEntityClass(), this.getEntityClass());
-
-            Predicate groupPredicate = helper.getRoot().get("account").get("groupId").equalTo(group);
-            Predicate datePredicate = helper.getCb().between(helper.getRoot().get("date"), from, to);
-            Predicate accountPredicate = helper.in("account", accounts);
-            Predicate tagsPredicate = helper.containsAny("tags", tags);
-
-            helper.where(helper.getCb().and(datePredicate, accountPredicate, tagsPredicate, groupPredicate));
-
-            return helper.getResultList();
-        });
-    }
+    List<T> findAll(@NonNull D from, @NonNull D to, @NonNull Set<A> accounts, @NonNull Set<TA> tags, @NonNull G group);
 
     /**
      * Return the amount of all period to the cutoff (inclusive)
@@ -87,22 +58,5 @@ public class TransactionDAO<
      * @param accounts accounts filter
      * @return the total amount period to the cutoff (inclusive)
      */
-    public AM getTransactionAmount(@NonNull D cutoff, @NonNull Class<AM> amountClass, @NonNull Class<N> numberClass, @NonNull Set<A> accounts) {
-        return TransactionUtil.executeInTransactionReturn(em -> {
-            CriteriaQueryHelper<T, N> helper = new CriteriaQueryHelper<>(em, getEntityClass(), numberClass);
-
-            Predicate accountPredicate = helper.in("account", accounts);
-            Predicate datePredicate = helper.getCb().lessThanOrEqualTo(helper.getRoot().get("date"), cutoff);
-
-            helper.where(accountPredicate, datePredicate);
-
-            Expression<N> transactionSum = helper.getCb().sum(
-                    helper.getRoot().get("amount").get("amount")
-            );
-
-            helper.getCq().select(transactionSum);
-
-            return helper.convertor(amountClass, numberClass);
-        });
-    }
+    AM getTransactionAmount(@NonNull D cutoff, @NonNull Class<AM> amountClass, @NonNull Class<N> numberClass, @NonNull Set<A> accounts);
 }
