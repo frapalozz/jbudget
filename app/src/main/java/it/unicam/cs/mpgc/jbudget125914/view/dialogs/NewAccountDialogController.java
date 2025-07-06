@@ -61,15 +61,9 @@ public class NewAccountDialogController extends BaseDialog implements Initializa
                 getService().getFilterManager().getGroup()
                 );
 
-        getService()
-                .getFilterManager()
-                .getGroup()
-                .getAccounts()
-                .add(getService()
-                        .getDaoManager()
-                        .getAccountDAO()
-                        .create(account));
+        getService().getDaoManager().getAccountDAO().create(account);
         getService().getFetchManager().updateGroup(getService().getDaoManager(), getService().getFilterManager());
+        getService().update();
         getStage().close();
         alertBuilder("Now select the new account");
     }

@@ -60,15 +60,6 @@ public class TransactionDAO<
         super(transactionClass);
     }
 
-    @Override
-    public <ID> void delete(@NonNull ID id) {
-        TransactionUtil.executeInTransaction(em -> {
-            T transaction = em.find(getEntityClass(), id);
-            transaction.getTags().clear();
-            em.remove(transaction);
-        });
-    }
-
     /**
      * Generate the recurrence transactions
      * @param startDate start date of the recurrence

@@ -23,6 +23,7 @@ package it.unicam.cs.mpgc.jbudget125914.view.dialogs;
 import it.unicam.cs.mpgc.jbudget125914.models.embeddable.amount.FinancialAmount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.account.FinancialAccount;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.category.FinancialCategory;
+import it.unicam.cs.mpgc.jbudget125914.models.entities.group.FinancialGroup;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.tag.FinancialTag;
 import it.unicam.cs.mpgc.jbudget125914.models.entities.transaction.Transaction;
 import it.unicam.cs.mpgc.jbudget125914.view.util.ControllerUtil;
@@ -58,8 +59,11 @@ public class BaseNewTransactionController<T extends Transaction<FinancialAmount,
     @FXML
     private VBox tagBox;
 
+    private FinancialGroup group;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        group = getService().getFilterManager().getGroup();
         ControllerUtil cUtil = new ControllerUtil();
         cUtil.formatAmount(getAmount());
         if(getService().getFilterManager().getGroup().getAccounts() != null && !getService().getFilterManager().getGroup().getAccounts().isEmpty()) {
@@ -83,6 +87,7 @@ public class BaseNewTransactionController<T extends Transaction<FinancialAmount,
         ControllerUtil cUtil = new ControllerUtil();
         cUtil.dialogBuilder("dialogs/NewAccountDialog","New Account");
         populateAccounts();
+        group = getService().getFilterManager().getGroup();
     }
 
     /**
@@ -93,6 +98,7 @@ public class BaseNewTransactionController<T extends Transaction<FinancialAmount,
         ControllerUtil cUtil = new ControllerUtil();
         cUtil.dialogBuilder("dialogs/NewCategoryDialog","New Category");
         populateCategory();
+        group = getService().getFilterManager().getGroup();
     }
 
     /**
@@ -108,6 +114,7 @@ public class BaseNewTransactionController<T extends Transaction<FinancialAmount,
             NewTagDialogController controller = loader.getController();
             controller.setCategory(getCategory().getValue());
             controller.setCategoryChoice(getCategory());
+            controller.setGroup(group);
             controller.setAction(this::updateTags);
 
             Dialog<ButtonType> dialog = new Dialog<>();
