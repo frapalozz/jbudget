@@ -11,9 +11,9 @@
 
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://ep-aged-salad-a2jxjcd6-pooler.eu-central-1.aws.neon.tech/JBudget?sslmode=require"/>
-            <property name="jakarta.persistence.jdbc.user" value="JBudget_owner"/>
-            <property name="jakarta.persistence.jdbc.password" value="npg_IpoCKVcgd41A"/>
+            <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://ep-orange-sea-a22odnux-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require"/>
+            <property name="jakarta.persistence.jdbc.user" value="neondb_owner"/>
+            <property name="jakarta.persistence.jdbc.password" value="npg_nCeVtJ4GH3Ux"/>
 
             <property name="hibernate.hbm2ddl.auto" value="update"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
