@@ -30,9 +30,8 @@ import java.math.BigDecimal;
  * This class represent a FinancialAmount
  */
 @Getter
-@Setter
 @Embeddable
-public class FinancialAmount implements Amount<BigDecimal, FinancialAmount>, Comparable<FinancialAmount> {
+public final class FinancialAmount implements Amount<BigDecimal, FinancialAmount>, Comparable<FinancialAmount> {
 
     @Column(precision = 14, scale = 2, nullable = false)
     private final BigDecimal amount;

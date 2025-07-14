@@ -32,9 +32,7 @@ import lombok.NonNull;
  * @param <T> tag type
  * @param <A> account type
  */
-public interface Transaction<
-        AM, D, T, A
-        > extends Taggable<T>, AccountLinked<A>, Describable<String> {
+public interface Transaction<AM, D, T, A> extends Taggable<T>, AccountLinked<A>, Describable<String> {
 
     /**
      * Return the transaction ID

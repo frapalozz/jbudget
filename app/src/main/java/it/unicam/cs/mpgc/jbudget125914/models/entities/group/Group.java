@@ -34,9 +34,7 @@ import java.util.Set;
  * @param <C> currency type
  * @param <A> account type
  */
-public interface Group<
-        T, K, C, A
-        > extends Taggable<T>, Categorizable<K>, Nameable<String> {
+public interface Group<T, K, C, A> extends Taggable<T>, Categorizable<K>, Nameable<String> {
 
     /**
      * Return the Group ID
